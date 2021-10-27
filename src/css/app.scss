@@ -1,0 +1,85 @@
+// app global css in SCSS form
+:root {
+  --bc-blue-1: #002c6c;
+  --bc-blue-2: #0c234d;
+  --bc-black-1: #1d1d1b;
+  --bc-yellow-1: #fcde8e;
+  --q-transition-duration: 1.5s;
+}
+* {
+  font-family: 'Inter', sans-serif;
+}
+html{
+  scroll-behavior: smooth;
+}
+#q-app {
+  background-color: white;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+.flex-container {
+  width: 100%;
+  padding: 0 12px;
+  max-width: 1440px;
+}
+//captcha
+//   .grecaptcha-badge {
+//     opacity: 0;
+//     z-index: 4;
+//   }
+
+a {
+  text-decoration: none;
+  margin: 0 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  &:link,
+  &:visited {
+    color: #ffffff;
+  }
+  &:hover {
+    color: rgb(43, 144, 226);
+  }
+}
+.space-upper {
+  margin-top: 20px;
+}
+.space-bottom {
+  margin-bottom: 20px;
+}
+.color-blue {
+  color: #002c6c;
+}
+.color-red {
+  color: #d00606;
+}
+.color-grey {
+  color: #323232;
+}
+.star-backgroud {
+  background-image: url('/images/starbackground.png');
+}
+.font-card-title-text {
+  font-weight: 500;
+  font-size: 16px;
+}
+.font-card-title-present {
+  font-weight: 500;
+  font-size: 20px;
+}
+@media only screen and (max-width: 1300px) {
+  .flex-container {
+    padding: 0;
+  }
+}

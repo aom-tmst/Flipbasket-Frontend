@@ -1,6 +1,26 @@
-# Flipbasket-Frontend <br>
-this is flip basket v.0.2
-private Flipbasket v.0.1 ( https://github.com/aom-tmst/Reverese-Marketplace ) 
-Why we create a new repository
-  The reason why you have to create a new project is because the system-wide 
-  ux/ui has been modified and added functions such as vuex, eslint, etc.
+# Quasar App (flipbasket-frontend)
+
+A Quasar Framework app
+
+## Install the dependencies
+```bash
+npm install
+```
+
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
+```bash
+quasar dev
+```
+
+### Lint the files
+```bash
+npm run lint
+```
+
+### Build the app for production
+```bash
+quasar build
+```
+
+### Customize the configuration
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
