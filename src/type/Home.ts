@@ -5,7 +5,7 @@ export interface BannerAds {
 export interface ClothesDeatail { 
     postedImg: string
   postedOn: string
-  postedBy: string
+  productName: string
   detail: string
   address: string
   facebook: string

@@ -19,10 +19,10 @@
       >
       <q-intersection once transition="scale">
         <div class="flex-col content text-center">
-          <div class="flex-row">About fabric work. Trust us.</div>
-          <div class="flex-row head-title">LOREN IPSUM</div>
+          <div class="flex-row">Choose to search for unique products at</div>
+          <div class="flex-row head-title">Flipbasket</div>
           <div class="flex-row">
-            With over 40 years of experience as a skilled weaver
+            Open a new experience of online shopping.
           </div>
         </div>
         </q-intersection>

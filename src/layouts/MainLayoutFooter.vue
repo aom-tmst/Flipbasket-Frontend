@@ -4,7 +4,7 @@
       <div class="space-bottom">
         <div class="flex-row footer-list">
           <div class="column" style="width: 350px">
-            <img src="icons/Logo.png" alt="" style="width: 100px" />
+            <img src="icons/fliplogo.png" alt="" style="width: 250px" />
             <div class="content space-upper">
               {{aboutList.about}}
             </div>

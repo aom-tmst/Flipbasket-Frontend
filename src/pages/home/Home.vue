@@ -6,28 +6,46 @@
         <HomeSecondBanner />
       </div>
       <div class="flex-container">
-        <div id="product" />
+        <div id="shirt" />
         <div class="flex-col items-center">
           <div class="flex-row justify-center">
-            <span>Latest sewing work</span>
+            <span>Shirt</span>
           </div>
-          <HomeSewing :item="clothesDeatail" />
-          <!-- <div class="review">
+          <HomeShirt :item="clothesDeatail" />
+        </div>
+      </div>
+
+      <div class="scoped-banner" id="trousers">
+        <HomeTrouserBanner />
+      </div>
+      <div class="flex-container">
+        <div class="flex-col items-center">
+          <div class="flex-row justify-center">
+            <span>Trousers</span>
+          </div>
+          <Hometrousers :item="trousersDetail" />
+        </div>
+      </div>
+
+      <div class="scoped-banner" id="accessory">
+        <HomeAccessoryBanner />
+      </div>
+      <div class="flex-container">
+        <div class="flex-col items-center">
+          <div class="flex-row justify-center">
+            <span>Accessory</span>
+          </div>
+          <HomeAccessory :item="accessoryDetail" />
+        </div>
+      </div>
+      <!-- <div class="review">
             <span>Review By Customers</span>
           </div> -->
+      <div class="flex-container">
+        <div class="flex-col items-center">
           <div id="gallery" />
           <span>Gallery</span>
           <HomeGallery :item="galleryImg" />
-          <div id="location" />
-          <span>Location</span>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.393182321986!2d98.35364238932227!3d7.853854298286074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30502e4a79554b11%3A0x950b9d90cf09db50!2z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZIOC4reC4muC4iC7guJrguYnguLLguJnguJnguLLguJrguK3guJk!5e0!3m2!1sth!2sth!4v1635290212154!5m2!1sth!2sth"
-            width="600"
-            height="450"
-            style="border: 0"
-            allowfullscreen=""
-            loading="lazy"
-          ></iframe>
         </div>
       </div>
     </div>
@@ -37,12 +55,18 @@
 <script lang="ts">
 import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
-import HomeSewing from 'src/pages/home/HomeSewing.vue';
+import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
+import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
+import HomeShirt from 'src/pages/home/HomeShirt.vue';
+import Hometrousers from 'src/pages/home/Hometrousers.vue';
+import HomeAccessory from 'src/pages/home/HomeAccessory.vue';
 import HomeGallery from 'src/pages/home/HomeGallery.vue';
 import {
   bannerAds,
   clothesDeatail,
   galleryImg,
+  trousersDetail,
+  accessoryDetail,
 } from 'src/pages/home/constants';
 import { defineComponent } from 'vue';
 export default defineComponent({
@@ -51,8 +75,12 @@ export default defineComponent({
   components: {
     HomeMainBanner,
     HomeSecondBanner,
-    HomeSewing,
+    HomeShirt,
+    Hometrousers,
     HomeGallery,
+    HomeAccessory,
+    HomeTrouserBanner,
+    HomeAccessoryBanner,
   },
 
   setup() {
@@ -60,6 +88,8 @@ export default defineComponent({
       bannerAds,
       clothesDeatail,
       galleryImg,
+      trousersDetail,
+      accessoryDetail,
     };
   },
 });
@@ -76,7 +106,7 @@ export default defineComponent({
     position: relative;
     scroll-snap-type: y mandatory;
   }
-  #product {
+  #shirt {
     position: absolute;
     margin-top: -90px;
   }

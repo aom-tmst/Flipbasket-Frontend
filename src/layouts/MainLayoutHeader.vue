@@ -2,7 +2,7 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <q-img width="80px" src="icons/logo.png" />
+        <q-img width="200px" src="icons/fliplogo.png" />
       </q-btn>
 
       <!-- Desktop -->
@@ -15,6 +15,25 @@
         >
           {{ label }}
         </a>
+        <div class="cursor-pointer non-selectable">
+          <a>Product</a>
+          <q-menu auto-close>
+            <q-list>
+              <div class="flex-col edit-font">
+                <a
+                  v-for="({ label, path }, index) in productList"
+                  :key="index"
+                  :href="path"
+                  :class="{ 'is-actived': isActived(path) }"
+                  class="edit-font"
+                >
+                  {{ label }}
+                  <q-separator />
+                </a>
+              </div>
+            </q-list>
+          </q-menu>
+        </div>
       </div>
       <div class="flex-row items-center menu-list desktop-menu">
         <a
@@ -58,18 +77,24 @@ export default defineComponent({
     const route = useRoute();
     const dialog = ref(false);
     const menuList = [
-      { label: 'Home', path: '#Home' },
+      { label: 'Home', path: '#home' },
       { label: 'About', path: '#about' },
-      { label: 'Product', path: '#product' },
-      { label: 'Gallery', path: '#gallery' },
-      { label: 'Location', path: '#location' },
+      // { label: 'Gallery', path: '#gallery' },
+      // { label: 'Location', path: '#location' },
+    ];
+    const productList = [
+      { label: 'Shirt', path: '#shirt' },
+      { label: 'Trousers', path: '#trousers' },
+      { label: 'Accessory', path: '#accessory' },
+      // { label: 'Gallery', path: '#gallery' },
+      // { label: 'Location', path: '#location' },
     ];
     const loginList = [{ label: 'login', path: 'login', img: '' }];
     const isActived = (path: string) => {
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, loginList };
+    return { menuList, dialog, isActived, loginList, productList };
   },
 });
 </script>
@@ -106,6 +131,13 @@ export default defineComponent({
   margin-top: auto;
   background-color: var(--bc-black-1);
   height: calc(100vh - 80.97px) !important;
+}
+.edit-font {
+  margin: 10px 30px 10px 30px;
+  color: black;
+}
+.edit-font:hover {
+  color: rgb(43, 144, 226);
 }
 @media only screen and (max-width: 1000px) {
   .desktop-menu {
