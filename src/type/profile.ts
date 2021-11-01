@@ -1,4 +1,4 @@
 export interface ProfileDetail {
-    merchantName: string
+    profileName: string
     profileImg: string
 }
