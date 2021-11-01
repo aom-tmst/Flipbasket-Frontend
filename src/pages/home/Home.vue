@@ -11,7 +11,7 @@
           <div class="flex-row justify-center">
             <span>Shirt</span>
           </div>
-          <HomeShirt :item="clothesDeatail" />
+          <Shirt :item="clothesDeatail" />
         </div>
       </div>
 
@@ -23,7 +23,7 @@
           <div class="flex-row justify-center">
             <span>Trousers</span>
           </div>
-          <Hometrousers :item="trousersDetail" />
+          <Trousers :item="trousersDetail" />
         </div>
       </div>
 
@@ -35,19 +35,12 @@
           <div class="flex-row justify-center">
             <span>Accessory</span>
           </div>
-          <HomeAccessory :item="accessoryDetail" />
+          <Accessory :item="accessoryDetail" />
         </div>
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
           </div> -->
-      <div class="flex-container">
-        <div class="flex-col items-center">
-          <div id="gallery" />
-          <span>Gallery</span>
-          <HomeGallery :item="galleryImg" />
-        </div>
-      </div>
     </div>
   </q-page>
 </template>
@@ -57,10 +50,9 @@ import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
-import HomeShirt from 'src/pages/home/HomeShirt.vue';
-import Hometrousers from 'src/pages/home/Hometrousers.vue';
-import HomeAccessory from 'src/pages/home/HomeAccessory.vue';
-import HomeGallery from 'src/pages/home/HomeGallery.vue';
+import Shirt from 'src/components/Shirt.vue';
+import Trousers from 'src/components/Trousers.vue';
+import Accessory from 'src/components/Accessory.vue';
 import {
   bannerAds,
   clothesDeatail,
@@ -75,10 +67,9 @@ export default defineComponent({
   components: {
     HomeMainBanner,
     HomeSecondBanner,
-    HomeShirt,
-    Hometrousers,
-    HomeGallery,
-    HomeAccessory,
+    Shirt,
+  Trousers,
+    Accessory,
     HomeTrouserBanner,
     HomeAccessoryBanner,
   },

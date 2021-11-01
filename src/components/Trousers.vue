@@ -1,12 +1,4 @@
 <template>
-<!-- <div class="format-button flex-row">
-    <q-btn @click="showFormat1 = true;showFormat2 = false">
-      1
-    </q-btn>
-    <q-btn @click="showFormat1 = false;showFormat2 = true">
-      2
-    </q-btn>
-</div> -->
   <div class="flex-row wrapper justify-center" v-if="item">
     <div
       class="home-sewing"
@@ -44,47 +36,12 @@
   <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
     <span>See all</span>
   </div>
-
-  <!-- <div class="row-format flex-format flex-container" v-if="showFormat2">
-    <div
-      class="home-sewing"
-      v-for="(item, index) in item"
-      :key="index"
-      :style="`width: ${widthPerItem}%`"
-    >
-      <div class="flex-col">
-        <div class="flex-col items-center">
-          <img
-            class="transition"
-            :src="item.postedImg"
-            alt=""
-            style="width: 250px; height: 250px"
-          />
-        </div>
-        <div class="flex-col items-end posted-on">
-          Posted On : {{ item.postedOn }}
-        </div>
-        <div class="posted-by">{{ item.postedBy }}</div>
-        <div class="content-detail">{{ item.detail }}</div>
-        <div class="Location-box">
-          <div>Address: {{ item.address }}</div>
-          <div>Facebook: {{ item.facebook }}</div>
-          <div>Line: {{ item.line }}</div>
-          <div>Mail: {{ item.mail }}</div>
-          <div>Tel: {{ item.tel }}</div>
-        </div>
-        <div class="flex-col items-end posted-on" style="color: #149bfc">
-          Read more...
-        </div>
-      </div>
-    </div> -->
-  <!-- </div> -->
 </template>
 
 <script lang="ts">
 import { useQuasar } from 'quasar';
 import { ClothesDeatail } from 'src/type/Home';
-import { defineComponent, computed} from 'vue';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
   name: 'HomeSewing',
 
@@ -94,8 +51,6 @@ export default defineComponent({
 
   setup() {
     const quasar = useQuasar();
-    // const showFormat1 = ref(true);
-    // const showFormat2 = ref(false);
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
       const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : '4';
@@ -107,6 +62,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.flex-row{
+  flex-wrap: wrap;
+}
 .home-sewing {
   margin: 20px 50px 20px 50px;
   .Location-box {
@@ -134,11 +92,5 @@ export default defineComponent({
   .transition:hover {
     transform: scale(1.05);
   }
-}
-.row-format {
-  display: flex;
-  flex-direction: row;
-  overflow: auto;
-  flex-wrap: nowrap;
 }
 </style>

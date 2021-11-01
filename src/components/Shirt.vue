@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row wrapper justify-center" v-if="item">
+  <div class="flex-row justify-center" v-if="item">
     <div
       class="home-sewing"
       v-for="(item, index) in item"
@@ -7,7 +7,7 @@
       :style="`width: ${widthPerItem}%`"
     >
       <div class="flex-col">
-        <div class="flex-col items-center">
+        <div  @click="pushpage()" class="flex-col items-center">
           <img
             class="transition"
             :src="item.postedImg"
@@ -41,7 +41,8 @@
 <script lang="ts">
 import { useQuasar } from 'quasar';
 import { ClothesDeatail } from 'src/type/Home';
-import { defineComponent, computed } from 'vue';
+import { useRouter } from 'vue-router'
+import { defineComponent, computed} from 'vue';
 export default defineComponent({
   name: 'HomeSewing',
 
@@ -50,18 +51,26 @@ export default defineComponent({
   },
 
   setup() {
+    const router = useRouter()
     const quasar = useQuasar();
+    const pushpage = () => {
+      void router.push({ name: 'Product'})
+    }
+
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
       const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : '4';
       return 100 / parseInt(itemPerRow, 10) - 2;
     });
-    return { widthPerItem };
+    return { widthPerItem,pushpage };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.flex-row{
+  flex-wrap: wrap;
+}
 .home-sewing {
   margin: 20px 50px 20px 50px;
   .Location-box {
@@ -89,11 +98,5 @@ export default defineComponent({
   .transition:hover {
     transform: scale(1.05);
   }
-}
-.row-format {
-  display: flex;
-  flex-direction: row;
-  overflow: auto;
-  flex-wrap: nowrap;
 }
 </style>
