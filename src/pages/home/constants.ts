@@ -11,11 +11,7 @@ export const clothesDeatail = [
     productName: 'Red T-Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+   price: 2000,
   },
   {
     postedImg: 'images/shirt1.png',
@@ -23,11 +19,7 @@ export const clothesDeatail = [
     productName: 'Black Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+      price: 2000,
   },
   {
     postedImg: 'images/shirt3.png',
@@ -35,11 +27,7 @@ export const clothesDeatail = [
     productName: 'Nerd Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+      price: 2000,
   },
   {
     postedImg: 'images/shirt4.jpg',
@@ -47,11 +35,7 @@ export const clothesDeatail = [
     productName: 'Luxury Empire Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+      price: 2000,
   },
   {
     postedImg: 'images/shirt5.png',
@@ -59,11 +43,7 @@ export const clothesDeatail = [
     productName: 'Gaskid Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+      price: 2000,
   },
   {
     postedImg: 'images/shirt6.jpg',
@@ -71,11 +51,7 @@ export const clothesDeatail = [
     productName: 'Yenwan Shirt',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
 ]
 
@@ -86,11 +62,7 @@ export const trousersDetail = [
     productName: 'Jeans',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/leg/leg2.png',
@@ -98,11 +70,7 @@ export const trousersDetail = [
     productName: 'Long police pant',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/leg/leg3.png',
@@ -110,11 +78,7 @@ export const trousersDetail = [
     productName: 'Jump pant',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/leg/leg4.png',
@@ -122,11 +86,7 @@ export const trousersDetail = [
     productName: 'Short sea pant',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/leg/leg5.png',
@@ -134,11 +94,7 @@ export const trousersDetail = [
     productName: 'Short jeans',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/leg/leg6.png',
@@ -146,11 +102,7 @@ export const trousersDetail = [
     productName: 'Sakoy short pant',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
 ]
 
@@ -161,11 +113,7 @@ export const accessoryDetail = [
     productName: 'Pumpkin cap',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/asses/Asses2.png',
@@ -173,11 +121,7 @@ export const accessoryDetail = [
     productName: 'Mic & Min bracelet',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/asses/Asses3.png',
@@ -185,11 +129,7 @@ export const accessoryDetail = [
     productName: 'The Helmet',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/asses/Asses4.png',
@@ -197,11 +137,7 @@ export const accessoryDetail = [
     productName: 'Black steel bracelet',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/asses/Asses5.png',
@@ -209,11 +145,7 @@ export const accessoryDetail = [
     productName: 'GDWTHAI',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
   {
     postedImg: 'images/asses/Asses6.png',
@@ -221,11 +153,7 @@ export const accessoryDetail = [
     productName: 'Pink cat bracelet',
     detail:
       's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-    address: '127 kata patong',
-    facebook: 'Micheal Jasi',
-    line: '@Mj123',
-    mail: 'Mj123@dex.com',
-    tel: '061-565-4688',
+    price: 2000,
   },
 ]
 

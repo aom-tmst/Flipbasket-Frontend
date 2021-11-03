@@ -4,11 +4,7 @@ export interface ProductClothesDeatail {
   postedOn: string
   productName: string
   detail: string
-  address: string
-  facebook: string
-  line: string
-  mail: string
-  tel: string
+  price: number
 }
 
 export interface GalleryImg {

@@ -1,25 +1,45 @@
 <template>
-    <q-card>
+    <q-card class="dialog-edit-profile" style="max-width:500px;width:100%">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">Close icon</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section>
-        this is Edit
+        <span>Change your name</span>
+      <q-input class="q-pa-md q-mb-sm" v-model="name" :dense="dense" />
+      <div class="flex-row justify-end">
+        <q-btn color="primary" >Save Change</q-btn>
+      </div>
       </q-card-section>
     </q-card>
   
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent,ref} from 'vue';
 export default defineComponent({
-  name: 'DialogEditProfile',
+  name: 'DialogAddProduct',
 
-
+  setup(){
+      const name = ref('');
+      const dense = ref(null);
+      return{
+          name,
+          dense
+      }
+  }
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dialog-edit-profile{
+  padding: 10px;
+  span{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px;
+  }
+}
+
+</style>

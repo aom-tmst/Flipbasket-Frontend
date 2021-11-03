@@ -37,7 +37,7 @@
       </div>
       <div class="flex-row items-center menu-list desktop-menu">
         <a
-          :href="loginList[0].path"
+          href="#login"
           :class="{ 'is-actived': isActived(loginList[0].path) }"
           class="q-mr-xs"
           style="margin-left: 20px"

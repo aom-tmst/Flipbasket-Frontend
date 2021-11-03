@@ -30,13 +30,17 @@
       <div class="scoped-banner" id="accessory">
         <HomeAccessoryBanner />
       </div>
-      <div class="flex-container">
+      <div class="flex-container" style="margin-bottom: 20px">
         <div class="flex-col items-center">
           <div class="flex-row justify-center">
             <span>Accessory</span>
           </div>
           <Accessory :item="accessoryDetail" />
         </div>
+      </div>
+
+      <div class="scoped-banner-login" id="login">
+        <HomeLoginSession />
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
@@ -50,6 +54,7 @@ import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
+import HomeLoginSession from 'src/pages/home/HomeLoginSession.vue';
 import Shirt from 'src/components/Shirt.vue';
 import Trousers from 'src/components/Trousers.vue';
 import Accessory from 'src/components/Accessory.vue';
@@ -68,10 +73,11 @@ export default defineComponent({
     HomeMainBanner,
     HomeSecondBanner,
     Shirt,
-  Trousers,
+    Trousers,
     Accessory,
     HomeTrouserBanner,
     HomeAccessoryBanner,
+    HomeLoginSession,
   },
 
   setup() {
@@ -88,11 +94,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home {
-  iframe {
-    max-width: 1440px;
-    width: 100%;
-    margin-bottom: 40px;
-  }
   .flex-container {
     position: relative;
     scroll-snap-type: y mandatory;
@@ -104,6 +105,10 @@ export default defineComponent({
   .scoped-banner {
     width: 100%;
     height: 520px;
+  }
+  .scoped-banner-login {
+    width: 100%;
+    height: 800px;
   }
   .wrapper {
     display: flex;

@@ -26,13 +26,10 @@
               <div class="content-detail">
                 {{ productClothesDeatail.detail }}
               </div>
-              <div class="Location-box">
-                <div>Address: {{ productClothesDeatail.address }}</div>
-                <div>Facebook: {{ productClothesDeatail.facebook }}</div>
-                <div>Line: {{ productClothesDeatail.line }}</div>
-                <div>Mail: {{ productClothesDeatail.mail }}</div>
-                <div>Tel: {{ productClothesDeatail.tel }}</div>
+              <div class="flex-row justify-end content-detail">
+               price: {{ productClothesDeatail.price }} Bath
               </div>
+
               <div class="flex-row justify-end items-center clickable">
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
@@ -57,7 +54,7 @@ export default defineComponent({
   name: 'Product',
 
   setup() {
-    const router = useRouter() 
+    const router = useRouter();
     const pushpage = () => {
       void router.push({ name: 'SellerProfile' });
     };
@@ -88,10 +85,6 @@ export default defineComponent({
       margin-bottom: 10px;
     }
     .content-detail {
-      color: #585858;
-      margin-bottom: 10px;
-    }
-    .Location-box {
       color: #585858;
       margin-bottom: 10px;
     }

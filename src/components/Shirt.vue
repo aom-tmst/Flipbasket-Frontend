@@ -21,11 +21,7 @@
         <div class="posted-by">{{ item.productName }}</div>
         <div class="content-detail">{{ item.detail }}</div>
         <div class="Location-box">
-          <div>Address: {{ item.address }}</div>
-          <div>Facebook: {{ item.facebook }}</div>
-          <div>Line: {{ item.line }}</div>
-          <div>Mail: {{ item.mail }}</div>
-          <div>Tel: {{ item.tel }}</div>
+          <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
           Read more...

@@ -7,9 +7,5 @@ export const productClothesDeatail =
       productName: 'Red T-Shirt',
       detail:
         's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard',
-      address: '127 kata patong',
-      facebook: 'Micheal Jasi',
-      line: '@Mj123',
-      mail: 'Mj123@dex.com',
-      tel: '061-565-4688',
+      price : 2000
     }

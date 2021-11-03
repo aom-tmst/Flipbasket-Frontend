@@ -15,7 +15,7 @@
       </div>
       <div class="flex-row">
         <q-btn class="edit-btn" @click="addProduct = true">
-          Edit Profile
+          Add Product
         </q-btn>
         <q-dialog v-model="addProduct">
           <DialogAddProduct />
