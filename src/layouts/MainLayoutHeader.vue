@@ -36,13 +36,8 @@
         </div>
       </div>
       <div class="flex-row items-center menu-list desktop-menu">
-        <a
-          href="#login"
-          :class="{ 'is-actived': isActived(loginList[0].path) }"
-          class="q-mr-xs"
-          style="margin-left: 20px"
-          >{{ loginList[0].label }}</a
-        >
+        Welcome, {{ name }}
+        <q-btn class="logout" @click="Logout" > Logout </q-btn>
         <q-icon size="sm" name="account_circle" />
       </div>
 
@@ -67,8 +62,15 @@
 </template>
 
 <script lang="ts">
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 import { useRoute } from 'vue-router';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref , onMounted} from 'vue';
+
+interface Error {
+    message : string
+}
+
 
 export default defineComponent({
   name: 'MainLayoutHeader',
@@ -76,6 +78,23 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const dialog = ref(false);
+    const name = ref('')
+
+    onMounted(() => {
+       const user = firebase.auth().currentUser;
+      if (user) {
+        name.value = user.email?.split('@')[0] || '';
+      }
+    });
+
+    const Logout = () => {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => console.log('Signed Out'))
+        .catch((err : Error) => alert(err.message) )
+    }
+
     const menuList = [
       { label: 'Home', path: '#home' },
       { label: 'About', path: '#about' },
@@ -89,12 +108,11 @@ export default defineComponent({
       // { label: 'Gallery', path: '#gallery' },
       // { label: 'Location', path: '#location' },
     ];
-    const loginList = [{ label: 'login', path: 'login', img: '' }];
     const isActived = (path: string) => {
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, loginList, productList };
+    return { menuList, dialog, isActived, productList , name , Logout };
   },
 });
 </script>
