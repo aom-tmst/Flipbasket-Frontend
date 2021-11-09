@@ -42,6 +42,8 @@
       <div class="scoped-banner-login" id="login">
         <HomeLoginSession />
       </div>
+
+      {{homePageA}}
       <!-- <div class="review">
             <span>Review By Customers</span>
           </div> -->
@@ -65,7 +67,8 @@ import {
   trousersDetail,
   accessoryDetail,
 } from 'src/pages/home/constants';
-import { defineComponent } from 'vue';
+import { useStore } from 'src/store'
+import { defineComponent,computed } from 'vue';
 export default defineComponent({
   name: 'Home',
 
@@ -80,9 +83,25 @@ export default defineComponent({
     HomeLoginSession,
   },
 
+   preFetch({ store }) {
+    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage')
+    return Promise.all([fetchHomePage])
+  },
+
   setup() {
+    const store = useStore()
+    const homePageA = computed(()=>{
+      const homePage = store.state.pagesModule.homePage
+      console.log(homePage);
+      
+      return homePage?.[0]
+        
+      
+    })
+
     return {
       bannerAds,
+      homePageA,
       clothesDeatail,
       galleryImg,
       trousersDetail,
