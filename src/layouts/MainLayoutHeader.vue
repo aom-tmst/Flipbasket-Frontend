@@ -62,8 +62,7 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import { auth } from 'src/boot/firebase';
 import { useRoute } from 'vue-router';
 import { defineComponent, ref , onMounted} from 'vue';
 
@@ -81,16 +80,15 @@ export default defineComponent({
     const name = ref('')
 
     onMounted(() => {
-       const user = firebase.auth().currentUser;
+       const user = auth.currentUser;
       if (user) {
         name.value = user.email?.split('@')[0] || '';
       }
     });
 
     const Logout = () => {
-      firebase
-        .auth()
-        .signOut()
+        auth.
+        signOut()
         .then(() => console.log('Signed Out'))
         .catch((err : Error) => alert(err.message) )
     }

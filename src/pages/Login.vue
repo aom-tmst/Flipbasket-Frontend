@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase/compat/app';
+import { auth } from 'src/boot/firebase';
 import { defineComponent, ref } from 'vue';
-import 'firebase/compat/auth';
+
 
 interface Error {
     message : string
@@ -30,8 +30,7 @@ export default defineComponent({
     const password = ref('');
 
     const Login = () => {
-      firebase
-        .auth()
+        auth
         .signInWithEmailAndPassword(email.value, password.value)
         .then(data => console.log(data))
         .catch((err:Error) => alert(err.message)) ;
