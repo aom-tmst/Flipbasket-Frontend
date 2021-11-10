@@ -2,7 +2,7 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <q-img width="200px" src="icons/fliplogo.png" />
+        <img src="icons/fliplogo.png"  style="width:200px"/>
       </q-btn>
 
       <!-- Desktop -->
@@ -36,8 +36,17 @@
         </div>
       </div>
       <div class="flex-row items-center menu-list desktop-menu">
-        Welcome, {{ name }}
-        <q-btn class="logout" @click="Logout" > Logout </q-btn>
+        Welcome : {{ name }}
+        <q-btn
+          flat
+          no-caps
+          dense
+          class="logout"
+          @click="Logout"
+          style="margin-left: 20px"
+        >
+          Logout
+        </q-btn>
         <q-icon size="sm" name="account_circle" />
       </div>
 
@@ -46,13 +55,53 @@
         <q-btn icon="menu" @click="dialog = !dialog" />
         <q-dialog maximized seamless v-model="dialog" position="right">
           <q-card class="menu-dialog flex-col items-center">
+            <q-card-section> Welcome : {{ name }} </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in menuList"
               :key="index"
             >
-              <a :class="{ 'is-actived': isActived(path) }" :href="path">
+              <a
+                :class="{ 'is-actived': isActived(path) }"
+                :href="path"
+                @click="dialog = !dialog"
+              >
                 {{ label }}
               </a>
+            </q-card-section>
+            <q-card-section
+              v-for="({ label, path }, index) in productList"
+              :key="index"
+            >
+              <a
+                :class="{ 'is-actived': isActived(path) }"
+                :href="path"
+                @click="dialog = !dialog"
+              >
+                {{ label }}
+              </a>
+            </q-card-section>
+            <q-card-section>
+              <q-btn
+                flat
+                no-caps
+                dense
+                class="logout text-black"
+                to="profile"
+                @click="dialog = !dialog"
+              >
+                profile
+              </q-btn>
+            </q-card-section>
+            <q-card-section>
+              <q-btn
+                flat
+                no-caps
+                dense
+                class="logout text-black"
+                @click="Logout"
+              >
+                Logout
+              </q-btn>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -64,12 +113,11 @@
 <script lang="ts">
 import { auth } from 'src/boot/firebase';
 import { useRoute } from 'vue-router';
-import { defineComponent, ref , onMounted} from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 
 interface Error {
-    message : string
+  message: string;
 }
-
 
 export default defineComponent({
   name: 'MainLayoutHeader',
@@ -77,25 +125,28 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const dialog = ref(false);
-    const name = ref('')
+    const name = ref('');
 
     onMounted(() => {
-       const user = auth.currentUser;
+      const user = auth.currentUser;
       if (user) {
         name.value = user.email?.split('@')[0] || '';
       }
+      console.log(user);
+      
     });
 
     const Logout = () => {
-        auth.
-        signOut()
+      auth
+        .signOut()
         .then(() => console.log('Signed Out'))
-        .catch((err : Error) => alert(err.message) )
-    }
+        .catch((err: Error) => alert(err.message));
+    };
 
     const menuList = [
       { label: 'Home', path: '#home' },
       { label: 'About', path: '#about' },
+      { label: 'Profile', path: 'profile' },
       // { label: 'Gallery', path: '#gallery' },
       // { label: 'Location', path: '#location' },
     ];
@@ -110,7 +161,7 @@ export default defineComponent({
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, productList , name , Logout };
+    return { menuList, dialog, isActived, productList, name, Logout };
   },
 });
 </script>
@@ -145,8 +196,23 @@ export default defineComponent({
   width: 100vw;
   padding: 10px;
   margin-top: auto;
-  background-color: var(--bc-black-1);
-  height: calc(100vh - 80.97px) !important;
+  background-color: white;
+  opacity: 10;
+  height: calc(100vh - 70.3px) !important;
+  a {
+    text-align: center;
+    color: black;
+    margin: 0 20px 0 20px;
+    &:hover {
+      color: rgb(43, 144, 226);
+    }
+  }
+  a.is-actived {
+    &:link,
+    &:visited {
+      color: rgb(43, 144, 226);
+    }
+  }
 }
 .edit-font {
   margin: 10px 30px 10px 30px;

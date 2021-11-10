@@ -38,12 +38,6 @@
           <Accessory :item="accessoryDetail" />
         </div>
       </div>
-
-      <div class="scoped-banner-login" id="login">
-        <HomeLoginSession />
-      </div>
-
-      {{homePageA}}
       <!-- <div class="review">
             <span>Review By Customers</span>
           </div> -->
@@ -56,7 +50,6 @@ import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
-import HomeLoginSession from 'src/pages/home/HomeLoginSession.vue';
 import Shirt from 'src/components/Shirt.vue';
 import Trousers from 'src/components/Trousers.vue';
 import Accessory from 'src/components/Accessory.vue';
@@ -80,7 +73,6 @@ export default defineComponent({
     Accessory,
     HomeTrouserBanner,
     HomeAccessoryBanner,
-    HomeLoginSession,
   },
 
    preFetch({ store }) {
@@ -92,7 +84,7 @@ export default defineComponent({
     const store = useStore()
     const homePageA = computed(()=>{
       const homePage = store.state.pagesModule.homePage
-      console.log(homePage);
+      // console.log(homePage);
       
       return homePage?.[0]
         

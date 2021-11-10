@@ -6,7 +6,7 @@ import { PagesStateInterface,HomePage } from './state';
 const actions: ActionTree<PagesStateInterface, StateInterface> = {
   async fetchHomePage({ commit }) {
     const result = await api
-      .get<HomePage>('posts')
+      .get<HomePage>('stores')
       .then((response) => response.data)
     commit('setHomePage', result)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row card-profile wrapper" v-if="item">
+  <div class="flex-row card-profile items-center" v-if="item">
     <div class="flex-col">
       <div>
         <img
@@ -78,6 +78,7 @@ export default defineComponent({
 .card-profile {
   margin: 20px;
   .wrapper {
+    display: flex;
     flex-wrap: wrapper;
   }
   .posted-by {
@@ -87,6 +88,10 @@ export default defineComponent({
   }
   .edit-space-profile {
     margin: 10px;
+    .q-btn{
+      width: 200px;
+      width: 100%;
+    }
   }
   .edit-btn {
     border-radius: 8px;
