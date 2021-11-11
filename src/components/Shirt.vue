@@ -8,18 +8,18 @@
     >
       <div class="flex-col">
         <div  @click="pushpage()" class="flex-col items-center">
-          <img
+          <!-- <img
             class="transition"
-            :src="item.postedImg"
+            :src="'https://tailors-phuket.herokuapp.com'+item.image.url"
             alt=""
             style="width: 250px; height: 250px"
-          />
+          /> -->
         </div>
         <div class="flex-col items-end posted-on">
-          Posted On : {{ item.postedOn }}
+          Posted On : {{ item.createdAt }}
         </div>
-        <div class="posted-by">{{ item.productName }}</div>
-        <div class="content-detail">{{ item.detail }}</div>
+        <div class="posted-by">{{ item.name }}</div>
+        <div class="content-detail">{{ item.desc }}</div>
         <div class="Location-box">
           <div>price: {{ item.price }} bath</div>
         </div>
@@ -27,6 +27,7 @@
           Read more...
         </div>
       </div>
+      
     </div>
   </div>
   <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
@@ -36,14 +37,13 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar';
-import { ClothesDeatail } from 'src/type/Home';
 import { useRouter } from 'vue-router'
 import { defineComponent, computed} from 'vue';
 export default defineComponent({
   name: 'HomeSewing',
 
   props: {
-    item: Object as () => ClothesDeatail,
+    item: Object
   },
 
   setup() {

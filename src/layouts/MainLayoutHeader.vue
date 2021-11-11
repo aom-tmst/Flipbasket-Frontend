@@ -2,7 +2,7 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <img src="icons/fliplogo.png"  style="width:200px"/>
+        <img src="icons/fliplogo.png" style="width: 200px" />
       </q-btn>
 
       <!-- Desktop -->
@@ -128,12 +128,13 @@ export default defineComponent({
     const name = ref('');
 
     onMounted(() => {
-      const user = auth.currentUser;
-      if (user) {
-        name.value = user.email?.split('@')[0] || '';
-      }
-      console.log(user);
-      
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          name.value = user.email?.split('@')[0] || '';
+        }
+        console.log(user);
+        
+      });
     });
 
     const Logout = () => {

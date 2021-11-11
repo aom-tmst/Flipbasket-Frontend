@@ -10,8 +10,6 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
       .then((response) => response.data)
     commit('setHomePage', result)
 
-    console.log('testeiei',result);
-    
     return result
   },
 };
