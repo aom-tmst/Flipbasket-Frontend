@@ -42,8 +42,6 @@ export default defineComponent({
   },
 
     setup(){
-
-    
 const store = useStore()
     const homePageA = computed(()=>{
       const homePage = store.state.pagesModule.homePage

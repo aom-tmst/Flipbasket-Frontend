@@ -1,43 +1,27 @@
 <template>
-  <div class="flex-col items-cente">
-    <div class="flex-container">
-      <div class="flex-col items-center justify-center" style="height: 100vh">
-        <div class="login">
-          <div class="flex-row wrapper justify-center">
-            <div class="flex-col animation justify-center"  style="margin: 0 50px 0 50px">
-              <div class="animation_"> <h1>Login</h1> </div>
-            </div>
-            <div class="flex-col" style="margin: 0 50px 0 50px">
-              <form class="flex-col" @submit.prevent="Login">
-                <q-input type="text" placeholder="Email" v-model="email" />
+  <div class="flex-col" style="margin: 0 50px 0 50px">
+    <form class="flex-col" @submit.prevent="Login">
+      <q-input type="text" placeholder="Email" v-model="email" />
 
-                <q-input
-                  placeholder="Password"
-                  v-model="password"
-                  :type="isPwd ? 'password' : 'text'"
-                  hint="Password with toggle"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-                <q-btn type="submit" value="Login" style="margin: 10px 0"><span style="color:rgb(43, 144, 226)">login</span></q-btn>
-                <p>
-                  Need an account?
-                  <router-link class="text-black" to="/register"
-                    >Register</router-link
-                  >
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <q-input
+        placeholder="Password"
+        v-model="password"
+        :type="isPwd ? 'password' : 'text'"
+        hint="Password with toggle"
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+        </template>
+      </q-input>
+      <q-btn type="submit" value="Login" style="margin: 10px 0"
+        ><span style="color: rgb(43, 144, 226)">login</span></q-btn
+      >
+     
+    </form>
   </div>
 </template>
 
@@ -64,6 +48,8 @@ export default defineComponent({
         .catch((err: Error) => alert(err.message));
     };
 
+    
+
     return {
       isPwd,
       Login,
@@ -75,7 +61,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.wrapper{
+.wrapper {
   flex-wrap: wrap;
 }
 .q-input {
@@ -91,6 +77,7 @@ export default defineComponent({
 }
 .animation {
   .animation_ {
+    margin-top: -80px;
     border-radius: 8px;
     animation: yourAnimation 3s ease 0.5s infinite alternate none;
   }

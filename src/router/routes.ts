@@ -23,14 +23,9 @@ const routes: RouteRecordRaw[] = [
   ],
   },
   {
-    name: 'Login',
-    path: '/login',
-    component: () => import('src/pages/Login.vue'),
-  },
-  {
-    name: 'Register',
-    path: '/register',
-    component: () => import('src/pages/Register.vue'),
+    name: 'LoginSession',
+    path: '/login-session',
+    component: () => import('src/pages/LoginSession.vue'),
   },
 
   // Always leave this as last one,

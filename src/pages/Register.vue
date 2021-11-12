@@ -1,15 +1,5 @@
 <template>
-  <div class="flex-col items-cente">
-    <div class="flex-container">
-      <div class="flex-col items-center justify-center" style="height: 100vh">
-        <div class="login">
-          <div class="flex-row wrapper justify-center">
-            <div
-              class="flex-col animation justify-center"
-              style="margin: 0 50px 0 50px"
-            >
-              <div class="animation_"><h1>Register</h1></div>
-            </div>
+ 
             <div class="flex-col" style="margin: 0 50px 0 50px">
               <form class="flex-col" @submit.prevent="Register">
                 <q-input type="text" placeholder="Email" v-model="email" />
@@ -31,19 +21,9 @@
                 <q-btn type="submit" value="Register" style="margin: 10px 0"
                   ><span style="color: rgb(43, 144, 226)">Register</span></q-btn
                 >
-                <p>
-                  Did you have account yet ?
-                  <router-link class="text-black" to="/login"
-                    >Log in</router-link
-                  >
-                </p>
               </form>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          
 </template>
 
 <script lang="ts">

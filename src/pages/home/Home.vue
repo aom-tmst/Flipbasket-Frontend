@@ -11,7 +11,7 @@
           <div class="flex-row justify-center">
             <span>Shirt</span>
           </div>
-          <Shirt :item="clothesDeatail" />
+          <Shirt  :showEdit="false" :showDelete="false" :item="clothesDeatail" />
         </div>
       </div>
 

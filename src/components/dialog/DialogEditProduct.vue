@@ -2,6 +2,7 @@
   <q-card class="dialog-add-product" style="max-width: 500px; width: 100%" v-if="item">
     <q-card-section class="row items-center q-pb-none">
       <q-space />
+      {{item._id}}
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
@@ -27,8 +28,8 @@
       </div>
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
-      <div class="flex-row justify-end">
-        <q-btn @click="addProduct" color="primary">Add Product</q-btn>
+      <div class="flex-row justify-end" v-if="item">
+        <q-btn @click="addProduct(item)" color="primary">Add Product</q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -52,16 +53,18 @@ export default defineComponent({
     const image = ref(null);
     const dense = ref(false);
 
-    const addProduct = (item:Product) => {
+    const addProduct = (item?:Product) => {
+      if (!item) return
       const payload = {
         name: name.value,
         desc: desc.value,
         price: price.value,
         image: image.value,
       };
-      // console.log(payload);
-
-      const result =  api.put(`products/${item._id}`, payload);
+      console.log(payload);
+      console.log('teste',item?._id);
+      
+      const result =  api.put(`products/${item?._id}`, payload);
       console.log(result);
       
     };

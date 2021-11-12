@@ -16,8 +16,8 @@ export default defineComponent({
     onMounted(() => {
       auth.onAuthStateChanged((user) => {
         if (!user) {
-          void router.replace('/login');
-        } else if (route.path == '/login' || route.path == '/register') {
+          void router.replace('/login-session');
+        } else if (route.path == '/login-session' || route.path == '/register') {
           void router.replace('/');
         }
       });
