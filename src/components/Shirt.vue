@@ -7,7 +7,7 @@
       :style="`width: ${widthPerItem}%`"
     >
       <div class="flex-col">
-        <div  @click="pushpage()" class="flex-col items-center">
+        <div @click="pushpage()" class="flex-col items-center">
           <!-- <img
             class="transition"
             :src="'https://tailors-phuket.herokuapp.com'+item.image.url"
@@ -24,11 +24,18 @@
           <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
-          Read more...
+          <div class="flex-row">Read more...</div>
+          <div class="flex-row">
+            <q-btn class="edit-btn" @click="editProduct(item)">
+          edit Product
+        </q-btn>
+          </div>
         </div>
       </div>
-      
     </div>
+    <q-dialog v-model="editProductDialog">
+          <DialogEditProduct :item="selectedItem"/>
+        </q-dialog>
   </div>
   <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
     <span>See all</span>
@@ -36,35 +43,49 @@
 </template>
 
 <script lang="ts">
+import DialogEditProduct from 'src/components/dialog/DialogEditProduct.vue'
+import { Product } from 'src/type/Product'
 import { useQuasar } from 'quasar';
-import { useRouter } from 'vue-router'
-import { defineComponent, computed} from 'vue';
+import { useRouter } from 'vue-router';
+import { defineComponent, computed,ref } from 'vue';
 export default defineComponent({
   name: 'HomeSewing',
 
+  components:{
+    DialogEditProduct
+  },
+
   props: {
-    item: Object
+    item: Object as () => Product
   },
 
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const quasar = useQuasar();
-    const pushpage = () => {
-      void router.push({ name: 'Product'})
+    const editProductDialog = ref(false)
+    const selectedItem = ref();
+
+    const editProduct =  (item:Product) => {
+       selectedItem.value  =  item
+       editProductDialog.value = true
     }
+
+    const pushpage = () => {
+      void router.push({ name: 'Product' });
+    };
 
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
       const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : '4';
       return 100 / parseInt(itemPerRow, 10) - 2;
     });
-    return { widthPerItem,pushpage };
+    return { widthPerItem, pushpage,editProductDialog,editProduct,selectedItem };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.flex-row{
+.flex-row {
   flex-wrap: wrap;
 }
 .home-sewing {

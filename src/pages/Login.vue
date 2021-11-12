@@ -25,8 +25,7 @@
                     />
                   </template>
                 </q-input>
-
-                <input type="submit" value="Login" />
+                <q-btn type="submit" value="Login" style="margin: 10px 0"><span style="color:rgb(43, 144, 226)">login</span></q-btn>
                 <p>
                   Need an account?
                   <router-link class="text-black" to="/register"

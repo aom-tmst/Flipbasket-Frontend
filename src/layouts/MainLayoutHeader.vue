@@ -131,9 +131,7 @@ export default defineComponent({
       auth.onAuthStateChanged((user) => {
         if (user) {
           name.value = user.email?.split('@')[0] || '';
-        }
-        console.log(user);
-        
+        }   
       });
     });
 

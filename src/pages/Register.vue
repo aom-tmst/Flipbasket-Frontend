@@ -1,15 +1,48 @@
 <template>
-      <div class="register">
-    <h1>Register</h1>
-    <form @submit.prevent="Register">
-      <input type="text" placeholder="Email" v-model="email" />
-      <input type="password" placeholder="Password" v-model="password" />
-      <input type="submit" value="Register" />
-      <p>
-        have and account ?
-        <router-link class="text-black" to="/login"> Log in</router-link>
-      </p>
-    </form>
+  <div class="flex-col items-cente">
+    <div class="flex-container">
+      <div class="flex-col items-center justify-center" style="height: 100vh">
+        <div class="login">
+          <div class="flex-row wrapper justify-center">
+            <div
+              class="flex-col animation justify-center"
+              style="margin: 0 50px 0 50px"
+            >
+              <div class="animation_"><h1>Register</h1></div>
+            </div>
+            <div class="flex-col" style="margin: 0 50px 0 50px">
+              <form class="flex-col" @submit.prevent="Register">
+                <q-input type="text" placeholder="Email" v-model="email" />
+
+                <q-input
+                  placeholder="Password"
+                  v-model="password"
+                  :type="isPwd ? 'password' : 'text'"
+                  hint="Password with toggle"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+                <q-btn type="submit" value="Register" style="margin: 10px 0"
+                  ><span style="color: rgb(43, 144, 226)">Register</span></q-btn
+                >
+                <p>
+                  Did you have account yet ?
+                  <router-link class="text-black" to="/login"
+                    >Log in</router-link
+                  >
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,38 +50,34 @@
 import { auth } from 'src/boot/firebase';
 import { defineComponent, ref } from 'vue';
 
-
 interface Error {
-    message : string
+  message: string;
 }
 
 export default defineComponent({
-    name: 'Register',
+  name: 'Register',
 
-    setup(){
-        const email = ref('');
-        const password = ref('');
+  setup() {
+    const isPwd = ref(true);
+    const email = ref('');
+    const password = ref('');
 
-        const Register = () => {
-
-              auth
-                .createUserWithEmailAndPassword(email.value , password.value)
-                .then(user => {
-                    alert(user);
-                })
-                .catch((err:Error) => alert(err.message))
-        }
-        return{
-            Register,
-            email,
-            password
-        }
-    }
-})
-
-
+    const Register = () => {
+      auth
+        .createUserWithEmailAndPassword(email.value, password.value)
+        .then((user) => {
+          alert(user);
+        })
+        .catch((err: Error) => alert(err.message));
+    };
+    return {
+      isPwd,
+      Register,
+      email,
+      password,
+    };
+  },
+});
 </script>
 
-<style>
-
-</style>
+<style></style>
