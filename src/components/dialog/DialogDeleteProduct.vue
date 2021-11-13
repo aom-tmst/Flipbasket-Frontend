@@ -28,10 +28,11 @@ export default defineComponent({
 
   setup() {
     const store = useStore()
-    const addProduct = async(item:Product) => {
+    const addProduct = async(item:Product | undefined) => {
+      if (!item) return;
       await store.dispatch('pagesModule/DeleteProduct', null);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const result =  await api.delete(`products/${item._id}`);
+      const result =  await api.delete(`products/${item?._id}`);
      
     };
 
