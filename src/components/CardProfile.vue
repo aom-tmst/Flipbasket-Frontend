@@ -18,7 +18,7 @@
           Add Product
         </q-btn>
         <q-dialog v-model="addProduct">
-          <DialogAddProduct />
+          <DialogAddProduct :item="store" />
         </q-dialog>
 
         <q-btn class="edit-btn" @click="editProfile = true">
@@ -43,6 +43,7 @@
 import DialogAddGallery from 'src/components/dialog/DialogAddGallery.vue';
 import DialogEditProfile from 'src/components/dialog/DialogEditProfile.vue';
 import DialogAddProduct from 'src/components/dialog/DialogAddProduct.vue';
+import { Store } from 'src/store/pages/state'
 import { ProfileDetail } from 'src/type/profile';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
@@ -56,6 +57,7 @@ export default defineComponent({
 
   props: {
     item: Object as () => ProfileDetail,
+    store: Object as () => Store,
   },
 
   setup(){

@@ -1,10 +1,13 @@
 <template>
-  <q-card class="dialog-add-product" style="max-width: 500px; width: 100%">
+  <q-card
+    class="dialog-add-product"
+    style="max-width: 500px; width: 100%"
+    v-if="item"
+  >
     <q-card-section class="row items-center q-pb-none">
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
-
     <q-card-section>
       <span>Product Name</span>
       <q-input class="q-pa-md q-mb-sm" v-model="name" :dense="dense" />
@@ -35,28 +38,52 @@
 </template>
 
 <script lang="ts">
+import { Store } from 'src/store/pages/state';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
+
+interface AddProductPayload {
+  name: string;
+  desc: string;
+  price: number | null;
+}
+
+interface Product {
+  _id: string;
+}
+
 export default defineComponent({
   name: 'DialogEditProfile',
 
-  setup() {
+  props: {
+    item: Object as () => Store,
+  },
+
+  setup(props) {
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
     const image = ref(null);
     const dense = ref(false);
 
-    const addProduct = () => {
-      const payload = {
+    const addProduct = async () => {
+      const payload: AddProductPayload = {
         name: name.value,
         desc: desc.value,
         price: price.value,
-        image: image.value,
       };
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const result = api.post('products', payload);
+      const product = await api
+        .post<Product>('products', payload)
+        .then((response) => response.data);
+
+      const productIds = props.item?.products.map((product) => product._id) || []
+
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      const result1 = api.put(`stores/${props.item?._id}`, {  
+        products: [product._id,...productIds],
+      });
+      console.log(result1);
     };
 
     return {

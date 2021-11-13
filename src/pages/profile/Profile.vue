@@ -13,7 +13,7 @@
         >
         <div class="flex-col">
           <div class="flex-row">
-            <CardProfile :item="profileDetail" />
+            <CardProfile :item="profileDetail" :store="homePageA" />
           </div>
           <Shirt :item="homePageA.products" />
         </div>
