@@ -1,9 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-console.log(firebase);
-
-
 const firebaseConfig = {
   apiKey: 'AIzaSyCvwzqyj2UyooMsyxSN1X7zJyRtQSF-NKk',
   authDomain: 'flipbasket-login.firebaseapp.com',
@@ -15,8 +12,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-console.log(auth);
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export { auth }
+export { auth };

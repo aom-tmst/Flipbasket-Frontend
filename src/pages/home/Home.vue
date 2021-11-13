@@ -11,7 +11,7 @@
           <div class="flex-row justify-center">
             <span>Shirt</span>
           </div>
-          <Shirt  :showEdit="false" :showDelete="false" :item="clothesDeatail" />
+          <Shirt :showEdit="false" :showDelete="false" :item="clothesDeatail" />
         </div>
       </div>
 
@@ -60,8 +60,8 @@ import {
   trousersDetail,
   accessoryDetail,
 } from 'src/pages/home/constants';
-import { useStore } from 'src/store'
-import { defineComponent,computed } from 'vue';
+import { useStore } from 'src/store';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
   name: 'Home',
 
@@ -75,21 +75,18 @@ export default defineComponent({
     HomeAccessoryBanner,
   },
 
-   preFetch({ store }) {
-    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage')
-    return Promise.all([fetchHomePage])
+  preFetch({ store }) {
+    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
+    return Promise.all([fetchHomePage]);
   },
 
   setup() {
-    const store = useStore()
-    const homePageA = computed(()=>{
-      const homePage = store.state.pagesModule.homePage
-      // console.log(homePage);
-      
-      return homePage?.[0]
-        
-      
-    })
+    const store = useStore();
+    const homePageA = computed(() => {
+      const homePage = store.state.pagesModule.store;
+
+      return homePage?.[0];
+    });
 
     return {
       bannerAds,

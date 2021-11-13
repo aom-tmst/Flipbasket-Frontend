@@ -1,22 +1,17 @@
-interface Images{
-  url: string;
-}
+import { Product } from 'src/type/Product';
 
-export interface HomePage {
-  _id: number;
-  name: string;
-  desc: string;
-  price: number;
-  images: Images[];
+
+export interface Store {
+  products : Product[]
 }
 
 export interface PagesStateInterface {
-  homePage: HomePage[] | null
+  store: Store[] 
 }
 
 function state(): PagesStateInterface {
   return {
-    homePage: null,
+    store: [] as Store[]
   };
 }
 

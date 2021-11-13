@@ -54,12 +54,9 @@ export default defineComponent({
         price: price.value,
         image: image.value,
       };
-      console.log(payload);
 
-      const result =  api.post('products', payload);
-      //  const result1 =  api.post('stores/618abadbbc10802a8c3d9aa2', products);
-      console.log(result);
-      
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const result = api.post('products', payload);
     };
 
     return {

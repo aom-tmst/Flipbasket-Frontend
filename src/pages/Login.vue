@@ -1,8 +1,8 @@
 <template>
   <div class="flex-col" style="margin: 0 50px 0 50px">
+    login
     <form class="flex-col" @submit.prevent="Login">
       <q-input type="text" placeholder="Email" v-model="email" />
-
       <q-input
         placeholder="Password"
         v-model="password"
@@ -17,12 +17,13 @@
           />
         </template>
       </q-input>
+      <q-btn @click="resetPassword()">forgot password ?</q-btn>
       <q-btn type="submit" value="Login" style="margin: 10px 0"
         ><span style="color: rgb(43, 144, 226)">login</span></q-btn
       >
-     
     </form>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -48,11 +49,17 @@ export default defineComponent({
         .catch((err: Error) => alert(err.message));
     };
 
+    const resetPassword = () => {
+      auth.sendPasswordResetEmail(email.value)
+       .then((data) => console.log(data))
+        .catch((err: Error) => alert(err.message));
+    }
     
 
     return {
       isPwd,
       Login,
+      resetPassword,
       email,
       password,
     };

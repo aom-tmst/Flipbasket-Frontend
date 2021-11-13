@@ -1,17 +1,31 @@
 <template>
-  <q-card class="dialog-add-product" style="max-width: 500px; width: 100%" v-if="item">
+  <q-card
+    class="dialog-add-product"
+    style="max-width: 500px; width: 100%"
+    v-if="item"
+  >
     <q-card-section class="row items-center q-pb-none">
       <q-space />
-      {{item._id}}
+      {{ item._id }}
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
     <q-card-section>
       <span>Product Name</span>
-      <q-input class="q-pa-md q-mb-sm" v-model="name" :dense="dense" :placeholder="item.name"></q-input>
+      <q-input
+        class="q-pa-md q-mb-sm"
+        v-model="name"
+        :dense="dense"
+        :placeholder="item.name"
+      ></q-input>
       <span>Detail</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
-        <q-input v-model="desc" :placeholder="item.desc" filled type="textarea" />
+        <q-input
+          v-model="desc"
+          :placeholder="item.desc"
+          filled
+          type="textarea"
+        />
       </div>
       <span>price</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
@@ -29,48 +43,50 @@
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end" v-if="item">
-        <q-btn @click="addProduct(item)" color="primary">Add Product</q-btn>
+        <q-btn @click="editProduct(item)" color="primary">Change Product</q-btn>
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts">
-import { Product } from 'src/type/Product'
+import { useStore } from 'src/store';
+import { Product } from 'src/type/Product';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'DialogEditProfile',
 
-  props:{
-    item : Object as () => Product
+  props: {
+    item: Object as () => Product,
   },
 
   setup() {
+    const store = useStore();
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
     const image = ref(null);
     const dense = ref(false);
 
-    const addProduct = (item?:Product) => {
-      if (!item) return
+    const editProduct = async (item: Product | undefined) => {
+      if (!item) return;
       const payload = {
+        _id: item._id,
         name: name.value,
         desc: desc.value,
         price: price.value,
         image: image.value,
       };
-      console.log(payload);
-      console.log('teste',item?._id);
-      
-      const result =  api.put(`products/${item?._id}`, payload);
-      console.log(result);
-      
+      await store.dispatch('pagesModule/UpdateProduct', payload);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const result = await api.put(`products/${item?._id}`, payload);
+
     };
 
     return {
-      addProduct,
+      editProduct,
       name,
       dense,
       desc,

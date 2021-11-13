@@ -5,15 +5,47 @@
         <div class="animation_"><h3>Flipbasket</h3></div>
       </div>
       <div class="flex-row justify-center" style="margin: 10px 0">
-        <q-btn flat no-caps dense rounded @click="LoginWithGoogle()" style="margin: 0 10px"> <img src="images/googleico.png" alt=""> </q-btn>
-        <q-btn flat no-caps dense rounded @click="LoginWithGoogle()" style="margin: 0 10px"> <img src="images/facebookico.png" alt=""> </q-btn>
+        <q-btn
+          flat
+          no-caps
+          dense
+          rounded
+          @click="LoginWithGoogle()"
+          style="margin: 0 10px"
+        >
+          <img src="images/googleico.png" alt="" />
+        </q-btn>
+        <q-btn
+          flat
+          no-caps
+          dense
+          rounded
+          @click="LoginWithFacebook()"
+          style="margin: 0 10px"
+        >
+          <img src="images/facebookico.png" alt="" />
+        </q-btn>
       </div>
       <div class="flex-row justify-center" style="margin: 10px 0">
-        <q-btn class="edit-btn" @click="selectedComponent = 'Login'">
-          go to login
+        <q-btn
+          flat
+          no-caps
+          dense
+          class="edit-btn line-text"
+          @click="selectedComponent = 'Login'"
+          style="margin: 0 10px"
+        >
+          Login
         </q-btn>
-        <q-btn class="edit-btn" @click="selectedComponent = 'Register'">
-          go to register
+        <q-btn
+          flat
+          no-caps
+          dense
+          class="edit-btn line-text"
+          @click="selectedComponent = 'Register'"
+          style="margin: 0 10px"
+        >
+          Register
         </q-btn>
       </div>
     </div>
@@ -45,6 +77,7 @@ export default defineComponent({
     const selectedComponent = ref('Login');
 
     const provider = new firebase.auth.GoogleAuthProvider();
+    const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
     const LoginWithGoogle = () => {
       firebase
@@ -56,12 +89,35 @@ export default defineComponent({
         .catch((err: Error) => alert(err.message));
     };
 
+    const LoginWithFacebook = () => {
+       firebase
+        .auth()
+        .signInWithPopup(facebookProvider)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err: Error) => alert(err.message));
+    };
+
     return {
       selectedComponent,
+      LoginWithFacebook,
       LoginWithGoogle,
     };
   },
 });
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.line-text {
+  font-weight: 550;
+  background-image: linear-gradient(rgb(72, 72, 218), rgb(6, 70, 167));
+  background-size: 0% 3px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: 300ms ease;
+}
+.line-text:hover {
+  background-size: 100% 3px;
+}
+</style>

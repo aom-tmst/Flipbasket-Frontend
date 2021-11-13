@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import {useStore} from 'src/store'
 import { Product } from 'src/type/Product'
 import { api } from 'src/boot/axios';
 import { defineComponent } from 'vue';
@@ -26,11 +27,14 @@ export default defineComponent({
   },
 
   setup() {
-    const addProduct = (item:Product) => {
-      const result =  api.delete(`products/${item._id}` );
-      console.log(result);
-      
+    const store = useStore()
+    const addProduct = async(item:Product) => {
+      await store.dispatch('pagesModule/DeleteProduct', null);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const result =  await api.delete(`products/${item._id}`);
+     
     };
+
 
     return {
       addProduct,

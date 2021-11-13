@@ -1,5 +1,5 @@
 <template>
-  <q-page class="seller-profile"> 
+  <q-page class="seller-profile">
     <div class="flex-col items-center product">
       <div class="flex-container items-cemter">
         <q-btn
@@ -15,7 +15,7 @@
           <div class="flex-row">
             <CardProfile :item="profileDetail" />
           </div>
-          <Shirt :item="homePageA.products"/>
+          <Shirt :item="homePageA.products" />
         </div>
       </div>
     </div>
@@ -23,44 +23,37 @@
 </template>
 
 <script lang="ts">
-import CardProfile from 'src/components/CardProfile.vue'
+import CardProfile from 'src/components/CardProfile.vue';
 import Shirt from 'src/components/Shirt.vue';
-import { profileDetail } from 'src/pages/profile/constants'
-import { useStore } from 'src/store'
-import { defineComponent,computed } from 'vue'
+import { profileDetail } from 'src/pages/profile/constants';
+import { useStore } from 'src/store';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
-    name: 'Profile',
+  name: 'Profile',
 
-    components:{
-        Shirt,
-        CardProfile
-    },
-
-  preFetch({ store }) {
-    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage')
-    return Promise.all([fetchHomePage])
+  components: {
+    Shirt,
+    CardProfile,
   },
 
-    setup(){
-const store = useStore()
-    const homePageA = computed(()=>{
-      const homePage = store.state.pagesModule.homePage
-      // console.log(homePage);
-      
-      return homePage?.[0]
-        
-      
-    })
-        return{
-          homePageA,
-            profileDetail
-        }
-    }
-})
+  preFetch({ store }) {
+    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
+    return Promise.all([fetchHomePage]);
+  },
 
+  setup() {
+    const store = useStore();
+    const homePageA = computed(() => {
+      const homePage = store.state.pagesModule.store;
+      return homePage?.[0];
+    });
 
+    return {
+      homePageA,
+      profileDetail,
+    };
+  },
+});
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
