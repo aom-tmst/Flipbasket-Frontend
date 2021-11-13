@@ -65,7 +65,7 @@ export default defineComponent({
     return {
       addProduct,
       editProfile,
-      addGallery
+      addGallery,
     };
   },
 });

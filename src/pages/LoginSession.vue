@@ -1,15 +1,17 @@
 <template>
-  <div class="flex-row justify-center fixed-center wrapper">
+  <div class="flex-row justify-center fixed-center wrapper login-session">
     <div class="flex-col justify-center">
       <div class="animation justify-center" style="margin: 0 50px 0 50px">
-        <div class="animation_"><h3>Flipbasket</h3></div>
+        <div class="animation_">
+          <img src="images/fliplogo.png" alt="" style="width:250px">
+        </div>
       </div>
-      <div class="flex-row justify-center" style="margin: 10px 0">
+      <div class="flex-row justify-center" style="margin: 20px 0">
         <q-btn
           flat
           no-caps
           dense
-          rounded
+          roundeds
           @click="LoginWithGoogle()"
           style="margin: 0 10px"
         >
@@ -26,32 +28,29 @@
           <img src="images/facebookico.png" alt="" />
         </q-btn>
       </div>
-      <div class="flex-row justify-center" style="margin: 10px 0">
-        <q-btn
-          flat
-          no-caps
-          dense
-          class="edit-btn line-text"
+      <div class="flex-row justify-center edit-btn" style="margin: 10px 0">
+        <button
+        class="edit-btn line-text"
           @click="selectedComponent = 'Login'"
           style="margin: 0 10px"
         >
           Login
-        </q-btn>
-        <q-btn
-          flat
-          no-caps
-          dense
+        </button>
+        <button
           class="edit-btn line-text"
           @click="selectedComponent = 'Register'"
           style="margin: 0 10px"
         >
           Register
-        </q-btn>
+        </button>
       </div>
     </div>
     <div class="flex-col">
       <component :is="selectedComponent" />
     </div>
+  </div>
+  <div class="bg-image">
+    <img src="images/flipwallpaper.png" alt="" style="width:487px;height:487px">
   </div>
 </template>
 
@@ -109,6 +108,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.login-session{
+  button{
+    cursor: pointer;
+    background-color: white;
+    border: none;
+  }
+}
 .line-text {
   font-weight: 550;
   background-image: linear-gradient(rgb(72, 72, 218), rgb(6, 70, 167));
@@ -119,5 +125,11 @@ export default defineComponent({
 }
 .line-text:hover {
   background-size: 100% 3px;
+}
+
+.bg-image{
+  z-index: -1;
+  bottom: 0;
+  position: absolute;
 }
 </style>

@@ -23,10 +23,10 @@
       >
     </form>
   </div>
-
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar'
 import { auth } from 'src/boot/firebase';
 import { defineComponent, ref } from 'vue';
 
@@ -38,6 +38,7 @@ export default defineComponent({
   name: 'Login',
 
   setup() {
+    const $q = useQuasar()
     const isPwd = ref(true);
     const email = ref('');
     const password = ref('');
@@ -45,14 +46,42 @@ export default defineComponent({
     const Login = () => {
       auth
         .signInWithEmailAndPassword(email.value, password.value)
-        .then((data) => console.log(data))
-        .catch((err: Error) => alert(err.message));
+        
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        .then(async () => await showNotif())
+        .catch((err: Error) => triggerNegative(err.message));
     };
+
+     const showNotif = () => {
+        $q.notify({
+           spinner: true,
+          message: 'Login Successed',
+          color: 'secondary',
+          timeout: 1000
+        })
+      }
+
+      const triggerNegative = (e: string) => {
+        $q.notify({
+          type: 'negative',
+          message: `${e}`,
+          timeout: 1000
+        })
+      }
 
     const resetPassword = () => {
       auth.sendPasswordResetEmail(email.value)
-       .then((data) => console.log(data))
-        .catch((err: Error) => alert(err.message));
+       // eslint-disable-next-line @typescript-eslint/await-thenable
+       .then(async() => await onSent('please check on your email.'))
+        .catch(() => triggerNegative('invalid email ?!'));
+    }
+
+    const onSent = (e: string) => {
+      $q.notify({
+          type: 'positive',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          message: `${e}`
+        })
     }
     
 
