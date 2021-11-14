@@ -8,7 +8,7 @@
     <q-card-section>
       <span>Are you sure to Delete : {{item.name}}</span>
       <div class="flex-row justify-end">
-        <q-btn @click="addProduct(item)" color="primary">delete product</q-btn>
+        <q-btn @click="Product(item);" color="primary">delete product</q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -28,17 +28,18 @@ export default defineComponent({
 
   setup() {
     const store = useStore()
-    const addProduct = async(item:Product | undefined) => {
+    const Product = async(item:Product | undefined) => {
       if (!item) return;
-      await store.dispatch('pagesModule/DeleteProduct');
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result =  await api.delete(`products/${item?._id}`);
-     
+      console.log(result);
+    
+      await store.dispatch('pagesModule/DeleteProduct');
+          
     };
 
 
     return {
-      addProduct,
+      Product,
     };
   },
 });

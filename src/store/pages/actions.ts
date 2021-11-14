@@ -13,13 +13,17 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
     return result
   },
 
-   UpdateProduct({ commit },payload){
-    commit('onUpdateProduct',payload)
+   UpdateProduct({ dispatch }){
+    void dispatch('fetchHomePage')
   },
 
-  DeleteProduct({ commit }){
-    commit('onDeleteProduct')
-  }
+  AddProduct({ dispatch }){
+    void dispatch('fetchHomePage')
+  },
+
+  DeleteProduct({ dispatch }){
+    void dispatch('fetchHomePage')
+  },
 };
 
 export default actions;

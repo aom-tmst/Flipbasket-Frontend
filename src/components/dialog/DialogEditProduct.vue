@@ -78,10 +78,9 @@ export default defineComponent({
         price: price.value,
         image: image.value,
       };
-      await store.dispatch('pagesModule/UpdateProduct', payload);
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = await api.put(`products/${item?._id}`, payload);
+      await store.dispatch('pagesModule/UpdateProduct');
 
     };
 

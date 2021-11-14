@@ -5,7 +5,6 @@
         <img
           class="edit-profile-img"
           src="images/profileImg.jpg"
-          style="width: 100px"
         />
       </div>
     </div>
@@ -83,6 +82,9 @@ export default defineComponent({
     display: flex;
     flex-wrap: wrapper;
   }
+  img{
+    width: 100px;
+  }
   .posted-by {
     font-size: 18px;
     font-weight: bold;
@@ -91,7 +93,7 @@ export default defineComponent({
   .edit-space-profile {
     margin: 10px;
     .q-btn{
-      width: 200px;
+      max-width: 200px;
       width: 100%;
     }
   }
@@ -101,6 +103,31 @@ export default defineComponent({
   }
   .edit-profile-img {
     border-radius: 10px;
+  }
+}
+@media only screen and(max-width:1000px){
+  .card-profile {
+    .edit-space-profile {
+    margin: 10px;
+    .q-btn{
+      font-size: 2vw;
+      width: 100%;
+    }
+  }
+  img{
+    width: 20vw;
+  }
+  }
+}
+@media only screen and(max-width:370px){
+  .card-profile {
+    .edit-space-profile {
+    margin: 10px;
+    .q-btn{
+      font-size: 2vw;
+      width: 20%;
+    }
+  }
   }
 }
 </style>

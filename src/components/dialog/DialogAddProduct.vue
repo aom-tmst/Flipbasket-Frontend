@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts">
+import { useStore } from 'src/store';
+
 import { Store } from 'src/store/pages/state';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
@@ -60,6 +62,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const store = useStore();
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
@@ -77,13 +80,20 @@ export default defineComponent({
         .post<Product>('products', payload)
         .then((response) => response.data);
 
-      const productIds = props.item?.products.map((product) => product._id) || []
+      const productIds =
+        props.item?.products.map((product) => product._id) || [];
 
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      const result1 = api.put(`stores/${props.item?._id}`, {  
-        products: [product._id,...productIds],
+      const result1 = await api.put(`stores/${props.item?._id}`, {
+        products: [product._id, ...productIds],
       });
       console.log(result1);
+      
+    
+      
+      //  const productObject = props.item?.products || [];
+
+      await store.dispatch('pagesModule/AddProduct');
     };
 
     return {
