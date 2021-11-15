@@ -59,15 +59,12 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import Login from 'pages/Login.vue';
 import Register from 'pages/Register.vue';
 import ForgotPassword from 'pages/ForgotPassword.vue'
 import firebase from 'firebase/compat/app';
 import { defineComponent, ref } from 'vue';
-
-interface Error {
-  message: string;
-}
 
 export default defineComponent({
   name: 'LoginSession',
@@ -79,6 +76,7 @@ export default defineComponent({
   },
 
   setup() {
+    const $q = useQuasar();
     const selectedComponent = ref('Login');
 
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -88,20 +86,34 @@ export default defineComponent({
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err: Error) => alert(err.message));
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        .then(async () => await showNotif())
+        .catch(() => triggerNegative('invalid email or password !?'));
+    };
+    const showNotif = () => {
+      $q.notify({
+        type: 'positive',
+        message: 'Login successed.',
+        color: 'secondary',
+        timeout: 1000,
+      });
+    };
+
+    const triggerNegative = (e: string) => {
+      $q.notify({
+        type: 'negative',
+        message: `${e}`,
+        timeout: 1000,
+      });
     };
 
     const LoginWithFacebook = () => {
        firebase
         .auth()
         .signInWithPopup(facebookProvider)
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err: Error) => alert(err.message));
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        .then(async () => await showNotif())
+        .catch(() => triggerNegative('invalid email or password !?'));
     };
 
     return {

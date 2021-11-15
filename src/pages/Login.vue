@@ -24,7 +24,7 @@
       <q-btn type="submit" value="Login" style="margin: 10px 0"
         ><span style="color: rgb(43, 144, 226);font-weight:bold">login</span></q-btn
       >
-      <q-btn flat no-caps dense @click="resetPassword()">forgot password ?</q-btn>
+
 
       
     </form>
@@ -71,26 +71,9 @@ export default defineComponent({
       });
     };
 
-    const resetPassword = () => {
-      auth
-        .sendPasswordResetEmail(email.value)
-        // eslint-disable-next-line @typescript-eslint/await-thenable
-        .then(async () => await onSent('sent succeed! please check on your email.'))
-        .catch(() => triggerNegative('invalid email ?!'));
-    };
-
-    const onSent = (e: string) => {
-      $q.notify({
-        type: 'positive',
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        message: `${e}`,
-      });
-    };
-
     return {
       isPwd,
       Login,
-      resetPassword,
       email,
       password,
     };
