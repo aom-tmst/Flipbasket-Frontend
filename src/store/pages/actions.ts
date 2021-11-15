@@ -24,6 +24,12 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
   DeleteProduct({ dispatch }){
     void dispatch('fetchHomePage')
   },
+
+  UpdateProfileName({ dispatch }){
+    void dispatch('fetchHomePage')
+  },
+
+
 };
 
 export default actions;

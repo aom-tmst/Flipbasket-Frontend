@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row card-profile items-center" v-if="item">
+  <div class="flex-row card-profile items-center" v-if="item || store">
     <div class="flex-col">
       <div>
         <img
@@ -10,7 +10,7 @@
     </div>
     <div class="edit-space-profile flex-col">
       <div class="flex-row q-ml-sm posted-by">
-        <div>{{ item.profileName }}</div>
+        <div>{{ store?.name }}</div>
       </div>
       <div class="flex-row">
         <q-btn class="edit-btn" @click="addProduct = true">
@@ -24,7 +24,7 @@
           Edit Profile
         </q-btn>
         <q-dialog v-model="editProfile">
-          <DialogEditProfile />
+          <DialogEditProfile :item="store" />
         </q-dialog>
 
         <q-btn class="edit-btn" @click="addGallery = true">

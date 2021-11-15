@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { useStore } from 'src/store';
-
+import { useQuasar } from 'quasar';
 import { Store } from 'src/store/pages/state';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
@@ -62,6 +62,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const $q = useQuasar();
     const store = useStore();
     const name = ref('');
     const desc = ref('');
@@ -76,23 +77,34 @@ export default defineComponent({
         price: price.value,
       };
 
-      const product = await api
-        .post<Product>('products', payload)
-        .then((response) => response.data);
+      try {
+        const product = await api
+          .post<Product>('products', payload)
+          .then((response) => response.data);
 
-      const productIds =
-        props.item?.products.map((product) => product._id) || [];
+        const productIds =
+          props.item?.products.map((product) => product._id) || [];
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        const result1 = await api.put(`stores/${props.item?._id}`, {
+          products: [product._id, ...productIds],
+        });
+        console.log(result1);
 
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      const result1 = await api.put(`stores/${props.item?._id}`, {
-        products: [product._id, ...productIds],
-      });
-      console.log(result1);
-      
+        $q.notify({
+          type: 'positive',
+          message: 'Add Product Successed',
+          color: 'secondary',
+          timeout: 1000,
+        });
+      } catch (error) {
+        console.log(error);
+        $q.notify({
+          type: 'negative',
+          message: 'Bad form please enter your product again.',
+          timeout: 1000,
+        });
+      }
     
-      
-      //  const productObject = props.item?.products || [];
-
       await store.dispatch('pagesModule/AddProduct');
     };
 

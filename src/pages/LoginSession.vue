@@ -2,16 +2,16 @@
   <div class="flex-row justify-center fixed-center wrapper login-session">
     <div class="flex-col justify-center">
       <div class="animation justify-center" style="margin: 0 50px 0 50px">
-        <div class="animation_">
-          <img src="images/fliplogo.png" alt="" style="width:250px">
-        </div>
+        <div class="test">
+          <h1 data-text="Flipbasket.">Flipbasket.</h1>
+</div>
       </div>
       <div class="flex-row justify-center" style="margin: 20px 0">
         <q-btn
           flat
           no-caps
           dense
-          roundeds
+          rounded
           @click="LoginWithGoogle()"
           style="margin: 0 10px"
         >
@@ -43,20 +43,25 @@
         >
           Register
         </button>
+        <button
+          class="edit-btn line-text"
+          @click="selectedComponent = 'ForgotPassword'"
+          style="margin: 0 10px"
+        >
+          ForgotPassword
+        </button>
       </div>
     </div>
-    <div class="flex-col">
+    <div class="flex-col" style="margin-top: 20px">
       <component :is="selectedComponent" />
     </div>
-  </div>
-  <div class="bg-image">
-    <img src="images/flipwallpaper.png" alt="" style="width:487px;height:487px">
   </div>
 </template>
 
 <script lang="ts">
 import Login from 'pages/Login.vue';
 import Register from 'pages/Register.vue';
+import ForgotPassword from 'pages/ForgotPassword.vue'
 import firebase from 'firebase/compat/app';
 import { defineComponent, ref } from 'vue';
 
@@ -70,6 +75,7 @@ export default defineComponent({
   components: {
     Login,
     Register,
+    ForgotPassword,
   },
 
   setup() {
@@ -127,9 +133,34 @@ export default defineComponent({
   background-size: 100% 3px;
 }
 
-.bg-image{
-  z-index: -1;
-  bottom: 0;
+h1{
+  font-size: 50px;
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  position: relative;
+  -webkit-text-stroke: 0.2vh white;
+  justify-content: #000000;
+  text-transform: uppercase;
+}
+h1::before{
+  content: attr(data-text);
   position: absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:100%;
+  color: #222222;
+  -webkit-text-stroke: 0vh #000000;
+  border-right: 2px solid #000000;
+  overflow: hidden;
+  animation: animate 6s linear infinite;
+}
+@keyframes animate{
+  0%{
+    width:0;
+  }
+  70%{
+    width: 100%;
+  }
 }
 </style>

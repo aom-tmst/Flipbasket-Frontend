@@ -1,6 +1,9 @@
 <template>
   <div class="flex-col" style="margin: 0 50px 0 50px">
-    register
+    <div style="font-weight: bold">
+      <div style="font-size: 16px; color: #149bfc">Let's</div>
+      register and open the new experience.
+    </div>
     <form class="flex-col" @submit.prevent="Register">
       <q-input type="text" placeholder="Email" v-model="email" />
 
@@ -19,7 +22,7 @@
         </template>
       </q-input>
       <q-btn type="submit" value="Register" style="margin: 10px 0"
-        ><span style="color: rgb(43, 144, 226)">Register</span></q-btn
+        ><span style="color: rgb(43, 144, 226);font-weight:bold">Register</span></q-btn
       >
     </form>
   </div>

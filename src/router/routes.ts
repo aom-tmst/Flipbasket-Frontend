@@ -27,7 +27,6 @@ const routes: RouteRecordRaw[] = [
     path: '/login-session',
     component: () => import('src/pages/LoginSession.vue'),
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {

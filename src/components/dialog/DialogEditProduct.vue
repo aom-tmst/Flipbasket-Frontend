@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import { Product } from 'src/type/Product';
 import { api } from 'src/boot/axios';
@@ -62,6 +63,7 @@ export default defineComponent({
   },
 
   setup() {
+    const $q = useQuasar();
     const store = useStore();
     const name = ref('');
     const desc = ref('');
@@ -78,10 +80,25 @@ export default defineComponent({
         price: price.value,
         image: image.value,
       };
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const result = await api.put(`products/${item?._id}`, payload);
-      await store.dispatch('pagesModule/UpdateProduct');
+      try {
+        const result = await api.put(`products/${item?._id}`, payload);
+        console.log(result);
 
+        $q.notify({
+          type: 'positive',
+          message: ' Edit product successed',
+          color: 'secondary',
+          timeout: 1000,
+        });
+        await store.dispatch('pagesModule/UpdateProduct');
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Bad form please enter your product again.',
+          timeout: 1000,
+        });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     };
 
     return {
