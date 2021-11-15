@@ -57,6 +57,7 @@ export default defineComponent({
     const showNotif = () => {
       $q.notify({
         type: 'positive',
+        message: 'Login successed.',
         color: 'secondary',
         timeout: 1000,
       });
