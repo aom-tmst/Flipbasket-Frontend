@@ -13,9 +13,12 @@
         >
         <div class="flex-col">
           <div class="flex-row">
-            <CardProfile :item="profileDetail" :store="homePageA" />
+            <CardProfile :store="homePageA" />
+            {{ homePageA }}
+            ---------------
+            {{ user }}
           </div>
-          <Shirt :item="homePageA.products" />
+          <Shirt :item="homePageA[0].products" />
         </div>
       </div>
     </div>
@@ -43,13 +46,21 @@ export default defineComponent({
 
   setup() {
     const store = useStore();
+    const user = computed(() => {
+      const userDetail = store.state.pagesModule;
+      console.log(userDetail);
+      
+      return userDetail;
+    });
+
     const homePageA = computed(() => {
       const homePage = store.state.pagesModule.store;
-      return homePage?.[0];
+      return homePage;
     });
 
     return {
       homePageA,
+      user,
       profileDetail,
     };
   },

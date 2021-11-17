@@ -22,53 +22,53 @@
       </q-input>
 
       <q-btn type="submit" value="Login" style="margin: 10px 0"
-        ><span style="color: rgb(43, 144, 226);font-weight:bold">login</span></q-btn
+        ><span style="color: rgb(43, 144, 226); font-weight: bold"
+          >login</span
+        ></q-btn
       >
-
-
-      
     </form>
   </div>
 </template>
 
 <script lang="ts">
 import { useQuasar } from 'quasar';
-import { auth } from 'src/boot/firebase';
+import { LoginWithFirebase } from 'src/boot/firebase';
+import { useStore } from 'src/store';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'Login',
 
   setup() {
+    const store = useStore();
     const $q = useQuasar();
     const isPwd = ref(true);
     const email = ref('');
     const password = ref('');
 
-    const Login = () => {
-      auth
-        .signInWithEmailAndPassword(email.value, password.value)
-
-        // eslint-disable-next-line @typescript-eslint/await-thenable
-        .then(async () => await showNotif())
-        .catch(() => triggerNegative('invalid email or password !?'));
-    };
-
-    const showNotif = () => {
-      $q.notify({
-        type: 'positive',
-        message: 'Login successed.',
-        color: 'secondary',
-        timeout: 1000,
-      });
-    };
-
-    const triggerNegative = (e: string) => {
-      $q.notify({
-        type: 'negative',
-        message: `${e}`,
-        timeout: 1000,
-      });
+    const Login = async () => {
+      try {
+        const user = await LoginWithFirebase(email.value, password.value);
+        if (user.user) {
+          const userDetail = {
+            name : user.user.displayName,
+            uid : user.user.uid
+          }
+          await store.dispatch('pagesModule/SubmitUid',userDetail );
+          $q.notify({
+            type: 'positive',
+            message: 'Login successed.',
+            color: 'secondary',
+            timeout: 1000,
+          });
+        }
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Login failed , email or password does not exist',
+          timeout: 1000,
+        });
+      }
     };
 
     return {

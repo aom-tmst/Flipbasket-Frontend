@@ -35,8 +35,8 @@
           </q-menu>
         </div>
       </div>
-      <div class="flex-row items-center menu-list desktop-menu">
-        Welcome : {{ name }}
+      <div class="flex-row items-center menu-list desktop-menu" v-if="userDetail">
+        Welcome : {{ userDetail.name }}
         <q-btn
           flat
           no-caps
@@ -51,11 +51,11 @@
       </div>
 
       <!-- Mobile -->
-      <div class="menu-list mobile-menu">
+      <div class="menu-list mobile-menu" v-if="userDetail">
         <q-btn icon="menu" @click="dialog = !dialog" />
         <q-dialog maximized seamless v-model="dialog" position="right">
           <q-card class="menu-dialog flex-col items-center">
-            <q-card-section> Welcome : {{ name }} </q-card-section>
+            <q-card-section> Welcome : {{ userDetail.name }} </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in menuList"
               :key="index"
@@ -125,15 +125,18 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const dialog = ref(false);
-    const name = ref('');
+    const userDetail = ref();
 
-    onMounted(() => {
+     onMounted(() => {
       auth.onAuthStateChanged((user) => {
-        if (user) {
-          name.value = user.email?.split('@')[0] || '';
-        }   
+       userDetail.value = {
+         name: user?.displayName,
+       }
       });
     });
+
+    console.log(userDetail);
+    
 
     const Logout = () => {
       auth
@@ -160,7 +163,7 @@ export default defineComponent({
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, productList, name, Logout };
+    return { menuList, dialog, isActived, productList, Logout, userDetail };
   },
 });
 </script>

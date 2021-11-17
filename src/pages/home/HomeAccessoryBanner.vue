@@ -32,9 +32,6 @@ export default defineComponent({
   .head-title {
     font-size: 5vw;
     font-weight: bold;
-    text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
-      0 5px 0 #aaa;
-     
   }
 }
 </style>

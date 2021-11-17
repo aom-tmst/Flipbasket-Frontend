@@ -4,7 +4,7 @@
       <div class="animation justify-center" style="margin: 0 50px 0 50px">
         <div class="test">
           <h1 data-text="Flipbasket.">Flipbasket.</h1>
-</div>
+        </div>
       </div>
       <div class="flex-row justify-center" style="margin: 20px 0">
         <q-btn
@@ -12,7 +12,7 @@
           no-caps
           dense
           rounded
-          @click="LoginWithGoogle()"
+          @click="LoginGoogle()"
           style="margin: 0 10px"
         >
           <img src="images/googleico.png" alt="" />
@@ -22,7 +22,7 @@
           no-caps
           dense
           rounded
-          @click="LoginWithFacebook()"
+          @click="LoginFacebook()"
           style="margin: 0 10px"
         >
           <img src="images/facebookico.png" alt="" />
@@ -30,7 +30,7 @@
       </div>
       <div class="flex-row justify-center edit-btn" style="margin: 10px 0">
         <button
-        class="edit-btn line-text"
+          class="edit-btn line-text"
           @click="selectedComponent = 'Login'"
           style="margin: 0 10px"
         >
@@ -60,10 +60,10 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar';
+import { LoginWithGoogle, LoginWithFacebook } from 'src/boot/firebase';
 import Login from 'pages/Login.vue';
 import Register from 'pages/Register.vue';
-import ForgotPassword from 'pages/ForgotPassword.vue'
-import firebase from 'firebase/compat/app';
+import ForgotPassword from 'pages/ForgotPassword.vue';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
@@ -79,55 +79,56 @@ export default defineComponent({
     const $q = useQuasar();
     const selectedComponent = ref('Login');
 
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const facebookProvider = new firebase.auth.FacebookAuthProvider();
+    const LoginGoogle = () => {
+      try {
+        const loginWithGoogle = LoginWithGoogle();
+        console.log(loginWithGoogle);
 
-    const LoginWithGoogle = () => {
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        // eslint-disable-next-line @typescript-eslint/await-thenable
-        .then(async () => await showNotif())
-        .catch(() => triggerNegative('invalid email or password !?'));
-    };
-    const showNotif = () => {
-      $q.notify({
-        type: 'positive',
-        message: 'Login successed.',
-        color: 'secondary',
-        timeout: 1000,
-      });
-    };
-
-    const triggerNegative = (e: string) => {
-      $q.notify({
-        type: 'negative',
-        message: `${e}`,
-        timeout: 1000,
-      });
+        $q.notify({
+          type: 'positive',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          message: 'Login Successed',
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not login please check your eamil ',
+          timeout: 1000,
+        });
+      }
     };
 
-    const LoginWithFacebook = () => {
-       firebase
-        .auth()
-        .signInWithPopup(facebookProvider)
-        // eslint-disable-next-line @typescript-eslint/await-thenable
-        .then(async () => await showNotif())
-        .catch(() => triggerNegative('invalid email or password !?'));
+    const LoginFacebook = () => {
+      try {
+        const loginWithFacebook = LoginWithFacebook();
+        console.log(loginWithFacebook);
+
+        $q.notify({
+          type: 'positive',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          message: 'Login Successed',
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not login please check your eamil ',
+          timeout: 1000,
+        });
+      }
     };
 
     return {
       selectedComponent,
-      LoginWithFacebook,
-      LoginWithGoogle,
+      LoginFacebook,
+      LoginGoogle,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.login-session{
-  button{
+.login-session {
+  button {
     cursor: pointer;
     background-color: white;
     border: none;
@@ -145,7 +146,7 @@ export default defineComponent({
   background-size: 100% 3px;
 }
 
-h1{
+h1 {
   font-size: 50px;
   font-weight: bolder;
   color: rgb(255, 255, 255);
@@ -154,24 +155,24 @@ h1{
   justify-content: #000000;
   text-transform: uppercase;
 }
-h1::before{
+h1::before {
   content: attr(data-text);
   position: absolute;
-  top:0;
-  left:0;
-  width:0;
-  height:100%;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
   color: #222222;
   -webkit-text-stroke: 0vh #000000;
   border-right: 2px solid #000000;
   overflow: hidden;
   animation: animate 6s linear infinite;
 }
-@keyframes animate{
-  0%{
-    width:0;
+@keyframes animate {
+  0% {
+    width: 0;
   }
-  70%{
+  70% {
     width: 100%;
   }
 }

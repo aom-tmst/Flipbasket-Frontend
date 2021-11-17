@@ -29,6 +29,11 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
     void dispatch('fetchHomePage')
   },
 
+  SubmitUid({ dispatch,commit },userDetail){
+    commit('setUsetUid', userDetail)
+    
+    void dispatch('fetchHomePage')
+  },
 
 };
 

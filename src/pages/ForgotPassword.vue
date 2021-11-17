@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar';
-import { auth } from 'src/boot/firebase';
+import { ForgotPassword } from 'src/boot/firebase';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
@@ -29,29 +29,22 @@ export default defineComponent({
     const email = ref('');
 
     const resetPassword = () => {
-      auth
-        .sendPasswordResetEmail(email.value)
-        .then(
-          // eslint-disable-next-line @typescript-eslint/await-thenable
-          async () => await onSent('sent succeed! please check on your email.')
-        )
-        .catch(() => triggerNegative('invalid email ?!'));
-    };
+      try {
+        const reset = ForgotPassword(email.value);
+        console.log(reset);
 
-    const onSent = (e: string) => {
-      $q.notify({
-        type: 'positive',
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        message: `${e}`,
-      });
-    };
-
-    const triggerNegative = (e: string) => {
-      $q.notify({
-        type: 'negative',
-        message: `${e}`,
-        timeout: 1000,
-      });
+        $q.notify({
+          type: 'positive',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          message: 'sent successed please check on your email',
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not send , invalid eamil ',
+          timeout: 1000,
+        });
+      }
     };
 
     return {

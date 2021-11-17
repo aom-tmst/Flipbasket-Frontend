@@ -1,4 +1,5 @@
 import { store } from 'quasar/wrappers'
+import createPersistedState from "vuex-persistedstate";
 import { InjectionKey } from 'vue'
 import pagesModule, { PagesStateInterface } from './pages'
 import {
@@ -27,6 +28,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       pagesModule
     },
+    plugins: [createPersistedState()],
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only

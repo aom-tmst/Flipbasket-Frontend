@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row card-profile items-center" v-if="item || store">
+  <div class="flex-row card-profile items-center" v-if="store">
     <div class="flex-col">
       <div>
         <img
@@ -10,7 +10,7 @@
     </div>
     <div class="edit-space-profile flex-col">
       <div class="flex-row q-ml-sm posted-by">
-        <div>{{ store?.name }}</div>
+        <div>{{ store.name }}</div>
       </div>
       <div class="flex-row">
         <q-btn class="edit-btn" @click="addProduct = true">
@@ -43,7 +43,6 @@ import DialogAddGallery from 'src/components/dialog/DialogAddGallery.vue';
 import DialogEditProfile from 'src/components/dialog/DialogEditProfile.vue';
 import DialogAddProduct from 'src/components/dialog/DialogAddProduct.vue';
 import { Store } from 'src/store/pages/state'
-import { ProfileDetail } from 'src/type/profile';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'CardProfile',
@@ -55,7 +54,6 @@ export default defineComponent({
   },
 
   props: {
-    item: Object as () => ProfileDetail,
     store: Object as () => Store,
   },
 

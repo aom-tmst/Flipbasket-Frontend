@@ -76,6 +76,8 @@ export default defineComponent({
         desc: desc.value,
         price: price.value,
       };
+      console.log(payload, 'this');
+      
 
       try {
         const product = await api

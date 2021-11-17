@@ -5,6 +5,7 @@
       register and open the new experience.
     </div>
     <form class="flex-col" @submit.prevent="Register">
+      <q-input type="text" placeholder="Name" v-model="name" />
       <q-input type="text" placeholder="Email" v-model="email" />
 
       <q-input
@@ -22,41 +23,73 @@
         </template>
       </q-input>
       <q-btn type="submit" value="Register" style="margin: 10px 0"
-        ><span style="color: rgb(43, 144, 226);font-weight:bold">Register</span></q-btn
+        ><span style="color: rgb(43, 144, 226); font-weight: bold"
+          >Register</span
+        ></q-btn
       >
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { auth } from 'src/boot/firebase';
+// import { api } from 'src/boot/axios';
+import { useQuasar } from 'quasar';
+import { useStore } from 'src/store';
+import { RegistWithFirebase } from 'src/boot/firebase';
 import { defineComponent, ref } from 'vue';
-
-interface Error {
-  message: string;
-}
 
 export default defineComponent({
   name: 'Register',
 
   setup() {
+    const $q = useQuasar();
+    const store = useStore();
+    const name = ref();
     const isPwd = ref(true);
     const email = ref('');
     const password = ref('');
 
-    const Register = () => {
-      auth
-        .createUserWithEmailAndPassword(email.value, password.value)
-        .then((user) => {
-          alert(user);
-        })
-        .catch((err: Error) => alert(err.message));
+    const Register = async () => {
+      try {
+        const user = await RegistWithFirebase(
+          name.value,
+          email.value,
+          password.value
+        );
+        if (user.user) {
+          console.log(user.user);
+          const userDetail = {
+            name : user.user.displayName,
+            uid : user.user.uid
+          }
+          // const createStore = await api.post('stores/',);
+          // console.log(createStore, 'createStore');
+          
+          await store.dispatch('pagesModule/SubmitUid',userDetail);
+          $q.notify({
+            type: 'positive',
+            message: 'Regist successed.',
+            color: 'secondary',
+            timeout: 1000,
+          });
+        }
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Regist failed , invalid email',
+          timeout: 1000,
+        });
+      }
     };
+
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+
     return {
       isPwd,
       Register,
       email,
       password,
+      name,
     };
   },
 });
