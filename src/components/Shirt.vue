@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row justify-center" v-if="item">
+  <div class="flex-row" v-if="item">
     <div
       class="home-sewing"
       v-for="(item, index) in item"
@@ -24,9 +24,13 @@
           <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
-          <div class="flex-row" style="margin-bottom:10px">Read more...</div>
+          <div class="flex-row" style="margin-bottom: 10px">Read more...</div>
           <div class="flex-row">
-            <q-btn class="flex-col edit-btn" @click="editProduct(item)" v-if="showEdit">
+            <q-btn
+              class="flex-col edit-btn"
+              @click="editProduct(item)"
+              v-if="showEdit"
+            >
               edit
             </q-btn>
             <q-btn
@@ -48,6 +52,7 @@
       <DialogDeleteProduct :item="selectedItem" />
     </q-dialog>
   </div>
+
   <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
     <span>See all</span>
   </div>
@@ -151,17 +156,17 @@ export default defineComponent({
     transform: scale(1.05);
   }
 }
-  @media only screen and(min-width:1000px){
-    .edit-btn{
-  height: 20px;
-  font-size: 12px;
-}
+@media only screen and(min-width:1000px) {
+  .edit-btn {
+    height: 20px;
+    font-size: 12px;
   }
-@media only screen and(max-width:1000px){
-    .edit-btn{
-  height: 20px;
-  width: 50%;
-  font-size: 1vw;
 }
+@media only screen and(max-width:1000px) {
+  .edit-btn {
+    height: 20px;
+    width: 50%;
+    font-size: 1vw;
   }
+}
 </style>

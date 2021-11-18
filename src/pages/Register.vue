@@ -33,6 +33,7 @@
 
 <script lang="ts">
 // import { api } from 'src/boot/axios';
+import { api } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import { RegistWithFirebase } from 'src/boot/firebase';
@@ -65,6 +66,9 @@ export default defineComponent({
           // const createStore = await api.post('stores/',);
           // console.log(createStore, 'createStore');
           
+          const result1 = await api.post('stores/', userDetail);
+          console.log('🚀 ~ file: Register.vue ~ line 70 ~ Register ~ result1', result1)
+
           await store.dispatch('pagesModule/SubmitUid',userDetail);
           $q.notify({
             type: 'positive',

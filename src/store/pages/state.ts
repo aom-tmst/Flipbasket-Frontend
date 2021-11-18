@@ -8,8 +8,8 @@ export interface Store {
 }
 
 export interface UserDetail {
-  name: string
-  uid: string
+  name: string | null | undefined
+  uid: string | null | undefined
 }
 
 export interface PagesStateInterface {
