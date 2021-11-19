@@ -16,18 +16,18 @@
             <div class="edit-box-img">
               <img class="edit-img" src="images/shirt1.png" alt="" />
             </div>
-            <div class="content">
+            <div class="content" style="max-width:350px;width:100%">
               <div class="flex-col items-end posted-on">
-                Posted On : {{ productClothesDeatail.postedOn }}
+                Posted On : {{ selectedProduct.createdAt}}
               </div>
               <div class="posted-by">
-                {{ productClothesDeatail.productName }}
+                {{ selectedProduct.name }}
               </div>
               <div class="content-detail">
-                {{ productClothesDeatail.detail }}
+                {{ selectedProduct.desc }}
               </div>
               <div class="flex-row justify-end content-detail">
-               price: {{ productClothesDeatail.price }} Bath
+                price: {{ selectedProduct.price }} Bath
               </div>
 
               <div class="flex-row justify-end items-center clickable">
@@ -35,7 +35,7 @@
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
                 <div @click="pushpage()" class="product-by">
-                  <span>{{ productClothesDeatail.profileName }} </span>
+                  <span>{{ selectedProduct.store.name }} </span>
                 </div>
               </div>
             </div>
@@ -47,25 +47,45 @@
 </template>
 
 <script lang="ts">
-import { productClothesDeatail } from 'src/pages/product/constants';
-import { defineComponent } from 'vue';
-import { useRoute } from 'vue-router'
+import { useStore } from 'src/store';
+import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { productClothesDeatail } from 'src/pages/product/constants';
+import { defineComponent, computed, watchEffect,ref } from 'vue';
 export default defineComponent({
   name: 'Product',
 
+  preFetch({ store }) {
+    const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
+    return Promise.all([fetchAllProduct]);
+  },
+
   setup() {
-    const route = useRoute()
+    const store = useStore();
+    const route = useRoute();
     const router = useRouter();
+    const selectedProduct = ref();
+
+    const products = computed(() => {
+      const product = store.state.pagesModule.allProduct;
+      return product;
+    });
+
+    watchEffect(() => {
+      const queryProduct = route.query;
+      const selectedProductOnWatch = products.value.find(
+        (e) => e._id == queryProduct.item
+      );
+      console.log(selectedProductOnWatch);
+      selectedProduct.value = selectedProductOnWatch
+    });
+
     const pushpage = () => {
       void router.push({ name: 'SellerProfile' });
     };
 
-    const test = route.query
-    console.log(test, 'this is query');
-    
-
     return {
+      selectedProduct,
       productClothesDeatail,
       pushpage,
     };
