@@ -53,12 +53,12 @@ export default defineComponent({
       try {
         const result = await api.put(`stores/${item?._id}`, payload);
         console.log(result);
-        
+
         await store.dispatch('pagesModule/UpdateProfileName');
 
         $q.notify({
           type: 'positive',
-          message:  ' Changed name successed',
+          message: ' Changed name successed',
           color: 'secondary',
           timeout: 1000,
         });

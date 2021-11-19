@@ -39,7 +39,8 @@ export default defineComponent({
 
   preFetch({ store }) {
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
-    return Promise.all([fetchHomePage]);
+    const fetchPublicStore = store.dispatch('pagesModule/fetchPublicStore');
+    return Promise.all([fetchHomePage,fetchPublicStore]);
   },
 
   setup() {

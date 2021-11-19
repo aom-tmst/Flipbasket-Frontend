@@ -5,6 +5,8 @@ export interface Product {
     price: number
     createAt: string
     image: Image
+    type: string
+    uid: string
 }
 
 export interface GalleryImg {

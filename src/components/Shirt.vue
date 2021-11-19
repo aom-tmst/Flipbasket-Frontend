@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row" v-if="item">
+  <div class="flex-row justify-center" v-if="item">
     <div
       class="home-sewing"
       v-for="(item, index) in item"
@@ -7,7 +7,7 @@
       :style="`width: ${widthPerItem}%`"
     >
       <div class="flex-col">
-        <div @click="pushpage()" class="flex-col items-center">
+        <div @click="pushPage(item._id)" class="flex-col items-center">
           <!-- <img
             class="transition"
             :src="'https://tailors-phuket.herokuapp.com'+item.image.url"
@@ -24,7 +24,7 @@
           <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
-          <div class="flex-row" style="margin-bottom: 10px">Read more...</div>
+          <q-btn @click="pushPage(item._id)" no-caps flat dense unelevated style="margin-bottom: 10px;color: #149bfc">Read more...</q-btn>
           <div class="flex-row">
             <q-btn
               class="flex-col edit-btn"
@@ -102,8 +102,8 @@ export default defineComponent({
       deleteProductDialog.value = true;
     };
 
-    const pushpage = () => {
-      void router.push({ name: 'Product' });
+    const pushPage = (item : string) => {
+      void router.push({ name: 'Product',query: { item } });
     };
 
     const widthPerItem = computed(() => {
@@ -113,7 +113,7 @@ export default defineComponent({
     });
     return {
       widthPerItem,
-      pushpage,
+      pushPage,
       editProductDialog,
       editProduct,
       selectedItem,

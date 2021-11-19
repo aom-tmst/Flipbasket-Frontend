@@ -49,15 +49,21 @@
 <script lang="ts">
 import { productClothesDeatail } from 'src/pages/product/constants';
 import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'Product',
 
   setup() {
+    const route = useRoute()
     const router = useRouter();
     const pushpage = () => {
       void router.push({ name: 'SellerProfile' });
     };
+
+    const test = route.query
+    console.log(test, 'this is query');
+    
 
     return {
       productClothesDeatail,

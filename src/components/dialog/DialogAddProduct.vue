@@ -28,6 +28,17 @@
           />
         </div>
       </div>
+      <div class="q-pa-md flex-row justify-center">
+        <q-btn-toggle
+          v-model="type"
+          toggle-color="primary"
+          :options="[
+            { label: 'Shirt', value: 'shirt' },
+            { label: 'Pants', value: 'pants' },
+            { label: 'Accessory', value: 'accessory' },
+          ]"
+        />
+      </div>
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end">
@@ -47,7 +58,9 @@ import { defineComponent, ref } from 'vue';
 interface AddProductPayload {
   name: string;
   desc: string;
+  type: string | null;
   price: number | null;
+  uid: string | undefined
 }
 
 interface Product {
@@ -64,25 +77,30 @@ export default defineComponent({
   setup(props) {
     const $q = useQuasar();
     const store = useStore();
+    const type = ref(null);
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
     const image = ref(null);
     const dense = ref(false);
 
+
+
     const addProduct = async () => {
       const payload: AddProductPayload = {
         name: name.value,
         desc: desc.value,
         price: price.value,
+        type: type.value,
+        uid: props.item?._id,
       };
-      console.log(payload, 'this');
-      
 
       try {
         const product = await api
           .post<Product>('products', payload)
           .then((response) => response.data);
+
+        console.log(product, 'find type');
 
         const productIds =
           props.item?.products.map((product) => product._id) || [];
@@ -91,6 +109,9 @@ export default defineComponent({
           products: [product._id, ...productIds],
         });
         console.log(result1);
+
+    
+        // props.item?.products.map((product) => product._id) || [];
 
         $q.notify({
           type: 'positive',
@@ -106,7 +127,7 @@ export default defineComponent({
           timeout: 1000,
         });
       }
-    
+
       await store.dispatch('pagesModule/AddProduct');
     };
 
@@ -117,6 +138,7 @@ export default defineComponent({
       desc,
       price,
       image,
+      type,
     };
   },
 });

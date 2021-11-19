@@ -7,36 +7,31 @@
       </div>
       <div class="flex-container">
         <div id="shirt" />
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Shirt</span>
-          </div>
-          <Shirt :showEdit="false" :showDelete="false" :item="clothesDeatail" />
+
+        <div class="flex-row justify-center">
+          <span>Shirt</span>
         </div>
+        <Shirt :showEdit="false" :showDelete="false" :item="productShirt" />
       </div>
 
       <div class="scoped-banner" id="trousers">
         <HomeTrouserBanner />
       </div>
       <div class="flex-container">
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Trousers</span>
-          </div>
-          <Trousers :item="trousersDetail" />
+        <div class="flex-row justify-center">
+          <span>Trousers</span>
         </div>
+        <Trousers :showEdit="false" :showDelete="false" :item="productPants" />
       </div>
 
       <div class="scoped-banner" id="accessory">
         <HomeAccessoryBanner />
       </div>
       <div class="flex-container" style="margin-bottom: 20px">
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Accessory</span>
-          </div>
-          <Accessory :item="accessoryDetail" />
+        <div class="flex-row justify-center">
+          <span>Accessory</span>
         </div>
+        <Accessory :showEdit="false" :showDelete="false" :item="productAcc" />
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
@@ -77,20 +72,38 @@ export default defineComponent({
 
   preFetch({ store }) {
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
-    return Promise.all([fetchHomePage]);
+    const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
+    return Promise.all([fetchHomePage, fetchAllProduct]);
   },
 
   setup() {
     const store = useStore();
     const homePageA = computed(() => {
       const homePage = store.state.pagesModule.store;
-
       return homePage?.[0];
     });
 
-    
+    const products = computed(() => {
+      const product = store.state.pagesModule.allProduct;
+      return product;
+    });
+
+    console.log(products.value, 'this');
+    const productShirt = computed(() =>
+      products.value.filter((product) => product.type == 'shirt')
+    );
+    const productPants = computed(() =>
+      products.value.filter((product) => product.type == 'pants')
+    );
+    const productAcc = computed(() =>
+      products.value.filter((product) => product.type == 'accessory')
+    );
+    console.log(productShirt);
 
     return {
+      productShirt,
+      productPants,
+      productAcc,
       bannerAds,
       homePageA,
       clothesDeatail,
