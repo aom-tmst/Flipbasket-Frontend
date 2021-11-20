@@ -11,7 +11,7 @@
     </div>
     <div class="edit-space-profile flex-col items-center justify-center">
       <div class="flex-row posted-by">
-        <div>{{item.merchantName}}</div>
+        <div class="text-black">{{item.name}}</div>
       </div>
       <div class="flex-row">
         <q-btn class="edit-btn">
@@ -27,13 +27,13 @@
 </template>
 
 <script lang="ts">
-import { ProfileDetail } from 'src/type/sellerprofile'
+import {Store} from 'src/store/pages/state'
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'CardProfile',
 
   props:{
-      item: Object as () => ProfileDetail
+      item: Object as () => Store
   }
 });
 </script>

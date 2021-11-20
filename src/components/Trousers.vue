@@ -24,7 +24,15 @@
           <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
-          <q-btn @click="pushPage(item._id)" no-caps flat dense unelevated style="margin-bottom: 10px;color: #149bfc">Read more...</q-btn>
+          <q-btn
+            @click="pushPage(item._id)"
+            no-caps
+            flat
+            dense
+            unelevated
+            style="margin-bottom: 10px; color: #149bfc"
+            >Read more...</q-btn
+          >
           <div class="flex-row">
             <q-btn
               class="flex-col edit-btn"
@@ -51,10 +59,6 @@
     <q-dialog v-model="deleteProductDialog">
       <DialogDeleteProduct :item="selectedItem" />
     </q-dialog>
-  </div>
-
-  <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
-    <span>See all</span>
   </div>
 </template>
 
@@ -102,8 +106,8 @@ export default defineComponent({
       deleteProductDialog.value = true;
     };
 
-    const pushPage = (item : string) => {
-      void router.push({ name: 'Product',query: { item } });
+    const pushPage = (item: string) => {
+      void router.push({ name: 'Product', query: { item } });
     };
 
     const widthPerItem = computed(() => {

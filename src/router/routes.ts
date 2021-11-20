@@ -33,6 +33,11 @@ const routes: RouteRecordRaw[] = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),
   },
+  {
+    name: 'Addmin',
+    path: '/addmin',
+    component: () => import('src/pages/Addmin.vue'),
+  },
 ];
 
 export default routes;

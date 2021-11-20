@@ -15,7 +15,12 @@
           <div class="flex-row">
             <CardProfile :store="findUid" />
           </div>
-          <Shirt :item="findUid?.products" />
+          <div class="posted-by">Shirt</div>
+          <Shirt :item="findUid?.products"/>
+          <!-- <div class="posted-by">Pants</div>
+          <Trousers :item="selectedPants" />
+          <div class="posted-by">Accessory</div>
+          <Accessory :item="selectedAcc" /> -->
         </div>
       </div>
     </div>
@@ -26,25 +31,33 @@
 import { auth } from 'src/boot/firebase';
 import CardProfile from 'src/components/CardProfile.vue';
 import Shirt from 'src/components/Shirt.vue';
+// import Trousers from 'src/components/Trousers.vue';
+// import Accessory from 'src/components/Accessory.vue';
 import { profileDetail } from 'src/pages/profile/constants';
 import { useStore } from 'src/store';
-import { defineComponent, computed, onMounted } from 'vue';
+import { defineComponent, computed, onMounted, ref } from 'vue';
 export default defineComponent({
   name: 'Profile',
 
   components: {
     Shirt,
     CardProfile,
+    // Trousers,
+    // Accessory,
   },
 
   preFetch({ store }) {
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
     const fetchPublicStore = store.dispatch('pagesModule/fetchPublicStore');
-    return Promise.all([fetchHomePage,fetchPublicStore]);
+    return Promise.all([fetchHomePage, fetchPublicStore]);
   },
 
   setup() {
     const store = useStore();
+    const selectedShirt = ref();
+    const selectedPants = ref();
+    const selectedAcc = ref();
+
     onMounted(() => {
       auth.onAuthStateChanged((user) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -68,9 +81,29 @@ export default defineComponent({
     const findUid = computed(() =>
       homePageA.value.find((e) => e.uid == userDetail.value?.uid)
     );
-    console.log(findUid, 'uid');
 
+    // watchEffect(() => {
+    //   const productShirt = computed(() =>
+    //     findUid.value?.products.filter((e) => e.type == 'shirt')
+    //   );
+    //   selectedShirt.value = productShirt;
+
+    //   const productPants = computed(() =>
+    //     findUid.value?.products.filter((e) => e.type == 'pants')
+    //   );
+    //   console.log(productPants);
+    //   selectedPants.value = productShirt;
+
+    //   const productAcc = computed(() =>
+    //     findUid.value?.products.filter((e) => e.type == 'accessory')
+    //   );
+    //   console.log(productAcc);
+    //   selectedAcc.value = productShirt;
+    // });
     return {
+      selectedShirt,
+      selectedPants,
+      selectedAcc,
       findUid,
       userDetail,
       homePageA,

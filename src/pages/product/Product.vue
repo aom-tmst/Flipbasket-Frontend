@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <div class="flex-col items-center product">
-      <div class="flex-container items-cemter">
+    <div class="flex-row justify-center">
+      <div class="flex-container">
         <q-btn
           @click="$router.go(-1)"
           no-caps
@@ -11,14 +11,75 @@
         >
           <q-icon name="chevron_left" /> Black</q-btn
         >
-        <div class="flex-col items-center edit-display">
-          <div class="flex-row wrapper items-center justify-center">
+      </div>
+    </div>
+    <!-- desktop -->
+    <div class="container product desktop">
+      <div class="vertical-center">
+        <div class="flex-row justify-center">
+          <div class="flex-col">
+            <div class="edit-box-img">
+              <img class="edit-img-desktop" src="images/shirt1.png" alt="" />
+            </div>
+          </div>
+          <div class="flex-col items-center justify-center">
+            <div class="content" style="width: 350px">
+              <div class="flex-col items-end posted-on">
+                Posted On : {{ selectedProduct.createdAt }}
+              </div>
+              <div class="posted-by flex-row">
+                <div>{{ selectedProduct.name }}</div>
+                <q-space />
+                <div>
+                  <q-btn
+                    class="items-end"
+                    flat
+                    no-caps
+                    dense
+                    unelevated
+                    icon="more_vert"
+                  >
+                    <q-menu>
+                      <ProductPopup />
+                    </q-menu>
+                  </q-btn>
+                </div>
+              </div>
+              <div class="content-detail">
+                {{ selectedProduct.desc }}
+              </div>
+              <div class="flex-row justify-end content-detail">
+                price: {{ selectedProduct.price }} Bath
+              </div>
+              <div class="flex-row justify-end items-center clickable">
+                <div class="profile-img">
+                  <img :src="productClothesDeatail.profileImg" alt="" />
+                </div>
+                <div @click="pushpage(selectedProduct.uid)" class="product-by">
+                  <span>{{ selectedProduct.store.name }} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- mobile -->
+    <div class="flex-row justify-center product mobile">
+      <div class="flex-container">
+        <div
+          class="flex-row justify-center wrapper"
+          style="margin: 0 20px 0 20px"
+        >
+          <div class="flex-col">
             <div class="edit-box-img">
               <img class="edit-img" src="images/shirt1.png" alt="" />
             </div>
-            <div class="content" style="max-width:350px;width:100%">
+          </div>
+          <div class="flex-col items-center justify-center">
+            <div class="content" style="max-width: 350px; width: 100%">
               <div class="flex-col items-end posted-on">
-                Posted On : {{ selectedProduct.createdAt}}
+                Posted On : {{ selectedProduct.createdAt }}
               </div>
               <div class="posted-by">
                 {{ selectedProduct.name }}
@@ -29,12 +90,11 @@
               <div class="flex-row justify-end content-detail">
                 price: {{ selectedProduct.price }} Bath
               </div>
-
               <div class="flex-row justify-end items-center clickable">
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
-                <div @click="pushpage()" class="product-by">
+                <div @click="pushpage(selectedProduct.uid)" class="product-by">
                   <span>{{ selectedProduct.store.name }} </span>
                 </div>
               </div>
@@ -47,13 +107,17 @@
 </template>
 
 <script lang="ts">
+import ProductPopup from 'src/pages/product/ProductPopup.vue';
 import { useStore } from 'src/store';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { productClothesDeatail } from 'src/pages/product/constants';
-import { defineComponent, computed, watchEffect,ref } from 'vue';
+import { defineComponent, computed, watchEffect, ref } from 'vue';
 export default defineComponent({
   name: 'Product',
+
+  components: {
+    ProductPopup,
+  },
 
   preFetch({ store }) {
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
@@ -65,6 +129,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const selectedProduct = ref();
+    const menu = ref(false);
 
     const products = computed(() => {
       const product = store.state.pagesModule.allProduct;
@@ -77,14 +142,17 @@ export default defineComponent({
         (e) => e._id == queryProduct.item
       );
       console.log(selectedProductOnWatch);
-      selectedProduct.value = selectedProductOnWatch
+      selectedProduct.value = selectedProductOnWatch;
     });
 
-    const pushpage = () => {
-      void router.push({ name: 'SellerProfile' });
+    console.log(selectedProduct, 'this line');
+
+    const pushpage = (item: string) => {
+      void router.push({ name: 'SellerProfile', query: { item } });
     };
 
     return {
+      menu,
       selectedProduct,
       productClothesDeatail,
       pushpage,
@@ -94,6 +162,23 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.container {
+  height: 100vh;
+  position: relative;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.edit-img-desktop {
+  width: 400px;
+}
 .product {
   .edit-display {
     display: flex;
@@ -120,15 +205,15 @@ export default defineComponent({
         width: 30px;
         margin-right: 10px;
       }
-      .product-by {
-        font-size: 18px;
-      }
     }
+    // .product-by {
+    //   font-weight: bold;
+    // }
   }
   .edit-box-img {
     margin: 20px;
     .edit-img {
-      max-width: 400px;
+      max-width: 300px;
       width: 100%;
     }
   }
@@ -139,6 +224,18 @@ export default defineComponent({
   .product-by:hover {
     cursor: pointer;
     color: rgb(43, 144, 226);
+  }
+}
+
+@media only screen and(min-width:767px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .desktop {
+    display: none;
   }
 }
 </style>
