@@ -95,6 +95,8 @@ export default defineComponent({
         uid: props.item?._id,
       };
 
+      console.log(payload);
+      
       try {
         const product = await api
           .post<Product>('products', payload)

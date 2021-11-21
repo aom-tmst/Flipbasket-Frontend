@@ -40,7 +40,7 @@
                     icon="more_vert"
                   >
                     <q-menu>
-                      <ProductPopup />
+                      <ProductPopup :item="selectedProduct" :thisUser="storeDetail"/>
                     </q-menu>
                   </q-btn>
                 </div>
@@ -108,10 +108,11 @@
 
 <script lang="ts">
 import ProductPopup from 'src/pages/product/ProductPopup.vue';
+import { auth } from 'src/boot/firebase';
 import { useStore } from 'src/store';
 import { useRouter, useRoute } from 'vue-router';
 import { productClothesDeatail } from 'src/pages/product/constants';
-import { defineComponent, computed, watchEffect, ref } from 'vue';
+import { defineComponent, computed, watchEffect, ref,onMounted } from 'vue';
 export default defineComponent({
   name: 'Product',
 
@@ -120,8 +121,10 @@ export default defineComponent({
   },
 
   preFetch({ store }) {
+
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
-    return Promise.all([fetchAllProduct]);
+    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
+    return Promise.all([fetchAllProduct,fetchHomePage]);
   },
 
   setup() {
@@ -135,6 +138,37 @@ export default defineComponent({
       const product = store.state.pagesModule.allProduct;
       return product;
     });
+
+// ------------------------  Store Detail -------------------- 
+
+    onMounted(() => {
+      auth.onAuthStateChanged((user) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const userDetails = store.dispatch('pagesModule/SubmitUid', {
+          name: user?.displayName,
+          uid: user?.uid,
+        });
+      });
+    });
+
+    const userDetail = computed(() => {
+      const user = store.state.pagesModule.auth;
+      return user;
+    });
+    console.log(userDetail, 'user');
+    
+
+    const homePageA = computed(() => {
+      const homePage = store.state.pagesModule.store;
+      return homePage;
+    });
+
+    const storeDetail = computed(() =>
+      homePageA.value.find((e) => e.uid == userDetail.value?.uid)
+    );
+    console.log(storeDetail ,'this');
+
+  // ------------------------  Function -------------------- 
 
     watchEffect(() => {
       const queryProduct = route.query;
@@ -151,7 +185,13 @@ export default defineComponent({
       void router.push({ name: 'SellerProfile', query: { item } });
     };
 
+
+
+    
+    
+
     return {
+      storeDetail,
       menu,
       selectedProduct,
       productClothesDeatail,

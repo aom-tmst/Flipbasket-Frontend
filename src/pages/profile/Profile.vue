@@ -15,7 +15,6 @@
           <div class="flex-row">
             <CardProfile :store="findUid" />
           </div>
-          <div class="posted-by">Shirt</div>
           <Shirt :item="findUid?.products"/>
           <!-- <div class="posted-by">Pants</div>
           <Trousers :item="selectedPants" />
