@@ -48,6 +48,10 @@ export default defineComponent({
   setup(props) {
     const reportDetail = ref('');
 
+    // const AddCart = async() => {
+    //   await api.post<FixProduct>('carts/', payload);
+    // }
+
     const SentReport = async() => {
       const payload = {
         report_title: reportDetail.value,

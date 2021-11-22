@@ -17,14 +17,14 @@
         :img-src="item.bannerImg"
         class="column no-wrap flex-center"
       >
-      <q-intersection once transition="scale">
-        <div class="flex-col content text-center">
-          <div class="flex-row">Choose to search for unique products at</div>
-          <div class="flex-row head-title">Flipbasket</div>
-          <div class="flex-row">
-            Open a new experience of online shopping.
+        <q-intersection once transition="scale">
+          <div class="flex-col content text-center">
+            <div class="flex-row">Choose to search for unique products at</div>
+            <div class="flex-row head-title">Flipbasket</div>
+            <div class="flex-row">
+              Open a new experience of online shopping.
+            </div>
           </div>
-        </div>
         </q-intersection>
       </q-carousel-slide>
     </q-carousel>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { BannerAds } from 'src/type/Home'
+import { BannerAds } from 'src/type/Home';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
@@ -70,11 +70,10 @@ export default defineComponent({
     margin-left: 30vw;
 
     .head-title {
-    font-size: 5vw;
-    font-weight: bold;
+      font-size: 5vw;
+      font-weight: bold;
+    }
   }
-  }
-  
 }
 @media only screen and (min-width: 1000px) {
   .main-banner {

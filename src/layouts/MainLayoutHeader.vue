@@ -35,8 +35,12 @@
           </q-menu>
         </div>
       </div>
-      <div class="flex-row items-center menu-list desktop-menu" v-if="userDetail">
+      <div
+        class="flex-row items-center menu-list desktop-menu"
+        v-if="userDetail"
+      >
         Welcome : {{ userDetail.name }}
+        <q-icon class="cart-edit-icon" name="local_mall" @click="pushPage()" />
         <q-btn
           flat
           no-caps
@@ -112,7 +116,7 @@
 
 <script lang="ts">
 import { auth } from 'src/boot/firebase';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { defineComponent, ref, onMounted } from 'vue';
 
 interface Error {
@@ -123,20 +127,20 @@ export default defineComponent({
   name: 'MainLayoutHeader',
   components: {},
   setup() {
+    const router = useRouter();
     const route = useRoute();
     const dialog = ref(false);
     const userDetail = ref();
 
-     onMounted(() => {
+    onMounted(() => {
       auth.onAuthStateChanged((user) => {
-       userDetail.value = {
-         name: user?.displayName,
-       }
+        userDetail.value = {
+          name: user?.displayName,
+        };
       });
     });
 
     console.log(userDetail);
-    
 
     const Logout = () => {
       auth
@@ -163,12 +167,32 @@ export default defineComponent({
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, productList, Logout, userDetail };
+    const pushPage = () => {
+      void router.push({ path: 'cart' });
+    };
+
+    return {
+      pushPage,
+      menuList,
+      dialog,
+      isActived,
+      productList,
+      Logout,
+      userDetail,
+    };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.cart-edit-icon {
+  margin-left: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.cart-edit-icon:hover{
+  color: rgb(43, 144, 226);
+}
 .q-header {
   color: black;
   background-color: white;

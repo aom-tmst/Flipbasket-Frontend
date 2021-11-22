@@ -1,7 +1,7 @@
 import { api } from 'boot/axios';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { PagesStateInterface, Store,AllProduct } from './state';
+import { PagesStateInterface, Store,AllProduct,Cart } from './state';
 
 const actions: ActionTree<PagesStateInterface, StateInterface> = {
   async fetchHomePage({ commit }) {
@@ -19,6 +19,16 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
     commit('setAllProduct', result);
     return result;
   },
+
+  async fetchCartPage({ commit }) {
+    const result = await api
+      .get<Cart>('carts')
+      .then((response) => response.data);
+    commit('setCartPage', result);
+    return result;
+  },
+
+  
 
   UpdateProduct({ dispatch }) {
     void dispatch('fetchHomePage');

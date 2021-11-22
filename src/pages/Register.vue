@@ -69,6 +69,9 @@ export default defineComponent({
           const result1 = await api.post('stores/', userDetail);
           console.log('🚀 ~ file: Register.vue ~ line 70 ~ Register ~ result1', result1)
 
+          const addCart = await api.post('carts/', userDetail);
+          console.log('🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addCart', addCart)
+
           await store.dispatch('pagesModule/SubmitUid',userDetail);
           $q.notify({
             type: 'positive',

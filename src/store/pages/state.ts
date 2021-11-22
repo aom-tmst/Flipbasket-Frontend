@@ -28,9 +28,18 @@ export interface AllProduct {
   store: Store[];
 }
 
+export interface Cart {
+  _id: string;
+  name: string;
+  uid: string;
+  store: Store[];
+  products: Product[];
+}
+
 export interface PagesStateInterface {
   allProduct: AllProduct[];
   store: Store[];
+  cart: Cart[];
   auth: UserDetail;
 }
 
@@ -38,6 +47,7 @@ function state(): PagesStateInterface {
   return {
     allProduct: [] as AllProduct[],
     store: [] as Store[],
+    cart: [] as Cart[],
     auth: {} as UserDetail,
   };
 }

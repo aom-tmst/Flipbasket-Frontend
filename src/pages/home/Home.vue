@@ -11,7 +11,7 @@
         <div class="flex-row justify-center">
           <span>Shirt</span>
         </div>
-        <Shirt :showEdit="false" :showDelete="false" :item="productShirt" />
+        <Costume :showEdit="false" :showDelete="false" :item="productShirt" />
       </div>
 
       <div class="scoped-banner" id="trousers">
@@ -21,7 +21,7 @@
         <div class="flex-row justify-center">
           <span>Trousers</span>
         </div>
-        <Trousers :showEdit="false" :showDelete="false" :item="productPants" />
+        <Costume :showEdit="false" :showDelete="false" :item="productPants" />
       </div>
 
       <div class="scoped-banner" id="accessory">
@@ -31,7 +31,7 @@
         <div class="flex-row justify-center">
           <span>Accessory</span>
         </div>
-        <Accessory :showEdit="false" :showDelete="false" :item="productAcc" />
+        <Costume :showEdit="false" :showDelete="false" :item="productAcc" />
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
@@ -45,15 +45,11 @@ import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
-import Shirt from 'src/components/Shirt.vue';
-import Trousers from 'src/components/Trousers.vue';
-import Accessory from 'src/components/Accessory.vue';
+import Costume from 'src/components/Costume.vue';
 import {
   bannerAds,
   clothesDeatail,
   galleryImg,
-  trousersDetail,
-  accessoryDetail,
 } from 'src/pages/home/constants';
 import { useStore } from 'src/store';
 import { defineComponent, computed } from 'vue';
@@ -63,9 +59,7 @@ export default defineComponent({
   components: {
     HomeMainBanner,
     HomeSecondBanner,
-    Shirt,
-    Trousers,
-    Accessory,
+    Costume,
     HomeTrouserBanner,
     HomeAccessoryBanner,
   },
@@ -108,8 +102,6 @@ export default defineComponent({
       homePageA,
       clothesDeatail,
       galleryImg,
-      trousersDetail,
-      accessoryDetail,
     };
   },
 });

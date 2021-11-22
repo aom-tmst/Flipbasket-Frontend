@@ -16,11 +16,11 @@
             <CardProfileSeller :item="selectedStore" />
           </div>
           <div class="posted-by">Shirt</div>
-          <Shirt :showEdit="false" :showDelete="false" :item="selectedShirt" />
+          <Costume :showEdit="false" :showDelete="false" :item="selectedShirt" />
           <div class="posted-by">Trousers</div>
-          <Trousers :showEdit="false" :showDelete="false" :item="selectedPants" />
+          <Costume :showEdit="false" :showDelete="false" :item="selectedPants" />
           <div class="posted-by">Accessory</div>
-          <Accessory :showEdit="false" :showDelete="false" :item="selectedAcc" />
+          <Costume :showEdit="false" :showDelete="false" :item="selectedAcc" />
           <div class="posted-by">Gallery</div>
           <Gallery :item="galleryImg" />
         </div>
@@ -31,15 +31,10 @@
 
 <script lang="ts">
 import CardProfileSeller from 'src/components/CardProfileSeller.vue';
-import Shirt from 'src/components/Shirt.vue';
-import Trousers from 'src/components/Trousers.vue';
-import Accessory from 'src/components/Accessory.vue';
+import Costume from 'src/components/Costume.vue';
 import Gallery from 'src/components/Gallery.vue';
 import {
-  clothesDeatail,
   galleryImg,
-  trousersDetail,
-  accessoryDetail,
 } from 'src/pages/home/constants';
 import { useRoute } from 'vue-router';
 import { sellerProfileDetail } from 'src/pages/sellerprofile/constants';
@@ -51,9 +46,7 @@ export default defineComponent({
 
   components: {
     CardProfileSeller,
-    Shirt,
-    Trousers,
-    Accessory,
+    Costume,
     Gallery,
   },
 
@@ -118,9 +111,6 @@ export default defineComponent({
       selectedAcc,
       selectedStore,
       sellerProfileDetail,
-      clothesDeatail,
-      trousersDetail,
-      accessoryDetail,
       galleryImg,
     };
   },

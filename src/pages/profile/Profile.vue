@@ -15,7 +15,7 @@
           <div class="flex-row">
             <CardProfile :store="findUid" />
           </div>
-          <Shirt :item="findUid?.products"/>
+          <Costume :item="findUid?.products"/>
           <!-- <div class="posted-by">Pants</div>
           <Trousers :item="selectedPants" />
           <div class="posted-by">Accessory</div>
@@ -29,7 +29,7 @@
 <script lang="ts">
 import { auth } from 'src/boot/firebase';
 import CardProfile from 'src/components/CardProfile.vue';
-import Shirt from 'src/components/Shirt.vue';
+import Costume from 'src/components/Costume.vue';
 // import Trousers from 'src/components/Trousers.vue';
 // import Accessory from 'src/components/Accessory.vue';
 import { profileDetail } from 'src/pages/profile/constants';
@@ -39,7 +39,7 @@ export default defineComponent({
   name: 'Profile',
 
   components: {
-    Shirt,
+    Costume,
     CardProfile,
     // Trousers,
     // Accessory,
