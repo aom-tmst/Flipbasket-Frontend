@@ -40,7 +40,7 @@
                     icon="more_vert"
                   >
                     <q-menu>
-                      <ProductPopup :item="selectedProduct" :thisUser="storeDetail"/>
+                      <ProductPopup :item="selectedProduct" :thisUser="storeDetail" :thisCartId="cartDetailId"/>
                     </q-menu>
                   </q-btn>
                 </div>
@@ -124,7 +124,8 @@ export default defineComponent({
 
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
-    return Promise.all([fetchAllProduct,fetchHomePage]);
+    const fetchCartPage = store.dispatch('pagesModule/fetchCartPage')
+    return Promise.all([fetchAllProduct,fetchHomePage,fetchCartPage]);
   },
 
   setup() {
@@ -185,12 +186,19 @@ export default defineComponent({
       void router.push({ name: 'SellerProfile', query: { item } });
     };
 
+  // ------------------------  find cart id  -------------------- 
 
-
+     const cartDetail = computed(() => {
+      const cartDetails = store.state.pagesModule.cart;
+      return cartDetails;
+    });
     
-    
+    const cartDetailId = computed(() =>
+      cartDetail.value.find((e) => e.uid == userDetail.value?.uid)
+    );
 
     return {
+      cartDetailId,
       storeDetail,
       menu,
       selectedProduct,
