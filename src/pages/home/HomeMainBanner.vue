@@ -99,4 +99,15 @@ export default defineComponent({
     }
   }
 }
+@media only screen and (max-width: 500px) {
+  .main-banner {
+    .content {
+      margin-left: 0;
+      .head-title {
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+  }
+}
 </style>

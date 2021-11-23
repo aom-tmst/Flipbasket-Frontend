@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
 import { FixProduct } from 'src/type/FixProduct';
 import { Store } from 'src/store/pages/state';
@@ -58,20 +59,36 @@ export default defineComponent({
   },
 
   setup(props) {
+    const $q = useQuasar();
     const reportDetail = ref('');
 
     const SentReport = async () => {
-      const payload = {
-        report_title: reportDetail.value,
-        name: props.item?.name,
-        desc: props.item?.desc,
-        price: props.item?.price,
-        type: props.item?.type,
-        product_id: props.item?._id,
-        store_name: props.item?.store.name,
-        sentBy: props.thisUser?.name,
-      };
-      await api.post<FixProduct>('feedbacks', payload);
+      try {
+        const payload = {
+          report_title: reportDetail.value,
+          name: props.item?.name,
+          desc: props.item?.desc,
+          price: props.item?.price,
+          type: props.item?.type,
+          product_id: props.item?._id,
+          store_name: props.item?.store.name,
+          sentBy: props.thisUser?.name,
+        };
+        await api.post<FixProduct>('feedbacks', payload);
+
+        $q.notify({
+          type: 'positive',
+          message: 'Sent successed.',
+          color: 'secondary',
+          timeout: 1000,
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not sent report ',
+          timeout: 1000,
+        });
+      }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -82,10 +99,24 @@ export default defineComponent({
     console.log(productIds, '3');
 
     const AddCart = async () => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      await api.put(`carts/${props.thisCartId?._id}`, {
-        products: [props.item?._id, ...productIds],
-      });
+      try {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        await api.put(`carts/${props.thisCartId?._id}`, {
+          products: [props.item?._id, ...productIds],
+        });
+        $q.notify({
+          type: 'positive',
+          message: 'Add product successed',
+          color: 'secondary',
+          timeout: 1000,
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not add product, why? ',
+          timeout: 1000,
+        });
+      }
     };
 
     return { reportDetail, SentReport, AddCart };

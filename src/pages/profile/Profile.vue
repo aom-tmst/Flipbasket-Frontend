@@ -1,7 +1,7 @@
 <template>
   <q-page class="seller-profile">
     <div class="flex-col items-center product">
-      <div class="flex-container items-cemter">
+      <div class="flex-container items-cemter" v-if="findUid">
         <q-btn
           @click="$router.go(-1)"
           no-caps

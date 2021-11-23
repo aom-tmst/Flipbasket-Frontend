@@ -34,5 +34,19 @@ export default defineComponent({
     // text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
     //   0 5px 0 #aaa;
   }
+   .content{
+    margin: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .HomeSecondBanner {
+    .content{
+      line-height: 50px;
+    }
+    .head-title {
+        font-size: 40px;
+        font-weight: bold;
+      }
+  }
 }
 </style>
