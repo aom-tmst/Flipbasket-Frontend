@@ -4,7 +4,6 @@
       <q-item-section @click="AddCart()">
         <div class="flex-row items-center">
           <q-icon name="shopping_cart" class="q-mr-sm" />
-          {{thisCartId}}
           <span>Add to cart</span>
         </div>
       </q-item-section>
@@ -41,12 +40,12 @@ import { Store } from 'src/store/pages/state';
 import { defineComponent, ref } from 'vue';
 
 interface Product {
-  _id : string
+  _id: string;
 }
 
 interface CartDetail {
-  _id: string,
-  products : Product[]
+  _id: string;
+  products: Product[];
 }
 
 export default defineComponent({
@@ -61,27 +60,32 @@ export default defineComponent({
   setup(props) {
     const reportDetail = ref('');
 
-    const payload = {
-      report_title: reportDetail.value,
-      name: props.item?.name,
-      desc: props.item?.desc,
-      price: props.item?.price,
-      type: props.item?.type,
-      product_id: props.item?._id,
-      store_name: props.item?.store.name,
-      sentBy: props.thisUser?.name,
+    const SentReport = async () => {
+      const payload = {
+        report_title: reportDetail.value,
+        name: props.item?.name,
+        desc: props.item?.desc,
+        price: props.item?.price,
+        type: props.item?.type,
+        product_id: props.item?._id,
+        store_name: props.item?.store.name,
+        sentBy: props.thisUser?.name,
+      };
+      await api.post<FixProduct>('feedbacks', payload);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const productIds = props.thisCartId?.products.map((data)=> data._id)
+    const productIds = props.thisCartId?.products.map((data) => data._id) || [];
+
+    console.log(props.thisCartId?._id, '1');
+    console.log(props.item?._id, '2');
+    console.log(productIds, '3');
 
     const AddCart = async () => {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      await api.put<FixProduct>(`carts/${props.thisCartId?._id}`, { products: [props.item?._id, ...[productIds]] })
-    };
-
-    const SentReport = async () => {
-      await api.post<FixProduct>('feedbacks', payload);
+      await api.put(`carts/${props.thisCartId?._id}`, {
+        products: [props.item?._id, ...productIds],
+      });
     };
 
     return { reportDetail, SentReport, AddCart };
