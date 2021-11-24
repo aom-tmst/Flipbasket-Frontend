@@ -43,7 +43,7 @@
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end" v-if="item">
-        <q-btn @click="editProduct(item)" color="primary">Change Product</q-btn>
+        <q-btn @click="editProduct(item)" color="primary" v-close-popup>Change Product</q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -81,6 +81,7 @@ export default defineComponent({
         image: image.value,
       };
       try {
+         $q.loading.show();
         const result = await api.put(`products/${item?._id}`, payload);
         console.log(result);
 
@@ -97,6 +98,9 @@ export default defineComponent({
           message: 'Bad form please enter your product again.',
           timeout: 1000,
         });
+      }
+       finally {
+        $q.loading.hide();
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     };

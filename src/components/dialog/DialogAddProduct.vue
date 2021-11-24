@@ -42,7 +42,7 @@
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end">
-        <q-btn @click="addProduct" color="primary">Add Product</q-btn>
+        <q-btn @click="addProduct" color="primary" v-close-popup>Add Product</q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -84,8 +84,6 @@ export default defineComponent({
     const image = ref(null);
     const dense = ref(false);
 
-
-
     const addProduct = async () => {
       const payload: AddProductPayload = {
         name: name.value,
@@ -98,6 +96,7 @@ export default defineComponent({
       console.log(payload);
       
       try {
+         $q.loading.show();
         const product = await api
           .post<Product>('products', payload)
           .then((response) => response.data);
@@ -128,6 +127,9 @@ export default defineComponent({
           message: 'Bad form please enter your product again.',
           timeout: 1000,
         });
+      }
+       finally {
+        $q.loading.hide();
       }
 
       await store.dispatch('pagesModule/AddProduct');

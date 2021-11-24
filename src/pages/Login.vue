@@ -34,7 +34,7 @@
 import { useQuasar } from 'quasar';
 import { LoginWithFirebase } from 'src/boot/firebase';
 import { useStore } from 'src/store';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onBeforeUnmount } from 'vue';
 
 export default defineComponent({
   name: 'Login',
@@ -46,15 +46,29 @@ export default defineComponent({
     const email = ref('');
     const password = ref('');
 
+    let timer: NodeJS.Timeout|undefined
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer);
+        $q.loading.hide();
+      }
+    });
+
     const Login = async () => {
       try {
+        $q.loading.show();
         const user = await LoginWithFirebase(email.value, password.value);
         if (user.user) {
           const userDetail = {
-            name : user.user.displayName,
-            uid : user.user.uid
-          }
-          await store.dispatch('pagesModule/SubmitUid',userDetail );
+            name: user.user.displayName,
+            uid: user.user.uid,
+          };
+          $q.loading.show();
+
+          // hiding in 2s
+        
+          await store.dispatch('pagesModule/SubmitUid', userDetail);
           $q.notify({
             type: 'positive',
             message: 'Login successed.',
@@ -68,6 +82,9 @@ export default defineComponent({
           message: 'Login failed , email or password does not exist',
           timeout: 1000,
         });
+      }
+      finally {
+        $q.loading.hide();
       }
     };
 

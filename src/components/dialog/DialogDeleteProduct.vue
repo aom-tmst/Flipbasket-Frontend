@@ -12,7 +12,7 @@
     <q-card-section>
       <span>Are you sure to Delete : {{ item.name }}</span>
       <div class="flex-row justify-end">
-        <q-btn @click="Product(item)" color="primary">delete product</q-btn>
+        <q-btn @click="Product(item)" color="primary" v-close-popup>delete product</q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -38,6 +38,7 @@ export default defineComponent({
       if (!item) return;
 
       try {
+        $q.loading.show();
         const result = await api.delete(`products/${item?._id}`);
         console.log(result);
         await store.dispatch('pagesModule/DeleteProduct');
@@ -54,6 +55,9 @@ export default defineComponent({
           message: 'Error , please check your internet and try again.',
           timeout: 1000,
         });
+      }
+      finally {
+        $q.loading.hide();
       }
     };
 

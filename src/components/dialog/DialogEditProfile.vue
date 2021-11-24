@@ -18,7 +18,9 @@
         :dense="dense"
       />
       <div class="flex-row justify-end">
-        <q-btn @click="editProfile(item)" color="primary">Save Change</q-btn>
+        <q-btn @click="editProfile(item)" color="primary" v-close-popup
+          >Save Change</q-btn
+        >
       </div>
     </q-card-section>
   </q-card>
@@ -51,6 +53,7 @@ export default defineComponent({
       };
 
       try {
+        $q.loading.show();
         const result = await api.put(`stores/${item?._id}`, payload);
         console.log(result);
 
@@ -69,6 +72,8 @@ export default defineComponent({
           message: 'Bad form please enter your product again.',
           timeout: 1000,
         });
+      } finally {
+        $q.loading.hide();
       }
     };
 

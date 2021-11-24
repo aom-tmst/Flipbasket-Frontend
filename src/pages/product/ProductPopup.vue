@@ -64,6 +64,7 @@ export default defineComponent({
 
     const SentReport = async () => {
       try {
+        $q.loading.show();
         const payload = {
           report_title: reportDetail.value,
           name: props.item?.name,
@@ -89,6 +90,9 @@ export default defineComponent({
           timeout: 1000,
         });
       }
+      finally{
+        $q.loading.hide();
+      }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -100,6 +104,7 @@ export default defineComponent({
 
     const AddCart = async () => {
       try {
+        $q.loading.show();
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         await api.put(`carts/${props.thisCartId?._id}`, {
           products: [props.item?._id, ...productIds],
@@ -116,6 +121,9 @@ export default defineComponent({
           message: 'Can not add product, why? ',
           timeout: 1000,
         });
+      }
+      finally{
+        $q.loading.hide();
       }
     };
 

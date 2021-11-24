@@ -52,6 +52,7 @@ export default defineComponent({
 
     const Register = async () => {
       try {
+        $q.loading.show();
         const user = await RegistWithFirebase(
           name.value,
           email.value,
@@ -86,6 +87,9 @@ export default defineComponent({
           message: 'Regist failed , invalid email',
           timeout: 1000,
         });
+      }
+      finally {
+        $q.loading.hide();
       }
     };
 
