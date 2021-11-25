@@ -31,7 +31,7 @@
         <div class="flex-row justify-center">
           <span>Accessory</span>
         </div>
-        <Costume :showEdit="false" :showDelete="false" :item="productAcc" />
+        <Accessory :item="productAcc" />
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
@@ -46,6 +46,7 @@ import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
 import Costume from 'src/components/Costume.vue';
+import Accessory from 'src/components/Accessory.vue'
 import {
   bannerAds,
   clothesDeatail,
@@ -57,6 +58,7 @@ export default defineComponent({
   name: 'Home',
 
   components: {
+    Accessory,
     HomeMainBanner,
     HomeSecondBanner,
     Costume,

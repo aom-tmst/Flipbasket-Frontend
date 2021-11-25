@@ -1,23 +1,67 @@
 <template>
   <q-page>
     <div class="flex-row justify-center" v-if="findMathUid">
-      <!-- {{findMathUid}} -->
       <div class="flex-container">
         <div v-for="(item, index) in findMathUid.products" :key="index">
-          <div class="flex-col" style="margin: 20px">
-            <div class="flex-row">
-              <div>profile</div>
-              <div>{{ item.name }}</div>
+          <div class="flex-col desktop" style="margin: 20px">
+            <div class="flex-row" style="margin-top: 20px">
+              <img class="edit-profile-img" src="images/profileImg.jpg" />
+              <div class="flex-col q-ml-md">
+                <div class="posted-by" v-if="findMathUid">
+                  {{ findMathUid.name }}
+                </div>
+                <div>{{ item.name }}</div>
+              </div>
             </div>
             <div class="row">
-              <div class="col">image</div>
-              <div class="col">{{ item.desc }}</div>
-              <div class="col">{{ item.type }}</div>
-              <div class="col">{{ item.price }}</div>
-              <div class="col">{{ item._id }}</div>
-              <q-btn @click="deleteItemOnCart(item._id)"> - </q-btn>
+              <div class="col content">
+                <img src="images/shirt1.png" alt="" style="width: 12vw" />
+              </div>
+              <div class="col content content-detail">{{ item.desc }}</div>
+              <div class="col content">type: {{ item.type }}</div>
+              <div class="col content">price: {{ item.price }} bath</div>
+              <div class="col content">
+                <q-btn
+                  @click="deleteItemOnCart(item._id)"
+                  style="width: 30px; height: fit-content"
+                  icon="delete"
+                />
+              </div>
             </div>
           </div>
+
+          <div class="mobile justify-start" style="margin: 30px 5px 30px 5px">
+            <div class="edit-image">
+              <img src="images/shirt1.png" alt="" class="editeOnimage" />
+            </div>
+            <div class="flex-col justify-center" style="margin-left: 30px">
+              <div class="flex-row q-mb-md q-mt-md">
+                <img class="edit-profile-img" src="images/profileImg.jpg" />
+
+                <div class="flex-col q-ml-md">
+                  <div class="posted-by" v-if="findMathUid">
+                    {{ findMathUid.name }}
+                  </div>
+                  <div>{{ item.name }}</div>
+                </div>
+              </div>
+              <div class="content-detail" style="max-width: 500px">
+                {{ item.desc }}
+              </div>
+              <div class="flex-row items-center" style="margin-top: 20px">
+                <div style="margin-right: 30px">type: {{ item.type }}</div>
+                <div style="margin-right: 30px">
+                  price: {{ item.price }} bath
+                </div>
+                <q-btn
+                  @click="deleteItemOnCart(item._id)"
+                  style="width: 30px; height: fit-content"
+                  icon="delete"
+                />
+              </div>
+            </div>
+          </div>
+          <q-separator style="margin: 20px 0"/>
         </div>
       </div>
     </div>
@@ -87,11 +131,11 @@ export default defineComponent({
         console.log(result);
 
         $q.notify({
-            type: 'positive',
-            message: 'this product has removed from your cart',
-            color: 'secondary',
-            timeout: 1000,
-          });
+          type: 'positive',
+          message: 'this product has removed from your cart',
+          color: 'secondary',
+          timeout: 1000,
+        });
       } catch (e) {
         $q.notify({
           type: 'negative',
@@ -109,4 +153,57 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.posted-by {
+  font-weight: bold;
+}
+.content-detail {
+  color: #585858;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.editeOnimage {
+  width: 150px;
+}
+.edit-profile-img {
+  width: 50px;
+  border-radius: 10px;
+}
+
+@media only screen and(min-width:1000px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media only screen and(max-width:1000px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+  }
+}
+@media only screen and(max-width:500px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    .edit-image {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .editeOnimage {
+    width: 250px;
+  }
+}
+</style>

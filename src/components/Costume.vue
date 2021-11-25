@@ -24,7 +24,7 @@
           </div>
           <q-space/>
           <div v-if="showEdit">
-              <q-btn dense flat no-caps color="primary" icon="widgets">
+              <q-btn dense flat no-caps color="primary" icon="drag_handle">
                 <q-menu>
                   <q-list dense style="width:100%;min-width:200px">
                     <q-item clickable v-close-popup style="min-height:50px" >

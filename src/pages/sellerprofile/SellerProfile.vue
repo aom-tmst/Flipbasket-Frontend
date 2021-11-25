@@ -20,7 +20,7 @@
           <div class="posted-by">Trousers</div>
           <Costume :showEdit="false" :showDelete="false" :item="selectedPants" />
           <div class="posted-by">Accessory</div>
-          <Costume :showEdit="false" :showDelete="false" :item="selectedAcc" />
+          <Accessory  :item="selectedAcc" />
           <div class="posted-by">Gallery</div>
           <Gallery :item="galleryImg" />
         </div>
@@ -32,6 +32,7 @@
 <script lang="ts">
 import CardProfileSeller from 'src/components/CardProfileSeller.vue';
 import Costume from 'src/components/Costume.vue';
+import Accessory from 'src/components/Accessory.vue'
 import Gallery from 'src/components/Gallery.vue';
 import {
   galleryImg,
@@ -45,6 +46,7 @@ export default defineComponent({
   name: 'SellerProfile',
 
   components: {
+    Accessory,
     CardProfileSeller,
     Costume,
     Gallery,

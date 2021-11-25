@@ -7,6 +7,7 @@ export interface Product {
     image: Image
     type: string
     uid: string
+    
 }
 
 export interface GalleryImg {
