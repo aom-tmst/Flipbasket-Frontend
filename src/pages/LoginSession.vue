@@ -59,12 +59,14 @@
 </template>
 
 <script lang="ts">
+import { api } from 'src/boot/axios';
+import { useStore } from 'src/store';
 import { useQuasar } from 'quasar';
 import { LoginWithGoogle, LoginWithFacebook } from 'src/boot/firebase';
 import Login from 'pages/Login.vue';
 import Register from 'pages/Register.vue';
 import ForgotPassword from 'pages/ForgotPassword.vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
   name: 'LoginSession',
@@ -75,15 +77,52 @@ export default defineComponent({
     ForgotPassword,
   },
 
+  preFetch({ store }) {
+    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
+    return Promise.all([fetchHomePage]);
+  },
+
   setup() {
+    const store = useStore();
     const $q = useQuasar();
     const selectedComponent = ref('Login');
 
-    const LoginGoogle = () => {
-      try {
-        const loginWithGoogle = LoginWithGoogle();
-        console.log(loginWithGoogle);
+    const checkStore = computed(() => {
+      const homePage = store.state.pagesModule.store;
+      return homePage;
+    });
+    console.log(checkStore, 'store');
 
+    const LoginGoogle = async () => {
+      try {
+        const loginWithGoogle = await LoginWithGoogle();
+        console.log(loginWithGoogle, 'test');
+
+        const userDetail = {
+          name: loginWithGoogle.user.displayName,
+          uid: loginWithGoogle.user.uid,
+        };
+
+        const findStore = checkStore.value.find((e) => e.uid == userDetail.uid);
+        if (findStore) {
+          await store.dispatch('pagesModule/SubmitUid', userDetail);
+          console.log('findStore');
+        } else {
+          const result1 = await api.post('stores/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ result1',
+            result1
+          );
+
+          const addCart = await api.post('carts/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addCart',
+            addCart
+          );
+
+          await store.dispatch('pagesModule/SubmitUid', userDetail);
+          console.log('else did not find');
+        }
         $q.notify({
           type: 'positive',
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -98,11 +137,35 @@ export default defineComponent({
       }
     };
 
-    const LoginFacebook = () => {
+    const LoginFacebook = async () => {
       try {
-        const loginWithFacebook = LoginWithFacebook();
-        console.log(loginWithFacebook);
+        const loginWithFacebook = await LoginWithFacebook();
+        console.log(loginWithFacebook, 'Facebook user detail');
 
+        const userDetail = {
+          name: loginWithFacebook.user.displayName,
+          uid: loginWithFacebook.user.uid,
+        };
+        const findStore = checkStore.value.find((e) => e.uid == userDetail.uid);
+        if (findStore) {
+          await store.dispatch('pagesModule/SubmitUid', userDetail);
+          console.log('findStore');
+        } else {
+          const result1 = await api.post('stores/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ result1',
+            result1
+          );
+
+          const addCart = await api.post('carts/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addCart',
+            addCart
+          );
+
+          await store.dispatch('pagesModule/SubmitUid', userDetail);
+          console.log('else did not find');
+        }
         $q.notify({
           type: 'positive',
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

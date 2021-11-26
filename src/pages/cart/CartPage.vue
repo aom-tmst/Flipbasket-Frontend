@@ -6,11 +6,8 @@
           <div class="flex-col desktop" style="margin: 20px">
             <div class="flex-row" style="margin-top: 20px">
               <img class="edit-profile-img" src="images/profileImg.jpg" />
-              <div class="flex-col q-ml-md">
-                <div class="posted-by" v-if="findMathUid">
-                  {{ findMathUid.name }}
-                </div>
-                <div>{{ item.name }}</div>
+              <div class="flex-col q-ml-md justify-center">
+                <div class="posted-by">{{ item.name }}</div>
               </div>
             </div>
             <div class="row">
@@ -38,11 +35,8 @@
               <div class="flex-row q-mb-md q-mt-md">
                 <img class="edit-profile-img" src="images/profileImg.jpg" />
 
-                <div class="flex-col q-ml-md">
-                  <div class="posted-by" v-if="findMathUid">
-                    {{ findMathUid.name }}
-                  </div>
-                  <div>{{ item.name }}</div>
+                <div class="flex-col q-ml-md justify-center">
+                  <div class="posted-by">{{ item.name }}</div>
                 </div>
               </div>
               <div class="content-detail" style="max-width: 500px">
@@ -61,7 +55,7 @@
               </div>
             </div>
           </div>
-          <q-separator style="margin: 20px 0"/>
+          <q-separator style="margin: 20px 0" />
         </div>
       </div>
     </div>

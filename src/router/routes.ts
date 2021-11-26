@@ -40,7 +40,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     name: 'Addmin',
-    path: '/addmin',
+    path: '/admin',
     component: () => import('src/pages/Addmin.vue'),
   },
 ];

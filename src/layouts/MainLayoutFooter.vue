@@ -4,8 +4,8 @@
       <div class="space-bottom">
         <div class="flex-row footer-list">
           <div class="column" style="width: 350px">
-            <img src="icons/fliplogo.png" alt="" style="width: 250px" />
-            <div class="content space-upper">
+            <div class="title">Flipbasket</div>
+            <div class="content">
               {{aboutList.about}}
             </div>
           </div>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="column">
-            <div class="title">Address</div>
+            <div class="title">Store address</div>
             <div style="margin-bottom:10px;" v-for="(item, index) in addressList" :key="index">
               {{ item.title }} : {{ item.label }}
             </div>
@@ -55,7 +55,7 @@ export default defineComponent({
   setup(props) {
 
     const contact = () =>{
-      window.open('https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%99%E0%B8%B2%E0%B8%9A%E0%B8%AD%E0%B8%99/@8.2574944,99.6011689,16.5z/data=!4m9!1m2!2m1!1z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZ4Lia4LmJ4Liy4LiZ4LiZ4Liy4Lia4Lit4LiZ!3m5!1s0x3052496d20224297:0xcc5bf209923521bd!8m2!3d8.2596912!4d99.6032638!15sCjPguYLguKPguIfguYDguKPguLXguKLguJnguJrguYnguLLguJnguJnguLLguJrguK3guJmSAQZzY2hvb2w');
+      window.open('https://www.google.com/maps/dir/45.7034589,21.3021564/45.703536,21.302092/@45.7033946,21.3019842,43m/data=!3m1!1e3');
     }
 
     const route = useRoute();
@@ -64,15 +64,15 @@ export default defineComponent({
       about:'simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and'
     }
     const footerList = [
-      { title: 'Facebook', label: 'Micheal Jasi', path: 'locations' },
-      { title: 'Line', label: '@Mj123', path: 'blog' },
-      { title: 'Mail', label: 'Mj123@dex.com', path: 'contactus' },
-      { title: 'Tel', label: '061-565-4688', path: 'terms-and-conditions' },
+      { title: 'Facebook', label: '어쩌면나', path: 'locations' },
+      { title: 'Line', label: '@7th.31', path: 'blog' },
+      { title: 'Mail', label: 'tmst.mtj@gmail.com', path: 'contactus' },
+      { title: 'Tel', label: '081-691-2827', path: 'terms-and-conditions' },
     ];
     const addressList = [
       {
         title: 'Address',
-        label: 'address : 127 kata patong',
+        label: 'On the UFO forest',
         path: 'locations',
       },
     ];

@@ -67,17 +67,12 @@ export default defineComponent({
   },
 
   preFetch({ store }) {
-    const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
-    return Promise.all([fetchHomePage, fetchAllProduct]);
+    return Promise.all([fetchAllProduct]);
   },
 
   setup() {
     const store = useStore();
-    const homePageA = computed(() => {
-      const homePage = store.state.pagesModule.store;
-      return homePage?.[0];
-    });
 
     const products = computed(() => {
       const product = store.state.pagesModule.allProduct;
@@ -101,7 +96,6 @@ export default defineComponent({
       productPants,
       productAcc,
       bannerAds,
-      homePageA,
       clothesDeatail,
       galleryImg,
     };

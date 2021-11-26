@@ -76,6 +76,7 @@ export default defineComponent({
     margin-bottom: 10px;
   }
   .content-detail {
+    font-size: 16px;
     color: #585858;
     margin-bottom: 10px;
   }

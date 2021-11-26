@@ -2,12 +2,12 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <q-icon color="blue" name="local_mall" />
+        <q-icon color="blue" name="shopping_basket" />
         <div class="q-ml-sm" style="font-weight: bold">Flipbasket</div>
       </q-btn>
 
       <!-- Desktop -->
-      <div class="flex-row items-center menu-list desktop-menu e">
+      <div class="flex-row items-center menu-list desktop-menu">
         <a
           v-for="({ label, path }, index) in menuList"
           :key="index"
@@ -41,13 +41,13 @@
         <q-icon class="cart-edit-icon" name="local_mall" @click="pushPage()" />
       </div>
       <button
-        class="logout edit-btn q-mr-sm"
+        class="logout edit-btn q-mr-sm desktop-menu"
         @click="Logout"
         style="margin-left: 20px"
       >
         Logout
       </button>
-      <q-icon size="sm" name="account_circle" />
+      <q-icon size="sm" name="account_circle" class="desktop-menu"/>
 
       <!-- Mobile -->
       <div class="menu-list mobile-menu">
