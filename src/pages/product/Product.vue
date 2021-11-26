@@ -84,8 +84,27 @@
               <div class="flex-col items-end posted-on">
                 Posted On : {{ selectedProduct.createdAt }}
               </div>
-              <div class="posted-by">
-                {{ selectedProduct.name }}
+              <div class="posted-by flex-row">
+                <div>{{ selectedProduct.name }}</div>
+                <q-space />
+                <div>
+                  <q-btn
+                    class="items-end"
+                    flat
+                    no-caps
+                    dense
+                    unelevated
+                    icon="more_vert"
+                  >
+                    <q-menu>
+                      <ProductPopup
+                        :item="selectedProduct"
+                        :thisUser="storeDetail"
+                        :thisCartId="cartDetailId"
+                      />
+                    </q-menu>
+                  </q-btn>
+                </div>
               </div>
               <div class="content-detail">
                 {{ selectedProduct.desc }}
