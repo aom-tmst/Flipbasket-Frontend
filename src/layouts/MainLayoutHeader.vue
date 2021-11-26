@@ -2,7 +2,8 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <img src="icons/fliplogo.png" style="width: 200px" />
+        <q-icon color="blue" name="local_mall" />
+        <div class="q-ml-sm" style="font-weight: bold">Flipbasket</div>
       </q-btn>
 
       <!-- Desktop -->
@@ -35,30 +36,24 @@
           </q-menu>
         </div>
       </div>
-      <div
-        class="flex-row items-center menu-list desktop-menu"
-        v-if="userDetail"
-      >
-        Welcome : {{ userDetail.name }}
+      <div class="flex-row items-center menu-list desktop-menu">
+        <div v-if="userDetail">Welcome : {{ userDetail.name }}</div>
         <q-icon class="cart-edit-icon" name="local_mall" @click="pushPage()" />
-        <q-btn
-          flat
-          no-caps
-          dense
-          class="logout"
-          @click="Logout"
-          style="margin-left: 20px"
-        >
-          Logout
-        </q-btn>
-        <q-icon size="sm" name="account_circle" />
       </div>
+      <button
+        class="logout edit-btn q-mr-sm"
+        @click="Logout"
+        style="margin-left: 20px"
+      >
+        Logout
+      </button>
+      <q-icon size="sm" name="account_circle" />
 
       <!-- Mobile -->
-      <div class="menu-list mobile-menu" v-if="userDetail">
+      <div class="menu-list mobile-menu">
         <q-btn icon="menu" @click="dialog = !dialog" />
         <q-dialog maximized seamless v-model="dialog" position="right">
-          <q-card class="menu-dialog flex-col items-center">
+          <q-card class="menu-dialog flex-col items-center" v-if="userDetail">
             <q-card-section> Welcome : {{ userDetail.name }} </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in menuList"
@@ -85,27 +80,12 @@
               </a>
             </q-card-section>
             <q-card-section>
-              <q-btn
-                flat
-                no-caps
-                dense
-                class="logout text-black"
-                to="profile"
-                @click="dialog = !dialog"
-              >
-                profile
-              </q-btn>
+              <button class="edit-btn" @click="pushPage()" v-close-popup>
+                Cart
+              </button>
             </q-card-section>
             <q-card-section>
-              <q-btn
-                flat
-                no-caps
-                dense
-                class="logout text-black"
-                @click="Logout"
-              >
-                Logout
-              </q-btn>
+              <button class="logout edit-btn" @click="Logout">Logout</button>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -185,12 +165,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.edit-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.edit-btn:hover {
+  color: rgb(43, 144, 226);
+}
 .cart-edit-icon {
   margin-left: 20px;
   font-size: 20px;
   cursor: pointer;
 }
-.cart-edit-icon:hover{
+.cart-edit-icon:hover {
   color: rgb(43, 144, 226);
 }
 .q-header {

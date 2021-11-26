@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="flex-row justify-center">
+    <div class="desktop product flex-row justify-center">
       <div class="flex-container">
         <q-btn
           @click="$router.go(-1)"
@@ -11,11 +11,6 @@
         >
           <q-icon name="chevron_left" /> Black</q-btn
         >
-      </div>
-    </div>
-    <!-- desktop -->
-    <div class="container product desktop">
-      <div class="vertical-center">
         <div class="flex-row justify-center">
           <div class="flex-col">
             <div class="edit-box-img">
@@ -40,7 +35,11 @@
                     icon="more_vert"
                   >
                     <q-menu>
-                      <ProductPopup :item="selectedProduct" :thisUser="storeDetail" :thisCartId="cartDetailId"/>
+                      <ProductPopup
+                        :item="selectedProduct"
+                        :thisUser="storeDetail"
+                        :thisCartId="cartDetailId"
+                      />
                     </q-menu>
                   </q-btn>
                 </div>
@@ -62,8 +61,12 @@
             </div>
           </div>
         </div>
+        <div class="recommended-text" style="margin:20px 50px;">Recommended</div>
+        <Accessory :item="recommentedProduct" />
       </div>
     </div>
+    <!-- desktop -->
+
     <!-- mobile -->
     <div class="flex-row justify-center product mobile">
       <div class="flex-container">
@@ -101,31 +104,35 @@
             </div>
           </div>
         </div>
+        <div class="recommended-text" style="margin:20px 50px;">Recommended</div>
+        <Accessory :item="recommentedProduct" />
       </div>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
+import Accessory from 'src/components/Accessory.vue';
 import ProductPopup from 'src/pages/product/ProductPopup.vue';
 import { auth } from 'src/boot/firebase';
 import { useStore } from 'src/store';
 import { useRouter, useRoute } from 'vue-router';
 import { productClothesDeatail } from 'src/pages/product/constants';
-import { defineComponent, computed, watchEffect, ref,onMounted } from 'vue';
+import { defineComponent, computed, watchEffect, ref, onMounted } from 'vue';
+
 export default defineComponent({
   name: 'Product',
 
   components: {
     ProductPopup,
+    Accessory,
   },
 
   preFetch({ store }) {
-
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
-    const fetchCartPage = store.dispatch('pagesModule/fetchCartPage')
-    return Promise.all([fetchAllProduct,fetchHomePage,fetchCartPage]);
+    const fetchCartPage = store.dispatch('pagesModule/fetchCartPage');
+    return Promise.all([fetchAllProduct, fetchHomePage, fetchCartPage]);
   },
 
   setup() {
@@ -140,7 +147,7 @@ export default defineComponent({
       return product;
     });
 
-// ------------------------  Store Detail -------------------- 
+    // ------------------------  Store Detail --------------------
 
     onMounted(() => {
       auth.onAuthStateChanged((user) => {
@@ -157,7 +164,6 @@ export default defineComponent({
       return user;
     });
     console.log(userDetail, 'user');
-    
 
     const homePageA = computed(() => {
       const homePage = store.state.pagesModule.store;
@@ -167,9 +173,9 @@ export default defineComponent({
     const storeDetail = computed(() =>
       homePageA.value.find((e) => e.uid == userDetail.value?.uid)
     );
-    console.log(storeDetail ,'this');
+    console.log(storeDetail, 'this');
 
-  // ------------------------  Function -------------------- 
+    // ------------------------  Function --------------------
 
     watchEffect(() => {
       const queryProduct = route.query;
@@ -186,62 +192,62 @@ export default defineComponent({
       void router.push({ name: 'SellerProfile', query: { item } });
     };
 
-  // ------------------------  find cart id  -------------------- 
+    // ------------------------  find cart id  --------------------
 
-     const cartDetail = computed(() => {
+    const cartDetail = computed(() => {
       const cartDetails = store.state.pagesModule.cart;
       return cartDetails;
     });
-    
+
     const cartDetailId = computed(() =>
       cartDetail.value.find((e) => e.uid == userDetail.value?.uid)
     );
 
+    // ------------------------  find recommed product  --------------------
+ // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const recommentedProduct = computed(() => products.value.filter((e) => e.type == selectedProduct.value.type && e._id != selectedProduct.value._id))
+     
+      
+
     return {
+      recommentedProduct,
       cartDetailId,
       storeDetail,
       menu,
       selectedProduct,
       productClothesDeatail,
       pushpage,
+      products,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.container {
-  height: 100vh;
-  position: relative;
-}
-
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.edit-img-desktop {
-  width: 400px;
-}
 .product {
+  .edit-img-desktop {
+    width: 400px;
+  }
   .edit-display {
     display: flex;
   }
+  .posted-by {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .recommended-text{
+      color: rgb(36, 108, 167);
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
   .content {
     margin: 20px;
     max-width: 300px;
     width: 100%;
     .posted-on {
       margin: 5px 0 10px 0;
-    }
-    .posted-by {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
     }
     .content-detail {
       color: #585858;

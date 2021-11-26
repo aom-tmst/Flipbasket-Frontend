@@ -84,7 +84,7 @@ export default defineComponent({
       } catch (error) {
         $q.notify({
           type: 'negative',
-          message: 'Regist failed , invalid email',
+          message: 'Regist failed',
           timeout: 1000,
         });
       }
