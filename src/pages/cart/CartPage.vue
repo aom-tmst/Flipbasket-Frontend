@@ -1,62 +1,85 @@
 <template>
   <q-page>
-    <div class="flex-row justify-center" v-if="findMathUid">
-      <div class="flex-container">
-        <div v-for="(item, index) in findMathUid.products" :key="index">
-          <div class="flex-col desktop" style="margin: 20px">
-            <div class="flex-row" style="margin-top: 20px">
-              <img class="edit-profile-img" src="images/profileImg.jpg" />
-              <div class="flex-col q-ml-md justify-center">
-                <div class="posted-by">{{ item.name }}</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col content">
-                <img src="images/shirt1.png" alt="" style="width: 12vw" />
-              </div>
-              <div class="col content content-detail">{{ item.desc }}</div>
-              <div class="col content">type: {{ item.type }}</div>
-              <div class="col content">price: {{ item.price }} bath</div>
-              <div class="col content">
-                <q-btn
-                  @click="deleteItemOnCart(item._id)"
-                  style="width: 30px; height: fit-content"
-                  icon="delete"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mobile justify-start" style="margin: 30px 5px 30px 5px">
-            <div class="edit-image">
-              <img src="images/shirt1.png" alt="" class="editeOnimage" />
-            </div>
-            <div class="flex-col justify-center" style="margin-left: 30px">
-              <div class="flex-row q-mb-md q-mt-md">
+    <div v-if="findMathUid">
+      <div
+        class="flex-row justify-center"
+        v-if="findMathUid.products.length != 0"
+      >
+        <div class="flex-container">
+          <div v-for="(item, index) in findMathUid.products" :key="index">
+            <div class="flex-col desktop" style="margin: 20px">
+              <div class="flex-row" style="margin-top: 20px">
                 <img class="edit-profile-img" src="images/profileImg.jpg" />
-
                 <div class="flex-col q-ml-md justify-center">
                   <div class="posted-by">{{ item.name }}</div>
                 </div>
               </div>
-              <div class="content-detail" style="max-width: 500px">
-                {{ item.desc }}
-              </div>
-              <div class="flex-row items-center" style="margin-top: 20px">
-                <div style="margin-right: 30px">type: {{ item.type }}</div>
-                <div style="margin-right: 30px">
-                  price: {{ item.price }} bath
+              <div class="row">
+                <div class="col content">
+                  <img src="images/shirt1.png" alt="" style="width: 12vw" />
                 </div>
-                <q-btn
-                  @click="deleteItemOnCart(item._id)"
-                  style="width: 30px; height: fit-content"
-                  icon="delete"
-                />
+                <div class="col content content-detail">{{ item.desc }}</div>
+                <div class="col content">type: {{ item.type }}</div>
+                <div class="col content">price: {{ item.price }} bath</div>
+                <div class="col content">
+                  <q-btn
+                    @click="deleteItemOnCart(item._id)"
+                    style="width: 30px; height: fit-content"
+                    icon="delete"
+                  />
+                </div>
               </div>
             </div>
+
+            <div class="mobile justify-start" style="margin: 30px 5px 30px 5px">
+              <div class="edit-image">
+                <img src="images/shirt1.png" alt="" class="editeOnimage" />
+              </div>
+              <div class="flex-col justify-center" style="margin-left: 30px">
+                <div class="flex-row q-mb-md q-mt-md">
+                  <img class="edit-profile-img" src="images/profileImg.jpg" />
+
+                  <div class="flex-col q-ml-md justify-center">
+                    <div class="posted-by">{{ item.name }}</div>
+                  </div>
+                </div>
+                <div class="content-detail" style="max-width: 500px">
+                  {{ item.desc }}
+                </div>
+                <div class="flex-row items-center" style="margin-top: 20px">
+                  <div style="margin-right: 30px">type: {{ item.type }}</div>
+                  <div style="margin-right: 30px">
+                    price: {{ item.price }} bath
+                  </div>
+                  <q-btn
+                    @click="deleteItemOnCart(item._id)"
+                    style="width: 30px; height: fit-content"
+                    icon="delete"
+                  />
+                </div>
+              </div>
+            </div>
+            <q-separator style="margin: 20px 0" />
           </div>
-          <q-separator style="margin: 20px 0" />
         </div>
+      </div>
+      <div
+        class="flex-col items-center"
+        v-if="findMathUid.products.length == 0"
+      >
+        <q-page class="flex-col" style="justify-content: center;">
+          <div class="test1 flex-col items-center">
+            <div class="flex-row test2">
+              <img src="images/addCart.png" alt="" style="width: 150px" />
+            </div>
+            <div
+              class="flex-row q-mt-md"
+              style="font-size: 16px; font-weight: bold; color: #9b9b9b"
+            >
+              don't have any product on your cart
+            </div>
+          </div>
+        </q-page>
       </div>
     </div>
   </q-page>
@@ -148,6 +171,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.test1 {
+  margin-top: 10%;
+  .test2 {
+    opacity: 0.5;
+  }
+}
 .posted-by {
   font-weight: bold;
 }

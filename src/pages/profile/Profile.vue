@@ -15,11 +15,25 @@
           <div class="flex-row">
             <CardProfile :store="findUid" />
           </div>
-          <Costume :item="findUid?.products"/>
-          <!-- <div class="posted-by">Pants</div>
-          <Trousers :item="selectedPants" />
-          <div class="posted-by">Accessory</div>
-          <Accessory :item="selectedAcc" /> -->
+          <div class="" v-if="findUid.products.length != 0">
+            <Costume :item="findUid?.products" />
+          </div>
+          <div
+            class="flex-col items-center"
+            v-if="findUid.products.length == 0"
+          >
+            <div class="test1 flex-col items-center">
+              <div class="flex-row test2">
+                <img src="images/addproduct.png" alt="" style="width: 150px" />
+              </div>
+              <div
+                class="flex-row q-mt-md"
+                style="font-size: 16px; font-weight: bold; color: #9b9b9b"
+              >
+                don't have any product
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -113,4 +127,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.test1 {
+  margin-top: 10%;
+  .test2 {
+    opacity: 0.5;
+  }
+}
+</style>

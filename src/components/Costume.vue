@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row justify-center" v-if="item">
+  <div class="flex-row test" v-if="item">
     <div
       class="home-sewing"
       v-for="(item, index) in item"
@@ -132,8 +132,8 @@ export default defineComponent({
 
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
-      const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : '4';
-      return 100 / parseInt(itemPerRow, 10) - 2;
+      const itemPerRow = width < 1000 ? `${width / 3}`.charAt(0) : '3';
+      return 100 / parseInt(itemPerRow, 8) - 2;
     });
     return {
       widthPerItem,
@@ -149,11 +149,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.test{
+  padding-left: 50px;
+}
 .flex-row {
   flex-wrap: wrap;
 }
 .home-sewing {
-  margin: 20px 50px 20px 50px;
+  padding: 0 30px ;
+  margin: 15px 0;
   .Location-box {
     margin-left: 20px;
   }
@@ -193,5 +197,11 @@ export default defineComponent({
     width: 50%;
     font-size: 1vw;
   }
+}
+@media only screen and(max-width:600px) {
+  .test{
+  padding-left: 0px;
+  margin: 0px 20px;
+}
 }
 </style>
