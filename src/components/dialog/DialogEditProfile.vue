@@ -32,6 +32,7 @@ import { useStore } from 'src/store';
 import { api } from 'src/boot/axios';
 import { Store } from 'src/store/pages/state';
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   name: 'DialogAddProduct',
 
@@ -47,6 +48,9 @@ export default defineComponent({
 
     const editProfile = async (item: Store | undefined) => {
       if (!item) return;
+      if(name.value == ''){
+          name.value = item.name
+      }
       const payload = {
         _id: item._id,
         name: name.value,

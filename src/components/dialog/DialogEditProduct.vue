@@ -73,6 +73,12 @@ export default defineComponent({
 
     const editProduct = async (item: Product | undefined) => {
       if (!item) return;
+      if(name.value==''){
+        name.value = item.name
+      }
+      if(desc.value==''){
+        desc.value = item.desc
+      }
       const payload = {
         _id: item._id,
         name: name.value,

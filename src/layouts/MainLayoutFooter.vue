@@ -3,7 +3,7 @@
     <div class="flex-container">
       <div class="space-bottom">
         <div class="flex-row footer-list">
-          <div class="column" style="width: 350px">
+          <div class="column" style="width: 300px">
             <div class="title">Flipbasket</div>
             <div class="content">
               {{aboutList.about}}

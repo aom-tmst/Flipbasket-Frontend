@@ -10,15 +10,16 @@
     </q-card-section>
     <q-card-section>
       <span>Product Name</span>
-      <q-input class="q-pa-md q-mb-sm" v-model="name" :dense="dense" />
+      <q-input class="q-pa-md q-mb-sm" :rules="[val => !!val]" v-model="name" :dense="dense" />
       <span>Detail</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
-        <q-input v-model="desc" filled type="textarea" />
+        <q-input v-model="desc" :rules="[val => !!val]" filled type="textarea" />
       </div>
       <span>price</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
         <div class="q-gutter-md">
           <q-input
+          :rules="[val => !!val]"
             filled
             v-model="price"
             mask="#.##"

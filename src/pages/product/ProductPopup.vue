@@ -12,7 +12,7 @@
       <q-item-section>Other function +</q-item-section>
     </q-item>
     <q-separator />
-    <q-item v-close-popup>
+    <q-item>
       <q-item-section>
         <div class="flex-row items-center">
           <q-icon name="info" class="q-mr-sm" />
@@ -25,7 +25,7 @@
         <div class="flex-row items-center">
           <q-input outlined v-model="reportDetail" label="Report title" />
         </div>
-        <q-btn @click="SentReport()" color="primary" style="margin-top: 20px"
+        <q-btn @click="SentReport()" v-close-popup color="primary" style="margin-top: 20px"
           >Sent report</q-btn
         >
       </q-item-section>
@@ -64,33 +64,37 @@ export default defineComponent({
 
     const SentReport = async () => {
       try {
-        $q.loading.show();
-        const payload = {
-          report_title: reportDetail.value,
-          name: props.item?.name,
-          desc: props.item?.desc,
-          price: props.item?.price,
-          type: props.item?.type,
-          product_id: props.item?._id,
-          store_name: props.item?.store.name,
-          sentBy: props.thisUser?.name,
-        };
-        await api.post<FixProduct>('feedbacks', payload);
+        if (reportDetail.value != '') {
+          $q.loading.show();
+          const payload = {
+            report_title: reportDetail.value,
+            name: props.item?.name,
+            desc: props.item?.desc,
+            price: props.item?.price,
+            type: props.item?.type,
+            product_id: props.item?._id,
+            store_name: props.item?.store.name,
+            sentBy: props.thisUser?.name,
+          };
+          await api.post<FixProduct>('feedbacks', payload);
 
-        $q.notify({
-          type: 'positive',
-          message: 'Sent successed.',
-          color: 'secondary',
-          timeout: 1000,
-        });
-      } catch (error) {
+          $q.notify({
+            type: 'positive',
+            message: 'Sent successed.',
+            color: 'secondary',
+            timeout: 1000,
+          });
+        }
+        else{
+          throw new Error()
+        }
+      } catch (Error) {
         $q.notify({
           type: 'negative',
           message: 'Can not sent report ',
           timeout: 1000,
         });
-      }
-      finally{
+      } finally {
         $q.loading.hide();
       }
     };
@@ -121,8 +125,7 @@ export default defineComponent({
           message: 'Can not add product, why? ',
           timeout: 1000,
         });
-      }
-      finally{
+      } finally {
         $q.loading.hide();
       }
     };

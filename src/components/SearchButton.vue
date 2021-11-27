@@ -1,5 +1,5 @@
 <template>
-    <q-btn no-caps flat dense>
+    <q-btn no-caps flat dense to="Search">
       <img src="icons/searchico.png" alt="" />
     </q-btn>
 </template>
