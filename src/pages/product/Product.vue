@@ -54,7 +54,15 @@
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
-                <q-btn @click="NotificationStatus(selectedProduct.store.uid,selectedProduct._id)">Buy</q-btn>
+                <q-btn
+                  @click="
+                    NotificationStatus(
+                      selectedProduct.store.uid,
+                      selectedProduct._id
+                    )
+                  "
+                  >Buy</q-btn
+                >
                 <div @click="pushpage(selectedProduct.uid)" class="product-by">
                   <span>{{ selectedProduct.store.name }} </span>
                 </div>
@@ -62,7 +70,9 @@
             </div>
           </div>
         </div>
-        <div class="recommended-text" style="margin:20px 50px;">Recommended</div>
+        <div class="recommended-text" style="margin: 20px 50px">
+          Recommended
+        </div>
         <Accessory :item="recommentedProduct" />
       </div>
     </div>
@@ -124,7 +134,9 @@
             </div>
           </div>
         </div>
-        <div class="recommended-text" style="margin:20px 50px;">Recommended</div>
+        <div class="recommended-text" style="margin: 20px 50px">
+          Recommended
+        </div>
         <Accessory :item="recommentedProduct" />
       </div>
     </div>
@@ -155,7 +167,12 @@ export default defineComponent({
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
     const fetchCartPage = store.dispatch('pagesModule/fetchCartPage');
     const fetchNotification = store.dispatch('pagesModule/fetchNotification');
-    return Promise.all([fetchAllProduct, fetchHomePage, fetchNotification,fetchCartPage]);
+    return Promise.all([
+      fetchAllProduct,
+      fetchHomePage,
+      fetchNotification,
+      fetchCartPage,
+    ]);
   },
 
   setup() {
@@ -234,24 +251,31 @@ export default defineComponent({
 
     // ------------------------  find recommed product  --------------------
 
- // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const recommentedProduct = computed(() => products.value.filter((e) => e.type == selectedProduct.value.type && e._id != selectedProduct.value._id))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const recommentedProduct = computed(() => products.value.filter((e) => e.type == selectedProduct.value.type && e._id != selectedProduct.value._id)
+    );
 
-     
-     //----------------------- Notifications status ----------------------
+    //----------------------- Notifications status ----------------------
 
-        const productIds = cartDetailId.value?.products.map((data) => data._id) || [];
-        console.log(productIds , 'products all id');
-        
-   
-      const NotificationStatus = async ( items : string , itemId : string) => {
-        console.log(items);
-        console.log(notifications, 'this line');
-        
+    const NotificationStatus = async (items: string, itemId: string) => {
+      const selectedStauts = computed(() =>
+        notifications.value.filter((e) => e.uid == userDetail.value.uid)
+      );
+
+
+    console.log(items ,'0');
+    
+        const productIds = selectedStauts.value[0].products.map((data) => data._id) || [];
+      // const productIds = selectedStauts.value.map((data) => data._id) || [];
+      
+      console.log(productIds, 'products all id');
+
         const test = notifications.value.find((e) => e.uid == items)
-        console.log(test?._id, '1');
-        console.log(itemId, '2');
-        console.log(productIds, '3');
+
+      // const test = selectedStauts.value.find((e) => e.uid == items);
+      console.log(test?._id, '1');
+      console.log(itemId, '2');
+      console.log(productIds, '3');
 
       try {
         $q.loading.show();
@@ -300,16 +324,16 @@ export default defineComponent({
     display: flex;
   }
   .posted-by {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .recommended-text{
-      color: rgb(36, 108, 167);
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .recommended-text {
+    color: rgb(36, 108, 167);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
   .content {
     margin: 20px;
     max-width: 300px;

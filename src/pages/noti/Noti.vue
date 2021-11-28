@@ -9,9 +9,6 @@
                 <div class="flex-row">
                   -------------
               </div>
-              <div class="flex-row">
-                  {{notifications}}
-              </div>
           </div>
       </div>
   </q-page>
@@ -55,7 +52,7 @@ export default defineComponent({
 
     const selectedStauts = computed(() => notifications.value.filter((e) => e.uid == userDetail.value.uid ) )    
 
-    return { notifications,userDetail,selectedStauts }
+    return { selectedStauts }
   }
 
 })
