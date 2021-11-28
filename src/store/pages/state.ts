@@ -36,7 +36,15 @@ export interface Cart {
   products: Product[];
 }
 
+export interface Notification {
+  _id: string;
+  name: string;
+  uid: string;
+  products: Product[];
+}
+
 export interface PagesStateInterface {
+  notification: Notification[];
   allProduct: AllProduct[];
   store: Store[];
   cart: Cart[];
@@ -45,6 +53,7 @@ export interface PagesStateInterface {
 
 function state(): PagesStateInterface {
   return {
+    notification: [] as Notification[],
     allProduct: [] as AllProduct[],
     store: [] as Store[],
     cart: [] as Cart[],

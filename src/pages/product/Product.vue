@@ -54,6 +54,7 @@
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
+                <q-btn @click="NotificationStatus(selectedProduct.store.uid,selectedProduct._id)">Buy</q-btn>
                 <div @click="pushpage(selectedProduct.uid)" class="product-by">
                   <span>{{ selectedProduct.store.name }} </span>
                 </div>
@@ -133,6 +134,8 @@
 <script lang="ts">
 import Accessory from 'src/components/Accessory.vue';
 import ProductPopup from 'src/pages/product/ProductPopup.vue';
+import { api } from 'src/boot/axios';
+import { useQuasar } from 'quasar';
 import { auth } from 'src/boot/firebase';
 import { useStore } from 'src/store';
 import { useRouter, useRoute } from 'vue-router';
@@ -151,10 +154,12 @@ export default defineComponent({
     const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
     const fetchHomePage = store.dispatch('pagesModule/fetchHomePage');
     const fetchCartPage = store.dispatch('pagesModule/fetchCartPage');
-    return Promise.all([fetchAllProduct, fetchHomePage, fetchCartPage]);
+    const fetchNotification = store.dispatch('pagesModule/fetchNotification');
+    return Promise.all([fetchAllProduct, fetchHomePage, fetchNotification,fetchCartPage]);
   },
 
   setup() {
+    const $q = useQuasar();
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
@@ -164,6 +169,11 @@ export default defineComponent({
     const products = computed(() => {
       const product = store.state.pagesModule.allProduct;
       return product;
+    });
+
+    const notifications = computed(() => {
+      const notification = store.state.pagesModule.notification;
+      return notification;
     });
 
     // ------------------------  Store Detail --------------------
@@ -223,12 +233,51 @@ export default defineComponent({
     );
 
     // ------------------------  find recommed product  --------------------
+
  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const recommentedProduct = computed(() => products.value.filter((e) => e.type == selectedProduct.value.type && e._id != selectedProduct.value._id))
+
      
-      
+     //----------------------- Notifications status ----------------------
+
+        const productIds = cartDetailId.value?.products.map((data) => data._id) || [];
+        console.log(productIds , 'products all id');
+        
+   
+      const NotificationStatus = async ( items : string , itemId : string) => {
+        console.log(items);
+        console.log(notifications, 'this line');
+        
+        const test = notifications.value.find((e) => e.uid == items)
+        console.log(test?._id, '1');
+        console.log(itemId, '2');
+        console.log(productIds, '3');
+
+      try {
+        $q.loading.show();
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        await api.put(`notifications/${test?._id}`, {
+          products: [itemId, ...productIds],
+        });
+        $q.notify({
+          type: 'positive',
+          message: 'Add product successed',
+          color: 'secondary',
+          timeout: 1000,
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Can not add product, why? ',
+          timeout: 1000,
+        });
+      } finally {
+        $q.loading.hide();
+      }
+    };
 
     return {
+      NotificationStatus,
       recommentedProduct,
       cartDetailId,
       storeDetail,

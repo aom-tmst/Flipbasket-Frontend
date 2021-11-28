@@ -38,7 +38,8 @@
       </div>
       <div class="flex-row items-center menu-list desktop-menu">
         <div v-if="userDetail">Welcome : {{ userDetail.name }}</div>
-        <q-icon class="cart-edit-icon" name="local_mall" @click="pushPage()" />
+        <q-icon class="cart-edit-icon" name="shopping_bag" @click="pushPage()" />
+        <q-icon class="cart-edit-icon" name="support_agent" @click="pushToNoti()" />
       </div>
       <button
         class="logout edit-btn q-mr-sm desktop-menu"
@@ -82,6 +83,11 @@
             <q-card-section>
               <button class="edit-btn" @click="pushPage()" v-close-popup>
                 Cart
+              </button>
+            </q-card-section>
+            <q-card-section>
+              <button class="edit-btn" @click="pushToNoti()" v-close-popup>
+                Notification
               </button>
             </q-card-section>
             <q-card-section>
@@ -151,7 +157,12 @@ export default defineComponent({
       void router.push({ path: 'cart' });
     };
 
+     const pushToNoti = () => {
+      void router.push({ path: 'noti' });
+    };
+
     return {
+      pushToNoti,
       pushPage,
       menuList,
       dialog,

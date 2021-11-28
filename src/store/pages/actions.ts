@@ -1,7 +1,7 @@
 import { api } from 'boot/axios';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { PagesStateInterface, Store,AllProduct,Cart } from './state';
+import { PagesStateInterface, Store,AllProduct,Cart,Notification } from './state';
 
 const actions: ActionTree<PagesStateInterface, StateInterface> = {
   async fetchHomePage({ commit }) {
@@ -25,6 +25,14 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
       .get<Cart>('carts')
       .then((response) => response.data);
     commit('setCartPage', result);
+    return result;
+  },
+
+  async fetchNotification({ commit }) {
+    const result = await api
+      .get<Notification>('notifications')
+      .then((response) => response.data);
+    commit('setNotification', result);
     return result;
   },
 
@@ -52,7 +60,7 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
 
   SubmitUid({ dispatch, commit }, userDetail) {
     commit('setUsetUid', userDetail);
-    void dispatch('fetchCartPage');
+    void dispatch('fetchHomePage');
   },
 };
 

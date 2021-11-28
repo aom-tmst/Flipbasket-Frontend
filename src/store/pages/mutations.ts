@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { PagesStateInterface, Store, UserDetail,AllProduct,Cart } from './state';
+import { PagesStateInterface, Store, UserDetail,AllProduct,Cart,Notification } from './state';
 
 const mutation: MutationTree<PagesStateInterface> = {
   setHomePage(state: PagesStateInterface, payload: Store[]) {
@@ -12,6 +12,10 @@ const mutation: MutationTree<PagesStateInterface> = {
 
   setCartPage(state: PagesStateInterface, payload: Cart[]) {
     state.cart = payload;
+  },
+
+  setNotification(state: PagesStateInterface, payload: Notification[]) {
+    state.notification = payload;
   },
 
   setUsetUid(state: PagesStateInterface, userDetail: UserDetail){

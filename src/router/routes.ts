@@ -30,6 +30,11 @@ const routes: RouteRecordRaw[] = [
       path: 'search',
       component: () => import('src/pages/search/Search.vue'),
     },
+    {
+      name: 'Notification',
+      path: 'Noti',
+      component: () => import('src/pages/noti/Noti.vue'),
+    },
   ],
   },
   {

@@ -120,6 +120,12 @@ export default defineComponent({
             addCart
           );
 
+          const addNotification = await api.post('notifications/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addNotification',
+            addNotification
+          );
+
           await store.dispatch('pagesModule/SubmitUid', userDetail);
           console.log('else did not find');
         }
@@ -161,6 +167,12 @@ export default defineComponent({
           console.log(
             '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addCart',
             addCart
+          );
+
+          const addNotification = await api.post('notifications/', userDetail);
+          console.log(
+            '🚀 ~ file: Register.vue ~ line 70 ~ Register ~ addNotification',
+            addNotification
           );
 
           await store.dispatch('pagesModule/SubmitUid', userDetail);
