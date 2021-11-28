@@ -10,16 +10,26 @@
     </q-card-section>
     <q-card-section>
       <span>Product Name</span>
-      <q-input class="q-pa-md q-mb-sm" :rules="[val => !!val]" v-model="name" :dense="dense" />
+      <q-input
+        class="q-pa-md q-mb-sm"
+        :rules="[(val) => !!val]"
+        v-model="name"
+        :dense="dense"
+      />
       <span>Detail</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
-        <q-input v-model="desc" :rules="[val => !!val]" filled type="textarea" />
+        <q-input
+          v-model="desc"
+          :rules="[(val) => !!val]"
+          filled
+          type="textarea"
+        />
       </div>
       <span>price</span>
       <div class="q-pa-md q-mb-sm" style="width: 100%">
         <div class="q-gutter-md">
           <q-input
-          :rules="[val => !!val]"
+            :rules="[(val) => !!val]"
             filled
             v-model="price"
             mask="#.##"
@@ -43,7 +53,9 @@
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end">
-        <q-btn @click="addProduct" color="primary" v-close-popup>Add Product</q-btn>
+        <q-btn @click="addProduct" color="primary" v-close-popup
+          >Add Product</q-btn
+        >
       </div>
     </q-card-section>
   </q-card>
@@ -52,6 +64,7 @@
 <script lang="ts">
 import { useStore } from 'src/store';
 import { useQuasar } from 'quasar';
+import { UploadImage } from 'src/boot/firebase';
 import { Store } from 'src/store/pages/state';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
@@ -61,7 +74,8 @@ interface AddProductPayload {
   desc: string;
   type: string | null;
   price: number | null;
-  uid: string | undefined
+  uid: string | undefined;
+  image_Url: string;
 }
 
 interface Product {
@@ -82,22 +96,27 @@ export default defineComponent({
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
-    const image = ref(null);
+    const image = ref<File>();
     const dense = ref(false);
 
     const addProduct = async () => {
-      const payload: AddProductPayload = {
-        name: name.value,
-        desc: desc.value,
-        price: price.value,
-        type: type.value,
-        uid: props.item?._id,
-      };
-
-      console.log(payload);
-      
       try {
-         $q.loading.show();
+        $q.loading.show();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const imagUrl = await UploadImage(image.value!);
+        console.log(imagUrl);
+
+        const payload: AddProductPayload = {
+          name: name.value,
+          desc: desc.value,
+          price: price.value,
+          type: type.value,
+          uid: props.item?._id,
+          image_Url: imagUrl,
+        };
+
+        console.log(payload);
+
         const product = await api
           .post<Product>('products', payload)
           .then((response) => response.data);
@@ -112,7 +131,6 @@ export default defineComponent({
         });
         console.log(result1);
 
-    
         // props.item?.products.map((product) => product._id) || [];
 
         $q.notify({
@@ -128,8 +146,7 @@ export default defineComponent({
           message: 'Bad form please enter your product again.',
           timeout: 1000,
         });
-      }
-       finally {
+      } finally {
         $q.loading.hide();
       }
 

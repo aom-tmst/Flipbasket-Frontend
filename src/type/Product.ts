@@ -4,7 +4,7 @@ export interface Product {
     desc : string
     price: number
     createAt: string
-    image: Image
+    image_Url : string
     type: string
     uid: string
     
@@ -12,8 +12,4 @@ export interface Product {
 
 export interface GalleryImg {
     img : string
-}
-
-interface Image {
-  url: string
 }

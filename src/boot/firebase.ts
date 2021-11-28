@@ -1,6 +1,8 @@
 import * as firebaseAuth from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { ExecException } from 'child_process';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCvwzqyj2UyooMsyxSN1X7zJyRtQSF-NKk',
@@ -14,6 +16,15 @@ const firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 const auth = firebaseAuth.getAuth(firebase)
 
+const storage = getStorage(firebase);
+
+const UploadImage = async (file:File):Promise<string> => {
+  const storageRef = ref(storage, Date.now().toString());
+  await uploadBytes(storageRef,file)
+ const imageUrl =  await getDownloadURL(storageRef)
+
+  return  imageUrl
+}
 // --------------------------- Google ----------------------------
 const LoginWithGoogle = async() => {
   try {
@@ -83,4 +94,4 @@ const ForgotPassword = async(email:string) => {
   }
 }
 
-export { auth,LoginWithGoogle,LoginWithFacebook,LoginWithFirebase,RegistWithFirebase,ForgotPassword } 
+export { auth,LoginWithGoogle,LoginWithFacebook,LoginWithFirebase,RegistWithFirebase,ForgotPassword,UploadImage } 

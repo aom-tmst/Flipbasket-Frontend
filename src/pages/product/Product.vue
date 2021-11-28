@@ -14,7 +14,7 @@
         <div class="flex-row justify-center">
           <div class="flex-col">
             <div class="edit-box-img">
-              <img class="edit-img-desktop" src="images/shirt1.png" alt="" />
+              <img class="edit-img-desktop" :src="selectedProduct.image_Url" alt="" />
             </div>
           </div>
           <div class="flex-col items-center justify-center">

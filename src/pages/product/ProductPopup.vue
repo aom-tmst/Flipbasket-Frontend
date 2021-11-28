@@ -75,6 +75,7 @@ export default defineComponent({
             product_id: props.item?._id,
             store_name: props.item?.store.name,
             sentBy: props.thisUser?.name,
+            image_Url: props.item?.image_Url
           };
           await api.post<FixProduct>('feedbacks', payload);
 

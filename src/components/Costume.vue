@@ -8,12 +8,12 @@
     >
       <div class="flex-col">
         <div @click="pushPage(item._id)" class="flex-col items-center">
-          <!-- <img
+          <img
             class="transition"
-            :src="'https://tailors-phuket.herokuapp.com'+item.image.url"
+            :src="item.image_Url"
             alt=""
             style="width: 250px; height: 250px"
-          /> -->
+          />
         </div>
         <div class="flex-col items-end posted-on">
           Posted On : {{ item.createdAt }}

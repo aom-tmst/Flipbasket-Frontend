@@ -16,7 +16,7 @@
               </div>
               <div class="row">
                 <div class="col content">
-                  <img src="images/shirt1.png" alt="" style="width: 12vw" />
+                  <img :src="item.image_Url" alt="" style="width: 12vw" />
                 </div>
                 <div class="col content content-detail">{{ item.desc }}</div>
                 <div class="col content">type: {{ item.type }}</div>
@@ -33,7 +33,7 @@
 
             <div class="mobile justify-start" style="margin: 30px 5px 30px 5px">
               <div class="edit-image">
-                <img src="images/shirt1.png" alt="" class="editeOnimage" />
+                <img :src="item.image_Url" alt="" class="editeOnimage" />
               </div>
               <div class="flex-col justify-center" style="margin-left: 30px">
                 <div class="flex-row q-mb-md q-mt-md">

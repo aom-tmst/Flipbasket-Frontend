@@ -1,8 +1,5 @@
 import { Product } from 'src/type/Product';
 
-interface Image {
-  url: string;
-}
 
 export interface UserDetail {
   name: string | null | undefined;
@@ -22,7 +19,7 @@ export interface AllProduct {
   desc: string;
   price: number;
   createAt: string;
-  image: Image;
+  image_Url: string;
   type: string;
   uid: string;
   store: Store[];
