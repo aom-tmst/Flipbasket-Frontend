@@ -299,6 +299,7 @@ export default defineComponent({
           color: 'secondary',
           timeout: 1000,
         });
+        await store.dispatch('pagesModule/UpdateNotification');
       } catch (error) {
         $q.notify({
           type: 'negative',
