@@ -5,10 +5,6 @@
               <div class="flex-row">
                   {{selectedStauts}}
               </div>
-
-                <div class="flex-row">
-                  -------------
-              </div>
           </div>
       </div>
   </q-page>
@@ -48,10 +44,9 @@ export default defineComponent({
       const user = store.state.pagesModule.auth;
       return user;
     });
-    console.log(userDetail, 'user');
+    console.log(userDetail.value.uid, 'user');
 
     const selectedStauts = computed(() => notifications.value.filter((e) => e.uid == userDetail.value.uid ) )    
-
     return { selectedStauts }
   }
 
