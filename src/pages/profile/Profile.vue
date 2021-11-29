@@ -35,6 +35,7 @@
             </div>
           </div>
         </div>
+        <Gallery :item="findUid.galleries"/>
       </div>
     </div>
   </q-page>
@@ -44,6 +45,7 @@
 import { auth } from 'src/boot/firebase';
 import CardProfile from 'src/components/CardProfile.vue';
 import Costume from 'src/components/Costume.vue';
+import Gallery from 'src/components/Gallery.vue'
 // import Trousers from 'src/components/Trousers.vue';
 // import Accessory from 'src/components/Accessory.vue';
 import { profileDetail } from 'src/pages/profile/constants';
@@ -53,6 +55,7 @@ export default defineComponent({
   name: 'Profile',
 
   components: {
+    Gallery,
     Costume,
     CardProfile,
     // Trousers,

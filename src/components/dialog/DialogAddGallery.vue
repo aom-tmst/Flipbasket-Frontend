@@ -4,7 +4,6 @@
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
-
     <q-card-section>
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
@@ -16,22 +15,59 @@
 </template>
 
 <script lang="ts">
+import { useStore } from 'src/store';
+import { Store } from 'src/store/pages/state';
+import { UploadImage } from 'src/boot/firebase';
 import { api } from 'src/boot/axios';
 import { defineComponent, ref } from 'vue';
+
+interface Product {
+  _id: string;
+}
+
 export default defineComponent({
   name: 'DialogAddProduct',
 
-  setup() {
-    
-    const image = ref();
+  props: {
+    item: Object as () => Store,
+  },
+
+  setup(props) {
+    const image = ref<File>();
+    const store = useStore();
 
     const putImage = async () => {
-      const formData = new FormData();
-      formData.append('files', image.value  )
-      console.log(image);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const imagUrl = await UploadImage(image.value!);
+      console.log(imagUrl);
+
+      const payload = {
+        store_Image: imagUrl,
+      };
+
+      console.log(payload, 'image path');
+
+      console.log(props.item?._id, 'store id');
+
+      const result = await api
+        .post<Product>('galleries', payload)
+        .then((response) => response.data);
+      console.log(result);
       
-      const imagePath = await api.post('upload', formData);
-      console.log(imagePath);
+      await store.dispatch('pagesModule/fetchHomePage');
+
+      const galleryIgs = props.item?.galleries.map((e) => e._id) || [];
+
+      console.log(galleryIgs, 'this');
+      
+
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      const putStore = await api.put(`stores/${props.item?._id}`, {
+        galleries: [result._id, ...galleryIgs],
+      });
+      console.log(putStore);
+
+      await store.dispatch('pagesModule/fetchHomePage');
     };
 
     return {

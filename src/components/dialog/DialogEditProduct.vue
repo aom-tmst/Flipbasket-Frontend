@@ -43,13 +43,16 @@
       <span>Upload Image</span>
       <q-file class="q-pa-md q-mb-sm" filled v-model="image" label="Filled" />
       <div class="flex-row justify-end" v-if="item">
-        <q-btn @click="editProduct(item)" color="primary" v-close-popup>Change Product</q-btn>
+        <q-btn @click="editProduct(item)" color="primary" v-close-popup
+          >Change Product</q-btn
+        >
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts">
+import { UploadImage } from 'src/boot/firebase';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import { Product } from 'src/type/Product';
@@ -68,26 +71,32 @@ export default defineComponent({
     const name = ref('');
     const desc = ref('');
     const price = ref(null);
-    const image = ref(null);
+    const image = ref<File>();
     const dense = ref(false);
 
     const editProduct = async (item: Product | undefined) => {
-      if (!item) return;
-      if(name.value==''){
-        name.value = item.name
-      }
-      if(desc.value==''){
-        desc.value = item.desc
-      }
-      const payload = {
-        _id: item._id,
-        name: name.value,
-        desc: desc.value,
-        price: price.value,
-        image: image.value,
-      };
       try {
-         $q.loading.show();
+        $q.loading.show();
+        if (!item) return;
+        if (name.value == '') {
+          name.value = item.name;
+        }
+        if (desc.value == '') {
+          desc.value = item.desc;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const imagUrl = await UploadImage(image.value!);
+        console.log(imagUrl);
+
+        const payload = {
+          _id: item._id,
+          name: name.value,
+          desc: desc.value,
+          price: price.value,
+          image_Url: imagUrl,
+        };
+
         const result = await api.put(`products/${item?._id}`, payload);
         console.log(result);
 
@@ -104,8 +113,7 @@ export default defineComponent({
           message: 'Bad form please enter your product again.',
           timeout: 1000,
         });
-      }
-       finally {
+      } finally {
         $q.loading.hide();
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -6,10 +6,16 @@ export interface UserDetail {
   uid: string | null | undefined;
 }
 
+export interface Gallery {
+  _id: string
+  store_Image : string
+}
+
 export interface Store {
   _id: string;
   name: string;
   uid: string;
+  galleries: Gallery[];
   products: Product[];
 }
 

@@ -31,7 +31,7 @@
           Add Gallery
         </q-btn>
         <q-dialog v-model="addGallery">
-          <DialogAddGallery />
+          <DialogAddGallery :item="store"/>
         </q-dialog>
       </div>
     </div>
