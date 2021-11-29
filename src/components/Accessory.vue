@@ -6,14 +6,14 @@
       :key="index"
     >
       <div class="flex-col" style="width:300px">
-        <!-- <div class="flex-col items-center">
+        <div class="flex-col items-center">
           <img
             class="transition"
-            :src="item.postedImg"
+            :src="item.image_Url"
             alt=""
             style="width: 250px; height: 250px"
           />
-        </div> -->
+        </div>
         <div class="flex-col items-end posted-on">
           Posted On : {{ item.createdAt }}
         </div>
