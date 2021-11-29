@@ -2,7 +2,6 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <q-icon color="blue" name="shopping_basket" />
         <div class="q-ml-sm" style="font-weight: bold">Flipbasket</div>
       </q-btn>
 
