@@ -66,6 +66,11 @@ const actions: ActionTree<PagesStateInterface, StateInterface> = {
     commit('setUsetUid', userDetail);
     void dispatch('fetchHomePage');
   },
+
+   InputMessage({ dispatch, commit }, thisMessage) {
+    commit('setMessage', thisMessage);
+    void dispatch('fetchHomePage');
+  },
 };
 
 export default actions;

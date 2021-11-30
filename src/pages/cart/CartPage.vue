@@ -24,6 +24,7 @@
                 <div class="col content">
                   <q-btn
                     @click="deleteItemOnCart(item._id)"
+                    class=" q-ml-md bg-primary text-white"
                     style="width: 30px; height: fit-content"
                     icon="delete"
                   />
@@ -53,6 +54,7 @@
                   </div>
                   <q-btn
                     @click="deleteItemOnCart(item._id)"
+                    class=" q-ml-md bg-primary text-white"
                     style="width: 30px; height: fit-content"
                     icon="delete"
                   />

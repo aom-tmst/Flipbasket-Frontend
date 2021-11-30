@@ -47,14 +47,10 @@
               <div class="content-detail">
                 {{ selectedProduct.desc }}
               </div>
-              <div class="flex-row justify-end content-detail">
+              <div class="flex-row justify-end items-center content-detail">
                 price: {{ selectedProduct.price }} Bath
-              </div>
-              <div class="flex-row justify-end items-center clickable">
-                <div class="profile-img">
-                  <img :src="productClothesDeatail.profileImg" alt="" />
-                </div>
-                <q-btn
+                <q-btn no-caps fab-mini
+                class=" q-ml-md bg-primary text-white"
                   @click="
                     NotificationStatus(
                       selectedProduct.store.uid,
@@ -63,6 +59,12 @@
                   "
                   >Buy</q-btn
                 >
+              </div>
+              <div class="flex-row items-center clickable">
+                <div class="profile-img">
+                  <img :src="productClothesDeatail.profileImg" alt="" />
+                </div>
+
                 <div @click="pushpage(selectedProduct.uid)" class="product-by">
                   <span>{{ selectedProduct.store.name }} </span>
                 </div>
@@ -87,7 +89,7 @@
         >
           <div class="flex-col">
             <div class="edit-box-img">
-              <img class="edit-img" src="images/shirt1.png" alt="" />
+              <img class="edit-img" :src="selectedProduct.image_Url" alt="" />
             </div>
           </div>
           <div class="flex-col items-center justify-center">
@@ -120,10 +122,20 @@
               <div class="content-detail">
                 {{ selectedProduct.desc }}
               </div>
-              <div class="flex-row justify-end content-detail">
+              <div class="flex-row justify-end items-center content-detail">
                 price: {{ selectedProduct.price }} Bath
+                <q-btn no-caps fab-mini
+                class=" q-ml-md bg-primary text-white"
+                  @click="
+                    NotificationStatus(
+                      selectedProduct.store.uid,
+                      selectedProduct._id
+                    )
+                  "
+                  >Buy</q-btn
+                >
               </div>
-              <div class="flex-row justify-end items-center clickable">
+              <div class="flex-row  items-center clickable">
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
@@ -295,7 +307,7 @@ export default defineComponent({
         });
         $q.notify({
           type: 'positive',
-          message: 'Add product successed',
+          message: 'buy product successed',
           color: 'secondary',
           timeout: 1000,
         });
@@ -303,7 +315,7 @@ export default defineComponent({
       } catch (error) {
         $q.notify({
           type: 'negative',
-          message: 'Can not add product, why? ',
+          message: 'Can not buy product, please check your wifi ',
           timeout: 1000,
         });
       } finally {

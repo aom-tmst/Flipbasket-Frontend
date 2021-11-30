@@ -1,13 +1,13 @@
 <template>
-  <div class="row-format flex-format flex-container" v-if="item">
+  <div class="row-format flex-format flex-container home-sewing" v-if="item">
     <div
-      class="home-sewing"
       v-for="(item, index) in item"
       :key="index"
     >
       <div class="flex-col" style="width:300px">
         <div class="flex-col items-center">
           <img
+          @click="pushPage(item._id)"
             class="transition"
             :src="item.image_Url"
             alt=""
@@ -49,9 +49,6 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-
-
-
     const pushPage = (item: string) => {
       void router.push({ name: 'Product', query: { item } });
     };

@@ -35,6 +35,11 @@ const routes: RouteRecordRaw[] = [
       path: 'Noti',
       component: () => import('src/pages/noti/Noti.vue'),
     },
+    {
+      name: 'Chat',
+      path: 'chat',
+      component: () => import('src/pages/chat/Chat.vue'),
+    },
   ],
   },
   {

@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import { Store } from 'src/store/pages/state';
 import { UploadImage } from 'src/boot/firebase';
@@ -33,41 +34,59 @@ export default defineComponent({
   },
 
   setup(props) {
+    const $q = useQuasar();
     const image = ref<File>();
     const store = useStore();
 
     const putImage = async () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const imagUrl = await UploadImage(image.value!);
-      console.log(imagUrl);
+      try {
+        $q.loading.show();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const imagUrl = await UploadImage(image.value!);
+        console.log(imagUrl);
 
-      const payload = {
-        store_Image: imagUrl,
-      };
+        const payload = {
+          store_Image: imagUrl,
+        };
 
-      console.log(payload, 'image path');
+        console.log(payload, 'image path');
 
-      console.log(props.item?._id, 'store id');
+        console.log(props.item?._id, 'store id');
 
-      const result = await api
-        .post<Product>('galleries', payload)
-        .then((response) => response.data);
-      console.log(result);
-      
-      await store.dispatch('pagesModule/fetchHomePage');
+        const result = await api
+          .post<Product>('galleries', payload)
+          .then((response) => response.data);
+        console.log(result);
 
-      const galleryIgs = props.item?.galleries.map((e) => e._id) || [];
+        await store.dispatch('pagesModule/fetchHomePage');
 
-      console.log(galleryIgs, 'this');
-      
+        const galleryIgs = props.item?.galleries.map((e) => e._id) || [];
 
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      const putStore = await api.put(`stores/${props.item?._id}`, {
-        galleries: [result._id, ...galleryIgs],
-      });
-      console.log(putStore);
+        console.log(galleryIgs, 'this');
 
-      await store.dispatch('pagesModule/fetchHomePage');
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        const putStore = await api.put(`stores/${props.item?._id}`, {
+          galleries: [result._id, ...galleryIgs],
+        });
+        console.log(putStore);
+
+        await store.dispatch('pagesModule/fetchHomePage');
+
+        $q.notify({
+          type: 'positive',
+          message: ' Add image successed',
+          color: 'secondary',
+          timeout: 1000,
+        });
+      } catch (error) {
+        $q.notify({
+          type: 'negative',
+          message: 'Error , please check your internet and try again.',
+          timeout: 1000,
+        });
+      } finally {
+        $q.loading.hide();
+      }
     };
 
     return {

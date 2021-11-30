@@ -15,14 +15,34 @@
           <div class="flex-row">
             <CardProfileSeller :item="selectedStore" />
           </div>
-          <div class="posted-by">Shirt</div>
-          <Costume :showEdit="false" :showDelete="false" :item="selectedShirt" />
-          <div class="posted-by">Trousers</div>
-          <Costume :showEdit="false" :showDelete="false" :item="selectedPants" />
-          <div class="posted-by">Accessory</div>
-          <Accessory  :item="selectedAcc" />
-          <div class="posted-by">Gallery</div>
-          <Gallery :item="galleryImg" />
+
+          <div v-if="selectedShirt.length != 0">
+            <div class="main-title">Shirt</div>
+            <Costume
+              :showEdit="false"
+              :showDelete="false"
+              :item="selectedShirt"
+            />
+          </div>
+
+          <div v-if="selectedPants.length != 0">
+            <div class="main-title">Trousers</div>
+            <Costume
+              :showEdit="false"
+              :showDelete="false"
+              :item="selectedPants"
+            />
+          </div>
+
+          <div v-if="selectedAcc.length != 0">
+            <div class="main-title">Accessory</div>
+            <Accessory :item="selectedAcc" />
+          </div>
+
+          <div v-if="thisuid.length != 0">
+            <div class="main-title">Gallery</div>
+            <Gallery :item="thisuid" />
+          </div>
         </div>
       </div>
     </div>
@@ -32,11 +52,9 @@
 <script lang="ts">
 import CardProfileSeller from 'src/components/CardProfileSeller.vue';
 import Costume from 'src/components/Costume.vue';
-import Accessory from 'src/components/Accessory.vue'
+import Accessory from 'src/components/Accessory.vue';
 import Gallery from 'src/components/Gallery.vue';
-import {
-  galleryImg,
-} from 'src/pages/home/constants';
+import { galleryImg } from 'src/pages/home/constants';
 import { useRoute } from 'vue-router';
 import { sellerProfileDetail } from 'src/pages/sellerprofile/constants';
 import { defineComponent, watchEffect, computed, ref } from 'vue';
@@ -66,6 +84,7 @@ export default defineComponent({
     const selectedShirt = ref();
     const selectedPants = ref();
     const selectedAcc = ref();
+    const thisuid = ref();
 
     const stores = computed(() => {
       const storesFormApi = store.state.pagesModule.store;
@@ -83,6 +102,8 @@ export default defineComponent({
       const queryProduct = route.query;
       const findUid = stores.value.find((e) => e._id == queryProduct.item);
       selectedStore.value = findUid;
+
+      thisuid.value = findUid?.galleries;
 
       const productShirt = products.value.filter(
         (e) => e.uid == queryProduct.item && e.type == 'shirt'
@@ -108,6 +129,7 @@ export default defineComponent({
     // );
 
     return {
+      thisuid,
       selectedShirt,
       selectedPants,
       selectedAcc,
@@ -120,11 +142,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.seller-profile {
-  .posted-by {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 20px;
-  }
+.main-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px;
 }
 </style>

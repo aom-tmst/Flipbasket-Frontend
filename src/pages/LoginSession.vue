@@ -91,6 +91,9 @@ export default defineComponent({
       const homePage = store.state.pagesModule.store;
       return homePage;
     });
+
+    
+
     console.log(checkStore, 'store');
 
     const LoginGoogle = async () => {

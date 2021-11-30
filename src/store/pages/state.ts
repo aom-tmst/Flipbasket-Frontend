@@ -52,6 +52,7 @@ export interface PagesStateInterface {
   store: Store[];
   cart: Cart[];
   auth: UserDetail;
+  message: string[]
 }
 
 function state(): PagesStateInterface {
@@ -61,6 +62,7 @@ function state(): PagesStateInterface {
     store: [] as Store[],
     cart: [] as Cart[],
     auth: {} as UserDetail,
+    message: []
   };
 }
 

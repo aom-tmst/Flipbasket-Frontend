@@ -13,8 +13,8 @@
       <div class="flex-row posted-by">
         <div class="text-black">{{item.name}}</div>
       </div>
-      <div class="flex-row">
-        <q-btn class="edit-btn">
+      <div class="flex-row" v-if="item">
+        <q-btn class="edit-btn" @click="pushpage(item._id)">
           Chat With Merchant
           <q-icon
             name="live_help"
@@ -27,6 +27,7 @@
 </template>
 
 <script lang="ts">
+import { useRouter } from 'vue-router';
 import {Store} from 'src/store/pages/state'
 import { defineComponent } from 'vue';
 export default defineComponent({
@@ -34,6 +35,16 @@ export default defineComponent({
 
   props:{
       item: Object as () => Store
+  },
+
+  setup(){
+    const router = useRouter();
+      const pushpage = (item : string) => {
+          void router.push({ name: 'Chat', query: { item } });
+      }
+      return {
+          pushpage
+      }
   }
 });
 </script>

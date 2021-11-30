@@ -42,7 +42,7 @@ export default defineComponent({
     .absolute{
       right: 0;
       z-index: 5;
-      margin-top: 100px;
+      margin-top: 200px;
       position: absolute;
       position: fixed;
       margin-right: 15px;

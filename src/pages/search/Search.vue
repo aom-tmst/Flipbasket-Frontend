@@ -11,6 +11,7 @@
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title>
             <div class="flex-row items-center">
+              <div class="hide">Search</div>
                <q-space />
 
               <q-select
@@ -180,5 +181,10 @@ export default defineComponent({
 .bg-color {
   color: black;
   background-color: whitesmoke;
+}
+@media only screen and(max-width:600px){
+  .hide{
+    display: none;
+  }
 }
 </style>
