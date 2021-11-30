@@ -30,7 +30,8 @@ export default defineComponent({
 
       void nextTick(() => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
-        const socket = io('http://192.168.1.44:1337');
+         const socket = io('http://localhost:1337');   
+        // const socket = io('http://192.168.1.44:1337');
         console.log(socket, 'this');
         // eslint-disable-next-line
         (window as any).socket = socket;

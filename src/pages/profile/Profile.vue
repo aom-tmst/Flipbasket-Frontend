@@ -16,7 +16,7 @@
             <CardProfile :store="findUid" />
           </div>
           <div class="" v-if="findUid.products.length != 0">
-            <Costume :item="findUid?.products" />
+            <Costume :showPage="false" :item="findUid?.products" />
           </div>
           <div
             class="flex-col items-center"

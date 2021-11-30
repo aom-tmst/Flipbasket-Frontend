@@ -22,28 +22,40 @@
           <div class="posted-by">
             {{ item.name }}
           </div>
-          <q-space/>
+          <q-space />
           <div v-if="showEdit">
-              <q-btn dense flat no-caps color="primary" icon="drag_handle">
-                <q-menu>
-                  <q-list dense style="width:100%;min-width:200px">
-                    <q-item clickable v-close-popup style="min-height:50px" >
-                      <q-item-section @click="editProduct(item)">Edit Product</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup style="min-height:50px">
-                      <q-item-section @click="deleteProduct(item)">Delete Product</q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </div>
+            <q-btn dense flat no-caps color="primary" icon="drag_handle">
+              <q-menu>
+                <q-list dense style="width: 100%; min-width: 200px">
+                  <q-item clickable v-close-popup style="min-height: 50px">
+                    <q-item-section @click="editProduct(item)"
+                      >Edit Product</q-item-section
+                    >
+                  </q-item>
+                  <q-separator />
+                  <q-item clickable v-close-popup style="min-height: 50px">
+                    <q-item-section @click="deleteProduct(item)"
+                      >Delete Product</q-item-section
+                    >
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </div>
         </div>
         <div class="content-detail">{{ item.desc }}</div>
-        <div class="Location-box">
+        <div class="Location-box flex-row justify-center">
           <div>price: {{ item.price }} bath</div>
+          <q-space />
+          <div class="product-by q-mr-lg flex-row items-center" @click="pushpagetoSeller(item.uid)" v-if="showPage">
+            <img
+              class="q-mr-md"
+              src="images/profileImg.jpg"
+              style="width: 25px; border-radius: 5px"
+            />{{ item.store.name }}
+          </div>
         </div>
-        <div class="flex-col items-end posted-on" style="color: #149bfc">
+        <div class="flex-col items-end posted-on" style="color: #149bfc" v-if="showPage">
           <q-btn
             @click="pushPage(item._id)"
             no-caps
@@ -103,6 +115,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    showPage: {
+      type: Boolean,
+      default: true,
+    },
     showDelete: {
       type: Boolean,
       default: true,
@@ -130,12 +146,17 @@ export default defineComponent({
       void router.push({ name: 'Product', query: { item } });
     };
 
+    const pushpagetoSeller = (item: string) => {
+      void router.push({ name: 'SellerProfile', query: { item } });
+    };
+
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
       const itemPerRow = width < 1000 ? `${width / 3}`.charAt(0) : '3';
       return 100 / parseInt(itemPerRow, 8) - 2;
     });
     return {
+      pushpagetoSeller,
       widthPerItem,
       pushPage,
       editProductDialog,
@@ -149,14 +170,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.test{
+.product-by {
+  color: black;
+  font-size: 16px;
+}
+.product-by:hover {
+  cursor: pointer;
+  color: rgb(43, 144, 226);
+}
+.test {
   padding-left: 50px;
 }
 .flex-row {
   flex-wrap: wrap;
 }
 .home-sewing {
-  padding: 0 30px ;
+  padding: 0 30px;
   margin: 15px 0;
   .Location-box {
     margin-left: 20px;
@@ -199,9 +228,9 @@ export default defineComponent({
   }
 }
 @media only screen and(max-width:600px) {
-  .test{
-  padding-left: 0px;
-  margin: 0px 20px;
-}
+  .test {
+    padding-left: 0px;
+    margin: 0px 20px;
+  }
 }
 </style>

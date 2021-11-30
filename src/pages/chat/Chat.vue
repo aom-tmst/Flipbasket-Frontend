@@ -38,18 +38,18 @@
                 :key="index"
               >
                 <q-chat-message>
-                  <span class="content">{{ index }}</span>
+                  <span class="content" style="margin-right:20px">{{ index }}</span>
                 </q-chat-message>
               </div>
             </div>
           </q-page-container>
         </q-layout>
-        <div class="flex-row q-mt-md">
+        <div class="flex-row q-mt-md q-ma-md">
           <q-input
             outlined
             v-model="text"
             label="Outlined"
-            style="width: 100vw"
+            style="width: 100vw;"
           />
           <q-btn class="bg-primary text-white" @click="sent()">sent</q-btn>
         </div>
@@ -113,9 +113,13 @@ export default defineComponent({
       // eslint-disable-next-line
       console.log((window as any).socket.emit);
 
+        // eslint-disable-next-line
+        text.value =  `${userDetail.value.name  + ' :   ' + text.value}`;
+  
       // eslint-disable-next-line
       (window as any).socket.emit('server', text.value);
       await store.dispatch('pagesModule/InputMessage', text.value);
+      text.value = ''
     };
     return { sent, text, userDetail, thisSeller, message };
   },

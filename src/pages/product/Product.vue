@@ -60,12 +60,11 @@
                   >Buy</q-btn
                 >
               </div>
-              <div class="flex-row items-center clickable">
+              <div class="flex-row items-center clickable product-by" style="cursor:pointer" @click="pushpage(selectedProduct.uid)">
                 <div class="profile-img">
                   <img :src="productClothesDeatail.profileImg" alt="" />
                 </div>
-
-                <div @click="pushpage(selectedProduct.uid)" class="product-by">
+                <div>
                   <span>{{ selectedProduct.store.name }} </span>
                 </div>
               </div>
@@ -389,6 +388,9 @@ export default defineComponent({
   .wrapper {
     display: flex;
     flex-wrap: wrap;
+  }
+  .product-by{
+    font-size: 16px;
   }
   .product-by:hover {
     cursor: pointer;
