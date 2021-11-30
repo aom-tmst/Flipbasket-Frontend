@@ -14,7 +14,7 @@
                   <div class="posted-by">{{ item.name }}</div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row q-mt-md">
                 <div class="col content">
                   <img :src="item.image_Url" alt="" style="width: 12vw" />
                 </div>

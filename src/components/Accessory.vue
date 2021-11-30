@@ -1,6 +1,7 @@
 <template>
-  <div class="row-format flex-format flex-container home-sewing" v-if="item">
+  <div class="row-format flex-format flex-container" v-if="item">
     <div
+    class="home-sewing"
       v-for="(item, index) in item"
       :key="index"
     >
