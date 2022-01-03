@@ -25,7 +25,7 @@
               <div class="posted-by flex-row">
                 <div>{{ selectedProduct.name }}</div>
                 <q-space />
-                <div>
+                <!-- <div>
                   <q-btn
                     class="items-end"
                     flat
@@ -42,14 +42,14 @@
                       />
                     </q-menu>
                   </q-btn>
-                </div>
+                </div> -->
               </div>
               <div class="content-detail">
                 {{ selectedProduct.desc }}
               </div>
               <div class="flex-row justify-end items-center content-detail">
                 price: {{ selectedProduct.price }} Bath
-                <q-btn no-caps fab-mini
+                <!-- <q-btn no-caps fab-mini
                 class=" q-ml-md bg-primary text-white"
                   @click="
                     NotificationStatus(
@@ -58,7 +58,7 @@
                     )
                   "
                   >Buy</q-btn
-                >
+                > -->
               </div>
               <div class="flex-row items-center clickable product-by" style="cursor:pointer" @click="pushpage(selectedProduct.uid)">
                 <div class="profile-img">

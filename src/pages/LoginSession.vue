@@ -6,7 +6,7 @@
           <h1 data-text="Flipbasket.">Flipbasket.</h1>
         </div>
       </div>
-      <div class="flex-row justify-center" style="margin: 20px 0">
+      <!-- <div class="flex-row justify-center" style="margin: 20px 0">
         <q-btn
           flat
           no-caps
@@ -27,8 +27,8 @@
         >
           <img src="images/facebookico.png" alt="" />
         </q-btn>
-      </div>
-      <div class="flex-row justify-center edit-btn" style="margin: 10px 0">
+      </div> -->
+      <!-- <div class="flex-row justify-center edit-btn" style="margin: 10px 0">
         <button
           class="edit-btn line-text"
           @click="selectedComponent = 'Login'"
@@ -50,7 +50,7 @@
         >
           ForgotPassword
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="flex-col" style="margin-top: 20px">
       <component :is="selectedComponent" />

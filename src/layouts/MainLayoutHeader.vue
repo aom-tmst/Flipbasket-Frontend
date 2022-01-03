@@ -15,6 +15,11 @@
         >
           {{ label }}
         </a>
+        <div @click="pushToProfile" v-if="userDetail">
+          <div v-if="userDetail.name != undefined">
+             <a class="test">Profile</a>
+          </div>
+        </div>
         <div class="cursor-pointer non-selectable">
           <a>Product</a>
           <q-menu auto-close>
@@ -35,26 +40,50 @@
           </q-menu>
         </div>
       </div>
-      <div class="flex-row items-center menu-list desktop-menu">
-        <div v-if="userDetail">Welcome : {{ userDetail.name }}</div>
-        <q-icon class="cart-edit-icon" name="shopping_bag" @click="pushPage()" />
-        <q-icon class="cart-edit-icon" name="support_agent" @click="pushToNoti()" />
-      </div>
-      <button
-        class="logout edit-btn q-mr-sm desktop-menu"
-        @click="Logout"
-        style="margin-left: 20px"
+      <div
+        class="flex-row items-center menu-list desktop-menu"
+        v-if="userDetail"
       >
-        Logout
-      </button>
-      <q-icon size="sm" name="account_circle" class="desktop-menu"/>
+        <div v-if="userDetail.name != undefined">
+          Welcome : {{ userDetail.name }}
+          <!-- <q-icon
+            class="cart-edit-icon"
+            name="shopping_bag"
+            @click="pushPage()"
+          />
+          <q-icon
+            class="cart-edit-icon"
+            name="support_agent"
+            @click="pushToNoti()"
+          /> -->
+        </div>
+      </div>
+      <div v-if="userDetail">
+        <button
+          v-if="userDetail.name != undefined"
+          class="logout edit-btn q-mr-sm desktop-menu"
+          @click="Logout"
+          style="margin-left: 20px"
+        >
+          Logout
+        </button>
+        <button
+          v-if="userDetail.name == undefined"
+          class="logout edit-btn q-mr-sm desktop-menu"
+          @click="Login"
+          style="margin-left: 20px"
+        >
+          Login
+        </button>
+      </div>
+      <q-icon size="sm" name="account_circle" class="desktop-menu" />
 
       <!-- Mobile -->
       <div class="menu-list mobile-menu">
         <q-btn icon="menu" @click="dialog = !dialog" />
         <q-dialog maximized seamless v-model="dialog" position="right">
           <q-card class="menu-dialog flex-col items-center" v-if="userDetail">
-            <q-card-section> Welcome : {{ userDetail.name }} </q-card-section>
+            <q-card-section v-if="userDetail.name != undefined"> Welcome : {{ userDetail.name }} </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in menuList"
               :key="index"
@@ -66,6 +95,11 @@
               >
                 {{ label }}
               </a>
+            </q-card-section>
+            <q-card-section v-if="userDetail.name != undefined">
+              <button class="edit-btn" @click="pushToProfile()" v-close-popup>
+                Profile
+              </button>
             </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in productList"
@@ -79,7 +113,7 @@
                 {{ label }}
               </a>
             </q-card-section>
-            <q-card-section>
+            <!-- <q-card-section>
               <button class="edit-btn" @click="pushPage()" v-close-popup>
                 Cart
               </button>
@@ -88,9 +122,22 @@
               <button class="edit-btn" @click="pushToNoti()" v-close-popup>
                 Notification
               </button>
-            </q-card-section>
-            <q-card-section>
-              <button class="logout edit-btn" @click="Logout">Logout</button>
+            </q-card-section> -->
+            <q-card-section v-if="userDetail">
+              <button
+                class="logout edit-btn"
+                v-if="userDetail.name != undefined"
+                @click="Logout"
+              >
+                Logout
+              </button>
+              <button
+                class="logout edit-btn"
+                v-if="userDetail.name == undefined"
+                @click="Login"
+              >
+                Log in
+              </button>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -122,6 +169,8 @@ export default defineComponent({
         userDetail.value = {
           name: user?.displayName,
         };
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.log(userDetail.value.name, 'this line');
       });
     });
 
@@ -134,10 +183,17 @@ export default defineComponent({
         .catch((err: Error) => alert(err.message));
     };
 
+    const pushToProfile = () => {
+      void router.push({path: 'profile'})
+    }
+
+    const Login = () => {
+      void router.push({ path: 'login-session' });
+    };
+
     const menuList = [
       { label: 'Home', path: '#home' },
       { label: 'About', path: '#about' },
-      { label: 'Profile', path: 'profile' },
       // { label: 'Gallery', path: '#gallery' },
       // { label: 'Location', path: '#location' },
     ];
@@ -156,7 +212,7 @@ export default defineComponent({
       void router.push({ path: 'cart' });
     };
 
-     const pushToNoti = () => {
+    const pushToNoti = () => {
       void router.push({ path: 'noti' });
     };
 
@@ -169,12 +225,17 @@ export default defineComponent({
       productList,
       Logout,
       userDetail,
+      Login,
+      pushToProfile,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.test{
+  cursor: pointer;
+}
 .edit-btn {
   cursor: pointer;
   background: none;
