@@ -5,7 +5,7 @@
         <img
           class="edit-profile-img"
           src="images/profileImg.jpg"
-          style="width: 100px"
+          style="width: 75px"
         />
       </div>
     </div>
@@ -13,7 +13,7 @@
       <div class="flex-row posted-by">
         <div class="text-black">{{item.name}}</div>
       </div>
-      <div class="flex-row" v-if="item">
+      <!-- <div class="flex-row" v-if="item">
         <q-btn class="edit-btn" @click="pushpage(item._id)">
           Chat With Merchant
           <q-icon
@@ -21,7 +21,7 @@
             style="margin-left: 5px; color: rgb(43, 144, 226)"
           />
         </q-btn>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

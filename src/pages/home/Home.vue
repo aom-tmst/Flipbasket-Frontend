@@ -14,20 +14,20 @@
         <Costume :showEdit="false" :showDelete="false" :item="productShirt" />
       </div>
 
-      <div class="scoped-banner" id="trousers">
+      <div class="scoped-banner" id="trousers" v-if="productPants.length !=0">
         <HomeTrouserBanner />
       </div>
-      <div class="flex-container">
+      <div class="flex-container" v-if="productPants.length !=0">
         <div class="flex-row justify-center">
           <span>Trousers</span>
         </div>
         <Costume :showEdit="false" :showDelete="false" :item="productPants" />
       </div>
 
-      <div class="scoped-banner" id="accessory">
+      <div class="scoped-banner" id="accessory" v-if="productAcc.length !=0">
         <HomeAccessoryBanner />
       </div>
-      <div class="flex-container" style="margin-bottom: 20px">
+      <div class="flex-container" style="margin-bottom: 20px" v-if="productAcc.length !=0">
         <div class="flex-row justify-center">
           <span>Accessory</span>
         </div>
