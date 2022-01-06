@@ -2,11 +2,11 @@
   <q-header elevated>
     <q-toolbar style="margin-bottom: 10px; margin-top: 10px">
       <q-btn dense flat :to="{ name: 'Home' }" @click="dialog = false">
-        <q-img width="200px" src="icons/fliplogo.png" />
+        <div class="q-ml-sm" style="font-weight: bold">Flipbasket</div>
       </q-btn>
 
       <!-- Desktop -->
-      <div class="flex-row items-center menu-list desktop-menu e">
+      <div class="flex-row items-center menu-list desktop-menu">
         <a
           v-for="({ label, path }, index) in menuList"
           :key="index"
@@ -15,6 +15,11 @@
         >
           {{ label }}
         </a>
+        <div @click="pushToProfile" v-if="userDetail">
+          <div v-if="userDetail.name != undefined">
+             <a class="test">Profile</a>
+          </div>
+        </div>
         <div class="cursor-pointer non-selectable">
           <a>Product</a>
           <q-menu auto-close>
@@ -35,24 +40,104 @@
           </q-menu>
         </div>
       </div>
-      <div class="flex-row items-center menu-list desktop-menu">
-        Welcome, {{ name }}
-        <q-btn class="logout" @click="Logout" > Logout </q-btn>
-        <q-icon size="sm" name="account_circle" />
+      <div
+        class="flex-row items-center menu-list desktop-menu"
+        v-if="userDetail"
+      >
+        <div v-if="userDetail.name != undefined">
+          Welcome : {{ userDetail.name }}
+          <!-- <q-icon
+            class="cart-edit-icon"
+            name="shopping_bag"
+            @click="pushPage()"
+          />
+          <q-icon
+            class="cart-edit-icon"
+            name="support_agent"
+            @click="pushToNoti()"
+          /> -->
+        </div>
       </div>
+      <div v-if="userDetail">
+        <button
+          v-if="userDetail.name != undefined"
+          class="logout edit-btn q-mr-sm desktop-menu"
+          @click="Logout"
+          style="margin-left: 20px"
+        >
+          Logout
+        </button>
+        <button
+          v-if="userDetail.name == undefined"
+          class="logout edit-btn q-mr-sm desktop-menu"
+          @click="Login"
+          style="margin-left: 20px"
+        >
+          Login
+        </button>
+      </div>
+      <q-icon size="sm" name="account_circle" class="desktop-menu" />
 
       <!-- Mobile -->
       <div class="menu-list mobile-menu">
         <q-btn icon="menu" @click="dialog = !dialog" />
         <q-dialog maximized seamless v-model="dialog" position="right">
-          <q-card class="menu-dialog flex-col items-center">
+          <q-card class="menu-dialog flex-col items-center" v-if="userDetail">
+            <q-card-section v-if="userDetail.name != undefined"> Welcome : {{ userDetail.name }} </q-card-section>
             <q-card-section
               v-for="({ label, path }, index) in menuList"
               :key="index"
             >
-              <a :class="{ 'is-actived': isActived(path) }" :href="path">
+              <a
+                :class="{ 'is-actived': isActived(path) }"
+                :href="path"
+                @click="dialog = !dialog"
+              >
                 {{ label }}
               </a>
+            </q-card-section>
+            <q-card-section v-if="userDetail.name != undefined">
+              <button class="edit-btn" @click="pushToProfile()" v-close-popup>
+                Profile
+              </button>
+            </q-card-section>
+            <q-card-section
+              v-for="({ label, path }, index) in productList"
+              :key="index"
+            >
+              <a
+                :class="{ 'is-actived': isActived(path) }"
+                :href="path"
+                @click="dialog = !dialog"
+              >
+                {{ label }}
+              </a>
+            </q-card-section>
+            <!-- <q-card-section>
+              <button class="edit-btn" @click="pushPage()" v-close-popup>
+                Cart
+              </button>
+            </q-card-section>
+            <q-card-section>
+              <button class="edit-btn" @click="pushToNoti()" v-close-popup>
+                Notification
+              </button>
+            </q-card-section> -->
+            <q-card-section v-if="userDetail">
+              <button
+                class="logout edit-btn"
+                v-if="userDetail.name != undefined"
+                @click="Logout"
+              >
+                Logout
+              </button>
+              <button
+                class="logout edit-btn"
+                v-if="userDetail.name == undefined"
+                @click="Login"
+              >
+                Log in
+              </button>
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -62,38 +147,49 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import { useRoute } from 'vue-router';
-import { defineComponent, ref , onMounted} from 'vue';
+import { auth } from 'src/boot/firebase';
+import { useRoute, useRouter } from 'vue-router';
+import { defineComponent, ref, onMounted } from 'vue';
 
 interface Error {
-    message : string
+  message: string;
 }
-
 
 export default defineComponent({
   name: 'MainLayoutHeader',
   components: {},
   setup() {
+    const router = useRouter();
     const route = useRoute();
     const dialog = ref(false);
-    const name = ref('')
+    const userDetail = ref();
 
     onMounted(() => {
-       const user = firebase.auth().currentUser;
-      if (user) {
-        name.value = user.email?.split('@')[0] || '';
-      }
+      auth.onAuthStateChanged((user) => {
+        userDetail.value = {
+          name: user?.displayName,
+        };
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.log(userDetail.value.name, 'this line');
+      });
     });
 
+    console.log(userDetail);
+
     const Logout = () => {
-      firebase
-        .auth()
+      auth
         .signOut()
         .then(() => console.log('Signed Out'))
-        .catch((err : Error) => alert(err.message) )
+        .catch((err: Error) => alert(err.message));
+    };
+
+    const pushToProfile = () => {
+      void router.push({path: 'profile'})
     }
+
+    const Login = () => {
+      void router.push({ path: 'login-session' });
+    };
 
     const menuList = [
       { label: 'Home', path: '#home' },
@@ -112,12 +208,50 @@ export default defineComponent({
       return route.path.substring(1) === path;
     };
 
-    return { menuList, dialog, isActived, productList , name , Logout };
+    const pushPage = () => {
+      void router.push({ path: 'cart' });
+    };
+
+    const pushToNoti = () => {
+      void router.push({ path: 'noti' });
+    };
+
+    return {
+      pushToNoti,
+      pushPage,
+      menuList,
+      dialog,
+      isActived,
+      productList,
+      Logout,
+      userDetail,
+      Login,
+      pushToProfile,
+    };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.test{
+  cursor: pointer;
+}
+.edit-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.edit-btn:hover {
+  color: rgb(43, 144, 226);
+}
+.cart-edit-icon {
+  margin-left: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.cart-edit-icon:hover {
+  color: rgb(43, 144, 226);
+}
 .q-header {
   color: black;
   background-color: white;
@@ -147,8 +281,23 @@ export default defineComponent({
   width: 100vw;
   padding: 10px;
   margin-top: auto;
-  background-color: var(--bc-black-1);
-  height: calc(100vh - 80.97px) !important;
+  background-color: white;
+  opacity: 10;
+  height: calc(100vh - 70.3px) !important;
+  a {
+    text-align: center;
+    color: black;
+    margin: 0 20px 0 20px;
+    &:hover {
+      color: rgb(43, 144, 226);
+    }
+  }
+  a.is-actived {
+    &:link,
+    &:visited {
+      color: rgb(43, 144, 226);
+    }
+  }
 }
 .edit-font {
   margin: 10px 30px 10px 30px;

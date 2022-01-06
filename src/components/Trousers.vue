@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row wrapper justify-center" v-if="item">
+  <div class="flex-row justify-center" v-if="item">
     <div
       class="home-sewing"
       v-for="(item, index) in item"
@@ -7,58 +7,129 @@
       :style="`width: ${widthPerItem}%`"
     >
       <div class="flex-col">
-        <div class="flex-col items-center">
-          <img
+        <div @click="pushPage(item._id)" class="flex-col items-center">
+          <!-- <img
             class="transition"
-            :src="item.postedImg"
+            :src="'https://tailors-phuket.herokuapp.com'+item.image.url"
             alt=""
             style="width: 250px; height: 250px"
-          />
+          /> -->
         </div>
         <div class="flex-col items-end posted-on">
-          Posted On : {{ item.postedOn }}
+          Posted On : {{ item.createdAt }}
         </div>
-        <div class="posted-by">{{ item.productName }}</div>
-        <div class="content-detail">{{ item.detail }}</div>
+        <div class="posted-by">{{ item.name }}</div>
+        <div class="content-detail">{{ item.desc }}</div>
         <div class="Location-box">
           <div>price: {{ item.price }} bath</div>
         </div>
         <div class="flex-col items-end posted-on" style="color: #149bfc">
-          Read more...
+          <q-btn
+            @click="pushPage(item._id)"
+            no-caps
+            flat
+            dense
+            unelevated
+            style="margin-bottom: 10px; color: #149bfc"
+            >Read more...</q-btn
+          >
+          <div class="flex-row">
+            <q-btn
+              class="flex-col edit-btn"
+              @click="editProduct(item)"
+              v-if="showEdit"
+            >
+              edit
+            </q-btn>
+            <q-btn
+              color="red"
+              class="flex-col edit-btn"
+              @click="deleteProduct(item)"
+              v-if="showDelete"
+            >
+              delete
+            </q-btn>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="flex-col text-blue" style="margin-left: auto; margin-right: 50px">
-    <span>See all</span>
+    <q-dialog v-model="editProductDialog">
+      <DialogEditProduct :item="selectedItem" />
+    </q-dialog>
+    <q-dialog v-model="deleteProductDialog">
+      <DialogDeleteProduct :item="selectedItem" />
+    </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
+import DialogDeleteProduct from 'src/components/dialog/DialogDeleteProduct.vue';
+import DialogEditProduct from 'src/components/dialog/DialogEditProduct.vue';
+import { Product } from 'src/type/Product';
 import { useQuasar } from 'quasar';
-import { ClothesDeatail } from 'src/type/Home';
-import { defineComponent, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { defineComponent, computed, ref } from 'vue';
 export default defineComponent({
   name: 'HomeSewing',
 
+  components: {
+    DialogEditProduct,
+    DialogDeleteProduct,
+  },
+
   props: {
-    item: Object as () => ClothesDeatail,
+    item: Object as () => Product,
+    showEdit: {
+      type: Boolean,
+      default: true,
+    },
+    showDelete: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   setup() {
+    const router = useRouter();
     const quasar = useQuasar();
+    const editProductDialog = ref(false);
+    const deleteProductDialog = ref(false);
+    const selectedItem = ref();
+
+    const editProduct = (item: Product) => {
+      selectedItem.value = item;
+      editProductDialog.value = true;
+    };
+
+    const deleteProduct = (item: Product) => {
+      selectedItem.value = item;
+      deleteProductDialog.value = true;
+    };
+
+    const pushPage = (item: string) => {
+      void router.push({ name: 'Product', query: { item } });
+    };
+
     const widthPerItem = computed(() => {
       const { width } = quasar.screen;
       const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : '4';
       return 100 / parseInt(itemPerRow, 10) - 2;
     });
-    return { widthPerItem };
+    return {
+      widthPerItem,
+      pushPage,
+      editProductDialog,
+      editProduct,
+      selectedItem,
+      deleteProduct,
+      deleteProductDialog,
+    };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.flex-row{
+.flex-row {
   flex-wrap: wrap;
 }
 .home-sewing {
@@ -87,6 +158,19 @@ export default defineComponent({
   }
   .transition:hover {
     transform: scale(1.05);
+  }
+}
+@media only screen and(min-width:1000px) {
+  .edit-btn {
+    height: 20px;
+    font-size: 12px;
+  }
+}
+@media only screen and(max-width:1000px) {
+  .edit-btn {
+    height: 20px;
+    width: 50%;
+    font-size: 1vw;
   }
 }
 </style>

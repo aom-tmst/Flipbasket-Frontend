@@ -7,40 +7,31 @@
       </div>
       <div class="flex-container">
         <div id="shirt" />
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Shirt</span>
-          </div>
-          <Shirt :item="clothesDeatail" />
+
+        <div class="flex-row justify-center">
+          <span>Shirt</span>
         </div>
+        <Costume :showEdit="false" :showDelete="false" :item="productShirt" />
       </div>
 
-      <div class="scoped-banner" id="trousers">
+      <div class="scoped-banner" id="trousers" v-if="productPants.length !=0">
         <HomeTrouserBanner />
       </div>
-      <div class="flex-container">
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Trousers</span>
-          </div>
-          <Trousers :item="trousersDetail" />
+      <div class="flex-container" v-if="productPants.length !=0">
+        <div class="flex-row justify-center">
+          <span>Trousers</span>
         </div>
+        <Costume :showEdit="false" :showDelete="false" :item="productPants" />
       </div>
 
-      <div class="scoped-banner" id="accessory">
+      <div class="scoped-banner" id="accessory" v-if="productAcc.length !=0">
         <HomeAccessoryBanner />
       </div>
-      <div class="flex-container" style="margin-bottom: 20px">
-        <div class="flex-col items-center">
-          <div class="flex-row justify-center">
-            <span>Accessory</span>
-          </div>
-          <Accessory :item="accessoryDetail" />
+      <div class="flex-container" style="margin-bottom: 20px" v-if="productAcc.length !=0">
+        <div class="flex-row justify-center">
+          <span>Accessory</span>
         </div>
-      </div>
-
-      <div class="scoped-banner-login" id="login">
-        <HomeLoginSession />
+        <Accessory :item="productAcc" />
       </div>
       <!-- <div class="review">
             <span>Review By Customers</span>
@@ -54,39 +45,59 @@ import HomeMainBanner from 'src/pages/home/HomeMainBanner.vue';
 import HomeSecondBanner from 'src/pages/home/HomeSecondBanner.vue';
 import HomeTrouserBanner from 'src/pages/home/HomeTrouserBanner.vue';
 import HomeAccessoryBanner from 'src/pages/home/HomeAccessoryBanner.vue';
-import HomeLoginSession from 'src/pages/home/HomeLoginSession.vue';
-import Shirt from 'src/components/Shirt.vue';
-import Trousers from 'src/components/Trousers.vue';
-import Accessory from 'src/components/Accessory.vue';
+import Costume from 'src/components/Costume.vue';
+import Accessory from 'src/components/Accessory.vue'
 import {
   bannerAds,
   clothesDeatail,
   galleryImg,
-  trousersDetail,
-  accessoryDetail,
 } from 'src/pages/home/constants';
-import { defineComponent } from 'vue';
+import { useStore } from 'src/store';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
   name: 'Home',
 
   components: {
+    Accessory,
     HomeMainBanner,
     HomeSecondBanner,
-    Shirt,
-    Trousers,
-    Accessory,
+    Costume,
     HomeTrouserBanner,
     HomeAccessoryBanner,
-    HomeLoginSession,
+  },
+
+  preFetch({ store }) {
+    const fetchAllProduct = store.dispatch('pagesModule/fetchAllProduct');
+    return Promise.all([fetchAllProduct]);
   },
 
   setup() {
+    const store = useStore();
+
+    const products = computed(() => {
+      const product = store.state.pagesModule.allProduct;
+      return product;
+    });
+
+    console.log(products.value, 'this');
+    const productShirt = computed(() =>
+      products.value.filter((product) => product.type == 'shirt')
+    );
+    const productPants = computed(() =>
+      products.value.filter((product) => product.type == 'pants')
+    );
+    const productAcc = computed(() =>
+      products.value.filter((product) => product.type == 'accessory')
+    );
+    console.log(productShirt);
+
     return {
+      productShirt,
+      productPants,
+      productAcc,
       bannerAds,
       clothesDeatail,
       galleryImg,
-      trousersDetail,
-      accessoryDetail,
     };
   },
 });

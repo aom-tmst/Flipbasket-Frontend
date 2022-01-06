@@ -3,7 +3,7 @@
     <div class="flex-col items-center">
       <div class="flex-row wrapper justify-center">
         <div class="edit-margin" v-for="(item, index) in item" :key="index">
-          <img :src="item.img" alt="" style="width: 330px;height:330px" />
+          <img :src="item.store_Image" alt="" style="width: 330px;height:330px" />
         </div>
       </div>
       <div class="flex-row text-blue">
@@ -14,13 +14,13 @@
 </template>
 
 <script lang="ts">
-import { GalleryImg } from 'src/type/Home';
+import {Gallery} from 'src/store/pages/state';
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'HomeGallery',
 
   props: {
-    item: Object as () => GalleryImg,
+    item: Object as () => Gallery,
   },
 });
 </script>

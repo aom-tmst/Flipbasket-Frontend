@@ -20,24 +20,43 @@ const routes: RouteRecordRaw[] = [
       path: 'profile',
       component: () => import('src/pages/profile/Profile.vue'),
     },
+    {
+      name: 'Cart',
+      path: 'cart',
+      component: () => import('src/pages/cart/CartPage.vue'),
+    },
+    {
+      name: 'Search',
+      path: 'search',
+      component: () => import('src/pages/search/Search.vue'),
+    },
+    {
+      name: 'Notification',
+      path: 'Noti',
+      component: () => import('src/pages/noti/Noti.vue'),
+    },
+    {
+      name: 'Chat',
+      path: 'chat',
+      component: () => import('src/pages/chat/Chat.vue'),
+    },
   ],
   },
   {
-    name: 'Login',
-    path: '/login',
-    component: () => import('src/pages/Login.vue'),
+    name: 'LoginSession',
+    path: '/login-session',
+    component: () => import('src/pages/LoginSession.vue'),
   },
-  {
-    name: 'Register',
-    path: '/register',
-    component: () => import('src/pages/Register.vue'),
-  },
-
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),
+  },
+  {
+    name: 'Addmin',
+    path: '/admin',
+    component: () => import('src/pages/Addmin.vue'),
   },
 ];
 

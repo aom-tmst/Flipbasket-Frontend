@@ -5,35 +5,46 @@
         <img
           class="edit-profile-img"
           src="images/profileImg.jpg"
-          style="width: 100px"
+          style="width: 75px"
         />
       </div>
     </div>
     <div class="edit-space-profile flex-col items-center justify-center">
       <div class="flex-row posted-by">
-        <div>{{item.merchantName}}</div>
+        <div class="text-black">{{item.name}}</div>
       </div>
-      <div class="flex-row">
-        <q-btn class="edit-btn">
+      <!-- <div class="flex-row" v-if="item">
+        <q-btn class="edit-btn" @click="pushpage(item._id)">
           Chat With Merchant
           <q-icon
             name="live_help"
             style="margin-left: 5px; color: rgb(43, 144, 226)"
           />
         </q-btn>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ProfileDetail } from 'src/type/sellerprofile'
+import { useRouter } from 'vue-router';
+import {Store} from 'src/store/pages/state'
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'CardProfile',
 
   props:{
-      item: Object as () => ProfileDetail
+      item: Object as () => Store
+  },
+
+  setup(){
+    const router = useRouter();
+      const pushpage = (item : string) => {
+          void router.push({ name: 'Chat', query: { item } });
+      }
+      return {
+          pushpage
+      }
   }
 });
 </script>

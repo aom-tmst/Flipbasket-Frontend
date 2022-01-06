@@ -1,38 +1,37 @@
 <template>
-  <div class="flex-row card-profile wrapper" v-if="item">
+  <div class="flex-row card-profile items-center" v-if="store">
     <div class="flex-col">
       <div>
         <img
           class="edit-profile-img"
           src="images/profileImg.jpg"
-          style="width: 100px"
         />
       </div>
     </div>
     <div class="edit-space-profile flex-col">
       <div class="flex-row q-ml-sm posted-by">
-        <div>{{ item.profileName }}</div>
+        <div>{{ store.name }}</div>
       </div>
       <div class="flex-row">
         <q-btn class="edit-btn" @click="addProduct = true">
           Add Product
         </q-btn>
         <q-dialog v-model="addProduct">
-          <DialogAddProduct />
+          <DialogAddProduct :item="store" />
         </q-dialog>
 
         <q-btn class="edit-btn" @click="editProfile = true">
           Edit Profile
         </q-btn>
         <q-dialog v-model="editProfile">
-          <DialogEditProfile />
+          <DialogEditProfile :item="store" />
         </q-dialog>
 
         <q-btn class="edit-btn" @click="addGallery = true">
           Add Gallery
         </q-btn>
         <q-dialog v-model="addGallery">
-          <DialogAddGallery />
+          <DialogAddGallery :item="store"/>
         </q-dialog>
       </div>
     </div>
@@ -43,7 +42,7 @@
 import DialogAddGallery from 'src/components/dialog/DialogAddGallery.vue';
 import DialogEditProfile from 'src/components/dialog/DialogEditProfile.vue';
 import DialogAddProduct from 'src/components/dialog/DialogAddProduct.vue';
-import { ProfileDetail } from 'src/type/profile';
+import { Store } from 'src/store/pages/state'
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'CardProfile',
@@ -55,7 +54,7 @@ export default defineComponent({
   },
 
   props: {
-    item: Object as () => ProfileDetail,
+    store: Object as () => Store,
   },
 
   setup(){
@@ -65,7 +64,7 @@ export default defineComponent({
     return {
       addProduct,
       editProfile,
-      addGallery
+      addGallery,
     };
   },
 });
@@ -78,7 +77,11 @@ export default defineComponent({
 .card-profile {
   margin: 20px;
   .wrapper {
+    display: flex;
     flex-wrap: wrapper;
+  }
+  img{
+    width: 100px;
   }
   .posted-by {
     font-size: 18px;
@@ -87,6 +90,10 @@ export default defineComponent({
   }
   .edit-space-profile {
     margin: 10px;
+    .q-btn{
+      max-width: 200px;
+      width: 100%;
+    }
   }
   .edit-btn {
     border-radius: 8px;
@@ -94,6 +101,31 @@ export default defineComponent({
   }
   .edit-profile-img {
     border-radius: 10px;
+  }
+}
+@media only screen and(max-width:1000px){
+  .card-profile {
+    .edit-space-profile {
+    margin: 10px;
+    .q-btn{
+      font-size: 2vw;
+      width: 100%;
+    }
+  }
+  img{
+    width: 20vw;
+  }
+  }
+}
+@media only screen and(max-width:370px){
+  .card-profile {
+    .edit-space-profile {
+    margin: 10px;
+    .q-btn{
+      font-size: 2vw;
+      width: 20%;
+    }
+  }
   }
 }
 </style>

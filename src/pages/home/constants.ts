@@ -1,7 +1,6 @@
 export const bannerAds = [
   { bannerImg: 'images/bannerImg.png' },
-  { bannerImg: 'images/bannerImg.png' },
-  { bannerImg: 'images/bannerImg.png' },
+  { bannerImg: 'images/bannerImg2.png' },
 ];
 
 export const clothesDeatail = [
